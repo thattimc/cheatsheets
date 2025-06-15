@@ -1,10 +1,12 @@
 # Cheatsheets Collection
 
-This repository contains a curated collection of cheatsheets for a wide range of tools and platforms, organized by category for easy reference.
+This repository contains a curated collection of cheatsheets for a wide
+range of tools and platforms, organized by category for easy reference.
 
 ## Directory Structure
 
-- [cloud/](cloud/): Cheatsheets for cloud provider CLIs (AWS, Azure, GCP)
+- [cloud/](cloud/): Cheatsheets for cloud provider CLIs (AWS, Azure,
+  GCP)
 - [kubernetes/](kubernetes/): Kubernetes and related tools (monitoring, storage, automation, etc.)
 - [devops/](devops/): DevOps tools and platforms (CI/CD, databases, APIs)
 - [networking/](networking/): Networking tools (VPNs, mesh, etc.)
@@ -26,4 +28,4 @@ Each directory contains a README with more details and a list of included cheats
 
 ---
 
-Feel free to contribute or suggest new cheatsheets! 
+Feel free to contribute or suggest new cheatsheets!

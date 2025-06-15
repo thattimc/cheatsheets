@@ -3,6 +3,7 @@
 ## Installation & Authentication
 
 ### Install gh
+
 ```bash
 # macOS
 brew install gh
@@ -15,6 +16,7 @@ winget install --id GitHub.cli
 ```
 
 ### Authentication
+
 ```bash
 # Login with web browser
 gh auth login
@@ -32,6 +34,7 @@ gh auth logout
 ## Repository Management
 
 ### Create Repository
+
 ```bash
 # Create new repo (interactive)
 gh repo create
@@ -53,6 +56,7 @@ gh repo create my-app --template owner/template-repo
 ```
 
 ### Repository Operations
+
 ```bash
 # Clone repository
 gh repo clone owner/repo
@@ -79,6 +83,7 @@ gh repo delete owner/repo
 ## Issues
 
 ### Create & Manage Issues
+
 ```bash
 # Create issue (interactive)
 gh issue create
@@ -97,6 +102,7 @@ gh issue create --label bug,priority-high
 ```
 
 ### View & List Issues
+
 ```bash
 # List issues
 gh issue list
@@ -114,6 +120,7 @@ gh issue view 123 --comments
 ```
 
 ### Issue Actions
+
 ```bash
 # Close issue
 gh issue close 123
@@ -138,6 +145,7 @@ gh issue unpin 123
 ## Pull Requests
 
 ### Create Pull Requests
+
 ```bash
 # Create PR (interactive)
 gh pr create
@@ -159,6 +167,7 @@ gh pr create --assignee username
 ```
 
 ### View & List Pull Requests
+
 ```bash
 # List PRs
 gh pr list
@@ -178,6 +187,7 @@ gh pr checks 123
 ```
 
 ### Pull Request Actions
+
 ```bash
 # Checkout PR branch
 gh pr checkout 123
@@ -208,6 +218,7 @@ gh pr edit 123 --add-reviewer username
 ```
 
 ### Pull Request Reviews
+
 ```bash
 # Review PR
 gh pr review 123
@@ -219,6 +230,7 @@ gh pr review 123 --comment --body "Looks good!"
 ## Releases
 
 ### Create & Manage Releases
+
 ```bash
 # Create release (interactive)
 gh release create
@@ -240,6 +252,7 @@ gh release create v1.0.0 ./dist/*
 ```
 
 ### View & List Releases
+
 ```bash
 # List releases
 gh release list
@@ -257,6 +270,7 @@ gh release download v1.0.0 --pattern "*.tar.gz"
 ## Workflows & Actions
 
 ### GitHub Actions
+
 ```bash
 # List workflows
 gh workflow list
@@ -282,6 +296,7 @@ gh run download 123456789
 ```
 
 ### Trigger Workflows
+
 ```bash
 # Trigger workflow dispatch
 gh workflow run workflow.yml
@@ -293,6 +308,7 @@ gh workflow run workflow.yml --field key=value
 ## Gists
 
 ### Create & Manage Gists
+
 ```bash
 # Create gist from file
 gh gist create file.txt
@@ -308,6 +324,7 @@ echo "Hello World" | gh gist create --filename hello.txt
 ```
 
 ### View & Edit Gists
+
 ```bash
 # List gists
 gh gist list
@@ -330,6 +347,7 @@ gh gist delete abc123
 ## Search
 
 ### Search GitHub
+
 ```bash
 # Search repositories
 gh search repos "machine learning" --language python
@@ -349,6 +367,7 @@ gh search code "function main" --language go
 ## Aliases
 
 ### Create & Manage Aliases
+
 ```bash
 # List aliases
 gh alias list
@@ -364,6 +383,7 @@ gh alias delete pv
 ## Configuration
 
 ### Settings
+
 ```bash
 # List configuration
 gh config list
@@ -378,6 +398,7 @@ gh config get editor
 ```
 
 ### Common Config Options
+
 ```bash
 # Set default editor
 gh config set editor code
@@ -394,6 +415,7 @@ gh config set prompt disabled
 ## Extensions
 
 ### Manage Extensions
+
 ```bash
 # List extensions
 gh extension list
@@ -412,6 +434,7 @@ gh extension remove extension-name
 ## Useful Flags & Options
 
 ### Global Flags
+
 ```bash
 --help          # Show help
 --version       # Show version
@@ -422,6 +445,7 @@ gh extension remove extension-name
 ```
 
 ### Common Patterns
+
 ```bash
 # Use JSON output with jq
 gh pr list --json number,title,author | jq '.[] | select(.author.login == "username")'
@@ -436,6 +460,7 @@ gh issue list --repo owner/repo
 ## Tips & Tricks
 
 ### Productivity Tips
+
 1. **Use aliases** for frequently used commands
 2. **Set up SSH** for faster authentication
 3. **Use templates** for consistent issue/PR creation
@@ -443,6 +468,7 @@ gh issue list --repo owner/repo
 5. **Use --web flag** to open items in browser
 
 ### Environment Variables
+
 ```bash
 # Set default repository
 export GH_REPO="owner/repo"
@@ -455,9 +481,9 @@ export GH_EDITOR="code"
 ```
 
 ### Bash/Zsh Completion
+
 ```bash
 # Add to ~/.bashrc or ~/.zshrc
 eval "$(gh completion -s bash)"  # for bash
 eval "$(gh completion -s zsh)"   # for zsh
 ```
-

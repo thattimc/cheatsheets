@@ -5,7 +5,8 @@ Thank you for considering contributing to this repository! Your help is apprecia
 ## How to Contribute
 
 1. **Fork the repository** and create your branch from `main`.
-2. **Add your cheatsheet** to the appropriate directory. If your tool doesn't fit an existing category, create a new directory and add a README.
+2. **Add your cheatsheet** to the appropriate directory. If your tool doesn't fit
+   an existing category, create a new directory and add a README.
 3. **Follow the formatting guidelines** below.
 4. **Open a Pull Request** with a clear description of your changes.
 
@@ -21,7 +22,7 @@ Thank you for considering contributing to this repository! Your help is apprecia
 
 ## Example Cheatsheet Structure
 
-```
+```markdown
 # ExampleTool Cheatsheet
 
 _A quick reference for ExampleTool_
@@ -33,14 +34,18 @@ _A quick reference for ExampleTool_
 ## Installation
 
 ```
+
 command to install
-```
+
+```bash
 
 ## Common Commands
 
 ```
+
 example command
-```
+
+```bash
 
 ## Tips
 
@@ -61,4 +66,4 @@ example command
 
 ## Code of Conduct
 
-Be respectful and constructive. All contributions are welcome! 
+Be respectful and constructive. All contributions are welcome!

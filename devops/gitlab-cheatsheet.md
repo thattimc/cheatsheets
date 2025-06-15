@@ -1,10 +1,13 @@
 # GitLab Cheatsheet
 
-GitLab is a complete DevOps platform that provides Git repository management, CI/CD pipelines, issue tracking, and more. This cheatsheet covers GitLab usage from basic Git operations to advanced DevOps workflows.
+GitLab is a complete DevOps platform that provides Git repository management,
+CI/CD pipelines, issue tracking, and more. This cheatsheet covers GitLab usage
+from basic Git operations to advanced DevOps workflows.
 
 ## Overview
 
 ### Key Features
+
 - **Git Repository Management** - Source code version control
 - **CI/CD Pipelines** - Continuous integration and deployment
 - **Issue Tracking** - Project management and bug tracking
@@ -15,6 +18,7 @@ GitLab is a complete DevOps platform that provides Git repository management, CI
 - **Package Registry** - Artifact and package management
 
 ### GitLab Editions
+
 - **GitLab.com** - SaaS offering
 - **GitLab Community Edition (CE)** - Free self-hosted
 - **GitLab Enterprise Edition (EE)** - Premium self-hosted
@@ -22,6 +26,7 @@ GitLab is a complete DevOps platform that provides Git repository management, CI
 ## Git Basics
 
 ### Repository Setup
+
 ```bash
 # Clone repository
 git clone https://gitlab.com/username/project.git
@@ -42,6 +47,7 @@ git config --global init.defaultBranch main
 ```
 
 ### Basic Git Operations
+
 ```bash
 # Check status
 git status
@@ -72,6 +78,7 @@ git push origin --delete feature-branch
 ```
 
 ### Advanced Git Operations
+
 ```bash
 # Rebase
 git rebase main
@@ -103,12 +110,15 @@ git diff branch1..branch2
 ## GitLab CLI (glab)
 
 ### Installation
+
 ```bash
 # macOS
 brew install glab
 
 # Linux
-curl -s https://api.github.com/repos/profclems/glab/releases/latest | grep "browser_download_url.*linux_amd64" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+curl -s https://api.github.com/repos/profclems/glab/releases/latest | \
+  grep "browser_download_url.*linux_amd64" | cut -d : -f 2,3 | tr -d \" | \
+  wget -qi -
 sudo tar -xzf glab_*_linux_amd64.tar.gz -C /usr/local/bin
 
 # Windows
@@ -119,6 +129,7 @@ glab version
 ```
 
 ### Authentication and Setup
+
 ```bash
 # Authenticate with GitLab
 glab auth login
@@ -134,6 +145,7 @@ glab config list
 ```
 
 ### Repository Operations
+
 ```bash
 # Clone repository
 glab repo clone username/project
@@ -156,6 +168,7 @@ glab repo archive username/project
 ## Issues
 
 ### Issue Management
+
 ```bash
 # List issues
 glab issue list
@@ -187,6 +200,7 @@ glab issue create --title="Feature" --linked-mr=456
 ```
 
 ### Issue Templates
+
 ```markdown
 <!-- .gitlab/issue_templates/Bug.md -->
 ## Bug Report
@@ -221,6 +235,7 @@ Any other information about the problem.
 ## Merge Requests
 
 ### Merge Request Operations
+
 ```bash
 # List merge requests
 glab mr list
@@ -261,6 +276,7 @@ glab mr note 456 --message="Looks good to me!"
 ```
 
 ### Merge Request Templates
+
 ```markdown
 <!-- .gitlab/merge_request_templates/Default.md -->
 ## Description
@@ -296,6 +312,7 @@ Related to #456
 ## CI/CD Pipelines
 
 ### GitLab CI/CD Configuration
+
 ```yaml
 # .gitlab-ci.yml
 stages:
@@ -401,6 +418,7 @@ deploy:production:
 ```
 
 ### Advanced CI/CD Features
+
 ```yaml
 # Multi-project pipelines
 trigger:downstream:
@@ -453,6 +471,7 @@ stop:review:
 ```
 
 ### Docker Integration
+
 ```yaml
 # Build and push Docker image
 build:docker:
@@ -484,6 +503,7 @@ deploy:docker:
 ## GitLab API
 
 ### Authentication
+
 ```bash
 # Using personal access token
 TOKEN="your-personal-access-token"
@@ -496,6 +516,7 @@ HEADERS="PRIVATE-TOKEN: $PROJECT_TOKEN"
 ```
 
 ### Project API
+
 ```bash
 # List projects
 curl -H "$HEADERS" "$GITLAB_URL/projects"
@@ -524,6 +545,7 @@ curl -X DELETE -H "$HEADERS" "$GITLAB_URL/projects/123"
 ```
 
 ### Issues API
+
 ```bash
 # List issues
 curl -H "$HEADERS" "$GITLAB_URL/projects/123/issues"
@@ -549,6 +571,7 @@ curl -X PUT -H "$HEADERS" -H "Content-Type: application/json" \
 ```
 
 ### Merge Requests API
+
 ```bash
 # List merge requests
 curl -H "$HEADERS" "$GITLAB_URL/projects/123/merge_requests"
@@ -575,6 +598,7 @@ curl -X PUT -H "$HEADERS" \
 ```
 
 ### Pipelines API
+
 ```bash
 # List pipelines
 curl -H "$HEADERS" "$GITLAB_URL/projects/123/pipelines"
@@ -604,6 +628,7 @@ curl -H "$HEADERS" "$GITLAB_URL/projects/123/pipelines/456/jobs"
 ## Container Registry
 
 ### Docker Registry Usage
+
 ```bash
 # Login to GitLab Container Registry
 docker login registry.gitlab.com
@@ -626,6 +651,7 @@ curl -X DELETE -H "$HEADERS" \
 ```
 
 ### Multi-stage Docker Build
+
 ```dockerfile
 # Dockerfile
 FROM node:16-alpine AS builder
@@ -644,6 +670,7 @@ CMD ["npm", "start"]
 ## Package Registry
 
 ### NPM Package Registry
+
 ```bash
 # Configure npm registry
 npm config set @your-scope:registry https://gitlab.com/api/v4/projects/123/packages/npm/
@@ -657,6 +684,7 @@ npm install @your-scope/package-name
 ```
 
 ### Maven Package Registry
+
 ```xml
 <!-- pom.xml -->
 <repositories>
@@ -675,6 +703,7 @@ npm install @your-scope/package-name
 ```
 
 ### Python Package Registry
+
 ```bash
 # Configure pip
 echo "[global]
@@ -690,6 +719,7 @@ pip install --index-url https://gitlab.com/api/v4/projects/123/packages/pypi/sim
 ## Security and Compliance
 
 ### Security Scanning
+
 ```yaml
 # SAST (Static Application Security Testing)
 include:
@@ -721,6 +751,7 @@ include:
 ```
 
 ### Compliance Pipeline
+
 ```yaml
 # Compliance framework
 include:
@@ -744,6 +775,7 @@ compliance:audit:
 ## Monitoring and Observability
 
 ### Application Performance Monitoring
+
 ```yaml
 # Enable APM
 performance:
@@ -757,6 +789,7 @@ performance:
 ```
 
 ### Error Tracking
+
 ```javascript
 // Sentry integration
 import * as Sentry from '@sentry/browser';
@@ -771,6 +804,7 @@ Sentry.init({
 ## GitLab Pages
 
 ### Static Site Deployment
+
 ```yaml
 # Deploy to GitLab Pages
 pages:
@@ -794,6 +828,7 @@ pages:
 ```
 
 ### Documentation Site
+
 ```yaml
 # MkDocs documentation
 pages:mkdocs:
@@ -814,6 +849,7 @@ pages:mkdocs:
 ## GitLab Runners
 
 ### Shared Runners
+
 ```yaml
 # Use GitLab.com shared runners
 job:shared:
@@ -825,9 +861,12 @@ job:shared:
 ```
 
 ### Self-hosted Runners
+
 ```bash
 # Install GitLab Runner
-curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+curl -L \
+  "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | \
+  sudo bash
 sudo apt-get install gitlab-runner
 
 # Register runner
@@ -852,6 +891,7 @@ sudo gitlab-runner start
 ```
 
 ### Runner Configuration
+
 ```toml
 # /etc/gitlab-runner/config.toml
 concurrent = 4
@@ -884,6 +924,7 @@ check_interval = 0
 ## Project Management
 
 ### Project Templates
+
 ```bash
 # Create project from template
 glab repo create my-project --template=group/template-project
@@ -898,6 +939,7 @@ glab repo create my-project --template=group/template-project
 ```
 
 ### Group Management
+
 ```bash
 # List groups
 glab group list
@@ -913,6 +955,7 @@ glab group list-projects my-group
 ```
 
 ### Milestones and Epics
+
 ```bash
 # List milestones
 glab milestone list
@@ -930,6 +973,7 @@ glab epic create --title="User Authentication" --description="Epic description"
 ## Advanced Features
 
 ### Multi-project Pipelines
+
 ```yaml
 # Trigger downstream pipeline
 trigger:downstream:
@@ -944,6 +988,7 @@ trigger:downstream:
 ```
 
 ### Parent-child Pipelines
+
 ```yaml
 # Generate dynamic child pipeline
 generate:config:
@@ -964,6 +1009,7 @@ trigger:child:
 ```
 
 ### Auto DevOps
+
 ```yaml
 # Enable Auto DevOps
 include:
@@ -978,6 +1024,7 @@ variables:
 ## Troubleshooting
 
 ### Common Git Issues
+
 ```bash
 # Fix merge conflicts
 git status
@@ -999,6 +1046,7 @@ git push --force-with-lease origin feature-branch
 ```
 
 ### Pipeline Debugging
+
 ```yaml
 # Debug pipeline
 debug:pipeline:
@@ -1012,6 +1060,7 @@ debug:pipeline:
 ```
 
 ### Runner Issues
+
 ```bash
 # Check runner logs
 sudo gitlab-runner --debug run
@@ -1045,6 +1094,7 @@ sudo gitlab-runner register
 ## Environment Variables
 
 ### GitLab CI/CD Variables
+
 ```bash
 # Predefined variables
 CI_COMMIT_SHA           # Commit SHA
@@ -1064,6 +1114,7 @@ DEPLOY_TOKEN          # Deployment token
 ```
 
 ### CLI Configuration
+
 ```bash
 # GitLab CLI configuration
 export GITLAB_TOKEN="your-personal-access-token"
@@ -1080,6 +1131,7 @@ export GIT_COMMITTER_EMAIL="your.email@example.com"
 ## Best Practices
 
 ### Repository Management
+
 1. **Branch Protection** - Protect main/master branch
 2. **Merge Request Reviews** - Require code reviews
 3. **Commit Messages** - Use conventional commit format
@@ -1087,6 +1139,7 @@ export GIT_COMMITTER_EMAIL="your.email@example.com"
 5. **Documentation** - Maintain comprehensive README
 
 ### CI/CD Pipeline Design
+
 1. **Fast Feedback** - Optimize pipeline speed
 2. **Fail Fast** - Put quick tests early
 3. **Parallel Execution** - Run independent jobs in parallel
@@ -1094,6 +1147,7 @@ export GIT_COMMITTER_EMAIL="your.email@example.com"
 5. **Security First** - Include security scans
 
 ### Security
+
 1. **Access Tokens** - Use project/group tokens with minimal scope
 2. **Secret Management** - Use CI/CD variables for secrets
 3. **Dependency Updates** - Regularly update dependencies
@@ -1103,4 +1157,3 @@ export GIT_COMMITTER_EMAIL="your.email@example.com"
 ---
 
 *For more detailed information, visit the [official GitLab documentation](https://docs.gitlab.com/)*
-

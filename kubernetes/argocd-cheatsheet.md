@@ -1,10 +1,13 @@
 # ArgoCD Cheatsheet
 
-ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It follows the GitOps pattern of using Git repositories as the source of truth for defining the desired application state.
+ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It follows the
+GitOps pattern of using Git repositories as the source of truth for defining the desired
+application state.
 
 ## Overview
 
 ### Key Features
+
 - **GitOps** - Git as the single source of truth
 - **Declarative** - Kubernetes manifests define desired state
 - **Automated Sync** - Automatic deployment from Git
@@ -17,6 +20,7 @@ ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It foll
 - **Health Monitoring** - Application health assessment
 
 ### Core Concepts
+
 - **Application** - A group of Kubernetes resources defined in Git
 - **Project** - A logical grouping of applications
 - **Repository** - Git repository containing application manifests
@@ -28,6 +32,7 @@ ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It foll
 ## Installation
 
 ### Install ArgoCD in Kubernetes
+
 ```bash
 # Create namespace
 kubectl create namespace argocd
@@ -50,6 +55,7 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
 ### High Availability Installation
+
 ```bash
 # Install HA version
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
@@ -61,6 +67,7 @@ helm install argocd argo/argo-cd -n argocd --create-namespace
 ```
 
 ### Install ArgoCD CLI
+
 ```bash
 # macOS
 brew install argocd
@@ -80,6 +87,7 @@ argocd version
 ## CLI Authentication and Configuration
 
 ### Login to ArgoCD
+
 ```bash
 # Login with username/password
 argocd login <ARGOCD_SERVER>
@@ -103,6 +111,7 @@ argocd account get-user-info
 ```
 
 ### Account Management
+
 ```bash
 # Get current user info
 argocd account get-user-info
@@ -123,6 +132,7 @@ argocd context <CONTEXT_NAME>
 ## Application Management
 
 ### Create Applications
+
 ```bash
 # Create application from CLI
 argocd app create guestbook \
@@ -159,6 +169,7 @@ argocd app create -f application.yaml
 ```
 
 ### Application Operations
+
 ```bash
 # List applications
 argocd app list
@@ -197,6 +208,7 @@ argocd app rollback guestbook 123  # To specific revision
 ```
 
 ### Application Monitoring
+
 ```bash
 # Get application history
 argocd app history guestbook
@@ -223,6 +235,7 @@ argocd app diff guestbook
 ## Application YAML Examples
 
 ### Basic Application
+
 ```yaml
 # application.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -248,6 +261,7 @@ spec:
 ```
 
 ### Helm Application
+
 ```yaml
 # helm-app.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -290,6 +304,7 @@ spec:
 ```
 
 ### Kustomize Application
+
 ```yaml
 # kustomize-app.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -320,6 +335,7 @@ spec:
 ```
 
 ### Multi-source Application
+
 ```yaml
 # multi-source-app.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -352,6 +368,7 @@ spec:
 ## Repository Management
 
 ### Repository Operations
+
 ```bash
 # Add repository
 argocd repo add https://github.com/myorg/myapp.git
@@ -372,6 +389,7 @@ argocd repo rm https://github.com/myorg/myapp.git
 ```
 
 ### Repository Credentials
+
 ```bash
 # Add repository credentials
 argocd repocreds add https://github.com/myorg --username myuser --password mypass
@@ -389,6 +407,7 @@ argocd repocreds rm https://github.com/myorg
 ## Cluster Management
 
 ### Cluster Operations
+
 ```bash
 # Add cluster
 argocd cluster add kubernetes-admin@kubernetes
@@ -408,6 +427,7 @@ argocd cluster rotate-auth https://kubernetes.default.svc
 ```
 
 ### Service Account for ArgoCD
+
 ```yaml
 # argocd-service-account.yaml
 apiVersion: v1
@@ -449,6 +469,7 @@ subjects:
 ## Project Management
 
 ### Project Operations
+
 ```bash
 # Create project
 argocd proj create myproject
@@ -474,6 +495,7 @@ argocd proj role add-policy myproject developer -a allow -r "myproject/*" -o "*"
 ```
 
 ### Project YAML
+
 ```yaml
 # project.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -518,6 +540,7 @@ spec:
 ## ConfigMaps and Configuration
 
 ### ArgoCD Configuration
+
 ```yaml
 # argocd-cm.yaml
 apiVersion: v1
@@ -564,6 +587,7 @@ data:
 ```
 
 ### RBAC Configuration
+
 ```yaml
 # argocd-rbac-cm.yaml
 apiVersion: v1
@@ -586,6 +610,7 @@ data:
 ## Sync Policies and Options
 
 ### Automated Sync Policy
+
 ```yaml
 # Automated sync with prune and self-heal
 syncPolicy:
@@ -601,6 +626,7 @@ syncPolicy:
 ```
 
 ### Manual Sync Policy
+
 ```yaml
 # Manual sync only
 syncPolicy:
@@ -617,6 +643,7 @@ syncPolicy:
 ```
 
 ### Sync Windows
+
 ```yaml
 # project.yaml with sync windows
 spec:
@@ -637,6 +664,7 @@ spec:
 ## Health Checks and Resource Hooks
 
 ### Custom Health Checks
+
 ```yaml
 # In argocd-cm ConfigMap
 resource.customizations.health.argoproj.io_Rollout: |
@@ -658,6 +686,7 @@ resource.customizations.health.argoproj.io_Rollout: |
 ```
 
 ### Resource Hooks
+
 ```yaml
 # pre-sync-hook.yaml
 apiVersion: batch/v1
@@ -680,6 +709,7 @@ spec:
 ```
 
 ### Sync Waves
+
 ```yaml
 # Apply resources in order using sync waves
 apiVersion: v1
@@ -700,6 +730,7 @@ metadata:
 ## Notifications
 
 ### Notification Configuration
+
 ```yaml
 # argocd-notifications-cm.yaml
 apiVersion: v1
@@ -756,6 +787,7 @@ data:
 ```
 
 ### Application Annotations for Notifications
+
 ```yaml
 # Add to application metadata
 metadata:
@@ -768,6 +800,7 @@ metadata:
 ## ArgoCD CLI Commands Reference
 
 ### Application Commands
+
 ```bash
 # Core application operations
 argocd app create <APP_NAME>           # Create application
@@ -794,6 +827,7 @@ argocd app patch-resource <APP_NAME>   # Patch resource
 ```
 
 ### Repository Commands
+
 ```bash
 argocd repo add <REPO_URL>             # Add repository
 argocd repo list                       # List repositories
@@ -802,6 +836,7 @@ argocd repo rm <REPO_URL>              # Remove repository
 ```
 
 ### Cluster Commands
+
 ```bash
 argocd cluster add <CONTEXT>           # Add cluster
 argocd cluster list                    # List clusters
@@ -810,6 +845,7 @@ argocd cluster rm <SERVER>             # Remove cluster
 ```
 
 ### Project Commands
+
 ```bash
 argocd proj create <PROJECT>           # Create project
 argocd proj list                       # List projects
@@ -822,6 +858,7 @@ argocd proj add-destination <PROJECT>  # Add destination
 ## GitOps Workflow Examples
 
 ### Basic GitOps Workflow
+
 ```bash
 # 1. Developer pushes code to Git
 git add .
@@ -846,6 +883,7 @@ argocd app sync myapp
 ```
 
 ### Multi-environment Workflow
+
 ```bash
 # Development environment
 argocd app create myapp-dev \
@@ -870,6 +908,7 @@ argocd app create myapp-prod \
 ## Monitoring and Observability
 
 ### Application Metrics
+
 ```bash
 # Get application sync status
 argocd app get myapp --output json | jq '.status.sync.status'
@@ -885,6 +924,7 @@ argocd app resources myapp --output wide
 ```
 
 ### Prometheus Metrics
+
 ```yaml
 # ServiceMonitor for ArgoCD metrics
 apiVersion: monitoring.coreos.com/v1
@@ -901,6 +941,7 @@ spec:
 ```
 
 ### Grafana Dashboard
+
 ```json
 {
   "dashboard": {
@@ -932,6 +973,7 @@ spec:
 ## Security Best Practices
 
 ### RBAC Configuration
+
 ```yaml
 # Minimal permissions for developer role
 policy.csv: |
@@ -943,6 +985,7 @@ policy.csv: |
 ```
 
 ### Secure Repository Access
+
 ```bash
 # Use SSH keys for private repositories
 ssh-keygen -t ed25519 -f ~/.ssh/argocd_key -N ""
@@ -959,6 +1002,7 @@ kubectl create secret generic github-creds \
 ```
 
 ### Network Security
+
 ```yaml
 # NetworkPolicy for ArgoCD
 apiVersion: networking.k8s.io/v1
@@ -993,6 +1037,7 @@ spec:
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Application stuck in sync
 argocd app get myapp --refresh
@@ -1023,6 +1068,7 @@ argocd app sync myapp --dry-run --local-repo-root ./
 ```
 
 ### Resource Conflicts
+
 ```bash
 # Force replace resources
 argocd app sync myapp --force
@@ -1038,6 +1084,7 @@ annotations:
 ```
 
 ### Performance Tuning
+
 ```yaml
 # argocd-cm.yaml
 data:
@@ -1055,6 +1102,7 @@ data:
 ## Advanced Configuration
 
 ### Custom Tools
+
 ```yaml
 # argocd-cm.yaml
 data:
@@ -1070,6 +1118,7 @@ data:
 ```
 
 ### Resource Exclusions
+
 ```yaml
 # In Application spec
 spec:
@@ -1086,6 +1135,7 @@ spec:
 ```
 
 ### Custom Health Checks
+
 ```yaml
 # argocd-cm.yaml
 data:
@@ -1108,6 +1158,7 @@ data:
 ## Useful Environment Variables
 
 ### ArgoCD CLI
+
 ```bash
 # Server configuration
 export ARGOCD_SERVER=argocd.example.com
@@ -1126,6 +1177,7 @@ export ARGOCD_CLIENT_CERT_KEY=/path/to/client.key
 ```
 
 ### ArgoCD Server
+
 ```bash
 # Server configuration
 ARGOCD_SERVER_INSECURE=true
@@ -1143,6 +1195,7 @@ ARGOCD_APPLICATION_NAMESPACES=argocd,apps
 ## Integration Examples
 
 ### GitHub Actions Integration
+
 ```yaml
 # .github/workflows/deploy.yml
 name: Deploy to ArgoCD
@@ -1172,6 +1225,7 @@ jobs:
 ```
 
 ### Terraform Integration
+
 ```hcl
 # argocd.tf
 resource "argocd_application" "myapp" {
@@ -1206,4 +1260,3 @@ resource "argocd_application" "myapp" {
 ---
 
 *For more detailed information, visit the [official ArgoCD documentation](https://argo-cd.readthedocs.io/)*
-

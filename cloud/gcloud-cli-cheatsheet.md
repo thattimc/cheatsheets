@@ -3,13 +3,17 @@
 ## Installation & Setup
 
 ### Install Google Cloud CLI
+
 ```bash
 # macOS
 brew install google-cloud-sdk
 
 # Linux (Debian/Ubuntu)
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] \
+  https://packages.cloud.google.com/apt cloud-sdk main" \
+  | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+  | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 sudo apt-get update && sudo apt-get install google-cloud-cli
 
 # Linux (RHEL/CentOS)
@@ -33,6 +37,7 @@ docker run -it google/cloud-sdk:latest gcloud version
 ```
 
 ### Authentication & Initialization
+
 ```bash
 # Initialize gcloud (interactive setup)
 gcloud init
@@ -57,6 +62,7 @@ gcloud auth revoke [ACCOUNT]
 ```
 
 ### Configuration
+
 ```bash
 # List configurations
 gcloud config configurations list
@@ -88,6 +94,7 @@ gcloud config unset compute/zone
 ## Projects
 
 ### Project Management
+
 ```bash
 # List projects
 gcloud projects list
@@ -114,6 +121,7 @@ gcloud billing projects link PROJECT_ID --billing-account=BILLING_ACCOUNT_ID
 ## Compute Engine
 
 ### Instance Management
+
 ```bash
 # List instances
 gcloud compute instances list
@@ -154,6 +162,7 @@ gcloud compute scp my-instance:~/remote-file local-file --zone=us-central1-a
 ```
 
 ### Instance Information
+
 ```bash
 # Describe instance
 gcloud compute instances describe my-instance --zone=us-central1-a
@@ -174,6 +183,7 @@ gcloud compute instance-templates list
 ```
 
 ### Disks
+
 ```bash
 # List disks
 gcloud compute disks list
@@ -206,6 +216,7 @@ gcloud compute disks delete my-disk --zone=us-central1-a
 ## Cloud Storage
 
 ### Bucket Management
+
 ```bash
 # List buckets
 gsutil ls
@@ -228,6 +239,7 @@ gsutil versioning set off gs://my-bucket-name
 ```
 
 ### Object Management
+
 ```bash
 # List objects
 gsutil ls gs://my-bucket-name
@@ -264,6 +276,7 @@ gsutil signurl -d 1h path/to/service-account-key.json gs://my-bucket-name/file.t
 ## Google Kubernetes Engine (GKE)
 
 ### Cluster Management
+
 ```bash
 # List clusters
 gcloud container clusters list
@@ -300,6 +313,7 @@ gcloud container clusters delete my-cluster --zone=us-central1-a
 ```
 
 ### Node Pool Management
+
 ```bash
 # List node pools
 gcloud container node-pools list --cluster=my-cluster --zone=us-central1-a
@@ -320,6 +334,7 @@ gcloud container node-pools delete my-node-pool \
 ## App Engine
 
 ### Application Management
+
 ```bash
 # Deploy application
 gcloud app deploy
@@ -351,6 +366,7 @@ gcloud app logs read -s default --limit=100
 ```
 
 ### Application Configuration
+
 ```bash
 # Describe application
 gcloud app describe
@@ -368,6 +384,7 @@ gcloud app instances ssh INSTANCE_ID --service=default --version=v1
 ## Cloud Functions
 
 ### Function Management
+
 ```bash
 # List functions
 gcloud functions list
@@ -400,7 +417,8 @@ gcloud functions delete my-function
 
 ## Cloud SQL
 
-### Instance Management
+### SQL Instance Management
+
 ```bash
 # List instances
 gcloud sql instances list
@@ -429,6 +447,7 @@ gcloud sql instances delete my-instance
 ```
 
 ### Database and User Management
+
 ```bash
 # List databases
 gcloud sql databases list --instance=my-instance
@@ -453,6 +472,7 @@ gcloud sql users delete myuser --instance=my-instance
 ```
 
 ### Backups and Export/Import
+
 ```bash
 # List backups
 gcloud sql backups list --instance=my-instance
@@ -475,6 +495,7 @@ gcloud sql import sql my-instance gs://my-bucket/database-export.sql \
 ## Identity and Access Management (IAM)
 
 ### IAM Policies
+
 ```bash
 # Get IAM policy
 gcloud projects get-iam-policy PROJECT_ID
@@ -503,6 +524,7 @@ gcloud iam roles describe roles/editor
 ```
 
 ### Service Accounts
+
 ```bash
 # List service accounts
 gcloud iam service-accounts list
@@ -531,6 +553,7 @@ gcloud iam service-accounts keys delete KEY_ID \
 ## Networking
 
 ### VPC Networks
+
 ```bash
 # List networks
 gcloud compute networks list
@@ -552,6 +575,7 @@ gcloud compute networks delete my-network
 ```
 
 ### Firewall Rules
+
 ```bash
 # List firewall rules
 gcloud compute firewall-rules list
@@ -575,6 +599,7 @@ gcloud compute firewall-rules update allow-http --allow=tcp:80,tcp:443
 ```
 
 ### Load Balancers
+
 ```bash
 # Create HTTP load balancer
 gcloud compute backend-services create my-backend-service \
@@ -599,6 +624,7 @@ gcloud compute forwarding-rules create my-forwarding-rule \
 ## BigQuery
 
 ### Dataset Management
+
 ```bash
 # List datasets
 bq ls
@@ -616,6 +642,7 @@ bq rm -r my_dataset
 ```
 
 ### Table Management
+
 ```bash
 # List tables
 bq ls my_dataset
@@ -643,6 +670,7 @@ bq rm my_dataset.my_table
 ```
 
 ### Query Operations
+
 ```bash
 # Run query
 bq query "SELECT COUNT(*) FROM my_dataset.my_table"
@@ -663,6 +691,7 @@ bq query --dry_run "SELECT * FROM my_dataset.my_table"
 ## Cloud Logging
 
 ### Log Management
+
 ```bash
 # Read logs
 gcloud logging read "resource.type=gce_instance"
@@ -683,6 +712,7 @@ gcloud logging entries list --filter="resource.type=gce_instance"
 ```
 
 ### Log Sinks
+
 ```bash
 # List sinks
 gcloud logging sinks list
@@ -704,6 +734,7 @@ gcloud logging sinks delete my-sink
 ## Cloud Monitoring
 
 ### Metrics
+
 ```bash
 # List metric descriptors
 gcloud monitoring metrics list
@@ -719,6 +750,7 @@ gcloud alpha monitoring policies create --policy-from-file=policy.yaml
 ## Secret Manager
 
 ### Secret Management
+
 ```bash
 # Create secret
 gcloud secrets create my-secret --data-file=secret.txt
@@ -743,6 +775,7 @@ gcloud secrets delete my-secret
 ## Useful Options & Formatting
 
 ### Output Formats
+
 ```bash
 # JSON output
 gcloud compute instances list --format=json
@@ -764,6 +797,7 @@ gcloud compute instances list --format="table[no-heading](name,status)"
 ```
 
 ### Filtering and Projection
+
 ```bash
 # Filter results
 gcloud compute instances list --filter="status:RUNNING"
@@ -781,6 +815,7 @@ gcloud compute instances list --format="value(name,machineType)"
 ```
 
 ### Global Flags
+
 ```bash
 # Specify project
 gcloud compute instances list --project=my-project
@@ -797,7 +832,8 @@ gcloud compute instances create my-instance --verbosity=none
 
 ## Environment Variables
 
-### Configuration
+### Environment Configuration
+
 ```bash
 # Set default project
 export GOOGLE_CLOUD_PROJECT=my-project
@@ -820,6 +856,7 @@ export CLOUDSDK_CORE_FORMAT=json
 ## Troubleshooting & Debug
 
 ### Debug Options
+
 ```bash
 # Check gcloud version
 gcloud version
@@ -846,6 +883,7 @@ gcloud compute instances list --log-http
 ```
 
 ### Common Issues
+
 ```bash
 # Clear credentials cache
 gcloud auth application-default revoke
@@ -869,6 +907,7 @@ gcloud services enable storage.googleapis.com
 ## Tips & Best Practices
 
 ### Performance
+
 1. **Use filters** to reduce data transferred and improve performance
 2. **Set defaults** in configuration to avoid repeating parameters
 3. **Use batch operations** when possible
@@ -876,6 +915,7 @@ gcloud services enable storage.googleapis.com
 5. **Use appropriate machine types** for your workloads
 
 ### Security
+
 1. **Use service accounts** for applications and automation
 2. **Follow principle of least privilege** for IAM roles
 3. **Enable audit logging** for compliance
@@ -883,6 +923,7 @@ gcloud services enable storage.googleapis.com
 5. **Use Secret Manager** for sensitive data
 
 ### Cost Optimization
+
 1. **Use sustained use discounts** for long-running instances
 2. **Implement preemptible instances** for fault-tolerant workloads
 3. **Monitor usage** with Cloud Billing API
@@ -890,6 +931,7 @@ gcloud services enable storage.googleapis.com
 5. **Clean up unused resources** regularly
 
 ### Automation
+
 1. **Use deployment manager** or Terraform for infrastructure as code
 2. **Implement CI/CD pipelines** with Cloud Build
 3. **Use Cloud Scheduler** for recurring tasks
@@ -897,6 +939,7 @@ gcloud services enable storage.googleapis.com
 5. **Set up monitoring and alerting** for production workloads
 
 ### Useful Aliases
+
 ```bash
 # Add to ~/.bashrc or ~/.zshrc
 alias gcl='gcloud compute instances list'
@@ -908,6 +951,7 @@ alias gswitch='gcloud config configurations activate'
 ```
 
 ### Script Examples
+
 ```bash
 #!/bin/bash
 # Create development environment
@@ -936,6 +980,7 @@ echo "SSH: gcloud compute ssh $INSTANCE_NAME --zone=$ZONE"
 ```
 
 ### Multi-line Commands
+
 ```bash
 # Use backslashes for readability
 gcloud compute instances create my-instance \
@@ -954,6 +999,7 @@ gcloud compute instances create my-instance \
 ## Advanced Features
 
 ### Custom Configurations
+
 ```bash
 # Create configuration for different environments
 gcloud config configurations create development
@@ -970,6 +1016,7 @@ gcloud config set compute/zone us-east1-a
 ```
 
 ### Batch Operations
+
 ```bash
 # Create multiple instances
 for i in {1..3}; do
@@ -982,4 +1029,3 @@ done
 # Wait for operations to complete
 gcloud compute operations wait OPERATION_NAME --zone=us-central1-a
 ```
-

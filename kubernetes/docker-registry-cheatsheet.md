@@ -1,16 +1,19 @@
 # Docker Registry Cheatsheet
 
-Docker Registry is a server-side application that stores and distributes Docker images. This cheatsheet covers Docker Hub, private registries, and registry management.
+Docker Registry is a server-side application that stores and distributes Docker images.
+This cheatsheet covers Docker Hub, private registries, and registry management.
 
 ## Overview
 
 ### Registry Types
+
 - **Docker Hub** - Official public registry
 - **Private Registries** - Self-hosted or cloud-based
 - **Cloud Registries** - AWS ECR, Google GCR, Azure ACR
 - **Enterprise Registries** - Harbor, JFrog Artifactory, Sonatype Nexus
 
 ### Registry Components
+
 - **Repository** - Collection of related images
 - **Tag** - Version identifier for images
 - **Layer** - Read-only file system changes
@@ -19,6 +22,7 @@ Docker Registry is a server-side application that stores and distributes Docker 
 ## Docker Hub
 
 ### Basic Operations
+
 ```bash
 # Login to Docker Hub
 docker login
@@ -47,6 +51,7 @@ docker tag myapp:latest myuser/myapp:v1.0
 ```
 
 ### Image Naming Convention
+
 ```bash
 # Format: [registry-host[:port]/]username/repository[:tag]
 
@@ -62,6 +67,7 @@ localhost:5000/myapp:dev
 ```
 
 ### Multi-platform Images
+
 ```bash
 # Build and push multi-platform images
 docker buildx create --use
@@ -74,6 +80,7 @@ docker buildx imagetools inspect myuser/myapp:latest
 ## Private Registry Setup
 
 ### Run Local Registry
+
 ```bash
 # Basic registry
 docker run -d -p 5000:5000 --name registry registry:2
@@ -95,6 +102,7 @@ docker run -d \
 ```
 
 ### Registry with TLS
+
 ```bash
 # Generate certificates
 mkdir -p certs
@@ -114,6 +122,7 @@ docker run -d \
 ```
 
 ### Registry with Authentication
+
 ```bash
 # Create htpasswd file
 mkdir auth
@@ -137,6 +146,7 @@ docker login localhost:5000
 ## Registry Configuration
 
 ### Configuration File (config.yml)
+
 ```yaml
 version: 0.1
 log:
@@ -159,6 +169,7 @@ health:
 ```
 
 ### Storage Backends
+
 ```yaml
 # Filesystem storage
 storage:
@@ -191,6 +202,7 @@ storage:
 ```
 
 ### Advanced Configuration
+
 ```yaml
 version: 0.1
 log:
@@ -245,6 +257,7 @@ notifications:
 ## Registry API
 
 ### API Endpoints
+
 ```bash
 # Check registry version and features
 curl http://localhost:5000/v2/
@@ -267,6 +280,7 @@ curl -X DELETE http://localhost:5000/v2/myapp/manifests/sha256:...
 ```
 
 ### Registry API with Authentication
+
 ```bash
 # Get auth token
 TOKEN=$(curl -s -X GET \
@@ -282,6 +296,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 ## Working with Images
 
 ### Push/Pull Operations
+
 ```bash
 # Tag image for registry
 docker tag myapp:latest localhost:5000/myapp:latest
@@ -300,6 +315,7 @@ docker push localhost:5000/myapp --all-tags
 ```
 
 ### Image Inspection
+
 ```bash
 # Inspect image
 docker inspect localhost:5000/myapp:latest
@@ -315,6 +331,7 @@ docker pull localhost:5000/myapp@sha256:...
 ```
 
 ### Image Management
+
 ```bash
 # Remove image
 docker rmi localhost:5000/myapp:latest
@@ -330,6 +347,7 @@ docker image prune -a
 ## Registry Management
 
 ### Garbage Collection
+
 ```bash
 # Run garbage collection
 docker exec registry bin/registry garbage-collect /etc/docker/registry/config.yml
@@ -342,6 +360,7 @@ docker exec registry bin/registry garbage-collect --delete-untagged /etc/docker/
 ```
 
 ### Registry Maintenance
+
 ```bash
 # View registry logs
 docker logs registry
@@ -361,6 +380,7 @@ tar -xzf registry-backup.tar.gz -C /
 ```
 
 ### Storage Management
+
 ```bash
 # Check storage usage
 du -sh /opt/registry/
@@ -375,6 +395,7 @@ find /opt/registry/docker/registry/v2/repositories -name "_uploads" -type d -exe
 ## Docker Compose Setup
 
 ### Basic Registry
+
 ```yaml
 # docker-compose.yml
 version: '3.8'
@@ -396,6 +417,7 @@ volumes:
 ```
 
 ### Registry with UI
+
 ```yaml
 version: '3.8'
 
@@ -438,6 +460,7 @@ volumes:
 ```
 
 ### Secure Registry with Authentication
+
 ```yaml
 version: '3.8'
 
@@ -467,6 +490,7 @@ volumes:
 ## Cloud Registries
 
 ### AWS ECR
+
 ```bash
 # Install AWS CLI
 pip install awscli
@@ -495,6 +519,7 @@ aws ecr list-images --repository-name myapp
 ```
 
 ### Google Container Registry (GCR)
+
 ```bash
 # Install gcloud CLI
 curl https://sdk.cloud.google.com | bash
@@ -517,6 +542,7 @@ gcloud container images list-tags gcr.io/project-id/myapp
 ```
 
 ### Azure Container Registry (ACR)
+
 ```bash
 # Install Azure CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
@@ -547,6 +573,7 @@ az acr repository show-tags --name myregistry --repository myapp
 ## Security
 
 ### Image Scanning
+
 ```bash
 # Docker Hub security scanning
 docker scan myuser/myapp:latest
@@ -561,6 +588,7 @@ docker run -p 6060:6060 --link clair-db:postgres -d --name clair arminc/clair-lo
 ```
 
 ### Content Trust
+
 ```bash
 # Enable Docker Content Trust
 export DOCKER_CONTENT_TRUST=1
@@ -582,6 +610,7 @@ docker trust revoke myuser/myapp:latest
 ```
 
 ### Registry Security
+
 ```bash
 # Generate strong htpasswd
 docker run --rm --entrypoint htpasswd httpd:2 -Bbn username $(openssl rand -base64 32)
@@ -599,6 +628,7 @@ nginx -s reload
 ## Monitoring and Logging
 
 ### Prometheus Metrics
+
 ```yaml
 # Registry configuration with metrics
 http:
@@ -610,6 +640,7 @@ http:
 ```
 
 ### Log Configuration
+
 ```yaml
 log:
   level: info
@@ -629,6 +660,7 @@ log:
 ```
 
 ### Health Checks
+
 ```bash
 # Registry health endpoint
 curl -f http://localhost:5000/v2/ || exit 1
@@ -652,6 +684,7 @@ fi
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Registry connection issues
 docker info | grep Registry
@@ -677,6 +710,7 @@ docker restart registry
 ```
 
 ### Debug Commands
+
 ```bash
 # Enable debug logging
 export DOCKER_BUILDKIT_DEBUG=1
@@ -701,6 +735,7 @@ curl -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
 ## Registry Utilities
 
 ### Registry Tools
+
 ```bash
 # reg - registry CLI tool
 go install github.com/genuinetools/reg@latest
@@ -721,6 +756,7 @@ skopeo copy docker://localhost:5000/myapp:latest docker://registry.example.com/m
 ```
 
 ### Backup and Migration
+
 ```bash
 # Backup registry images
 mkdir backup
@@ -745,6 +781,7 @@ done
 ## Performance Tuning
 
 ### Registry Optimization
+
 ```yaml
 # config.yml optimizations
 storage:
@@ -771,6 +808,7 @@ http:
 ```
 
 ### Caching Strategies
+
 ```bash
 # Redis cache for registry
 docker run -d --name redis redis:alpine
@@ -819,4 +857,3 @@ export DOCKER_REGISTRY=localhost:5000
 ---
 
 *For more detailed information, visit the [official Docker Registry documentation](https://docs.docker.com/registry/)*
-

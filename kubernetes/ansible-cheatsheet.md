@@ -1,10 +1,12 @@
 # Ansible Cheatsheet
 
-Ansible is an open-source automation tool for configuration management, application deployment, and task automation using simple YAML-based playbooks.
+Ansible is an open-source automation tool for configuration management, application
+deployment, and task automation using simple YAML-based playbooks.
 
 ## Installation
 
 ### macOS
+
 ```bash
 # Install via Homebrew
 brew install ansible
@@ -17,6 +19,7 @@ pip3 install ansible==6.0.0
 ```
 
 ### Linux (Ubuntu/Debian)
+
 ```bash
 # Install via package manager
 sudo apt update
@@ -33,6 +36,7 @@ sudo apt install ansible
 ```
 
 ### CentOS/RHEL
+
 ```bash
 # Install via yum/dnf
 sudo yum install epel-release
@@ -45,6 +49,7 @@ sudo dnf install ansible
 ## Configuration
 
 ### Ansible Configuration File (ansible.cfg)
+
 ```ini
 [defaults]
 # Inventory file location
@@ -84,6 +89,7 @@ pipelining = True
 ## Inventory
 
 ### Basic Inventory File (hosts)
+
 ```ini
 # Simple host list
 server1.example.com
@@ -114,6 +120,7 @@ db_port=3306
 ```
 
 ### YAML Inventory
+
 ```yaml
 all:
   children:
@@ -137,6 +144,7 @@ all:
 ```
 
 ### Dynamic Inventory
+
 ```bash
 # Use dynamic inventory script
 ansible-playbook -i inventory_script.py playbook.yml
@@ -148,6 +156,7 @@ ansible-playbook -i aws_ec2.yml playbook.yml
 ## Basic Commands
 
 ### ansible Command
+
 ```bash
 # Basic syntax
 ansible <host-pattern> -m <module> -a "<module-args>"
@@ -180,6 +189,7 @@ ansible all -m ping -f 10
 ```
 
 ### ansible-playbook Command
+
 ```bash
 # Run playbook
 ansible-playbook playbook.yml
@@ -218,6 +228,7 @@ ansible-playbook --vault-password-file vault_pass.txt playbook.yml
 ## Common Modules
 
 ### System Modules
+
 ```bash
 # Command module
 ansible all -m command -a "ls -la /tmp"
@@ -233,6 +244,7 @@ ansible all -m raw -a "uptime"
 ```
 
 ### File Operations
+
 ```bash
 # Copy files
 ansible all -m copy -a "src=/local/file dest=/remote/file"
@@ -253,6 +265,7 @@ ansible all -m lineinfile -a "path=/etc/hosts line='192.168.1.1 server1'"
 ```
 
 ### Package Management
+
 ```bash
 # APT (Debian/Ubuntu)
 ansible all -m apt -a "name=nginx state=present"
@@ -272,6 +285,7 @@ ansible all -m pip -a "name=django state=present"
 ```
 
 ### Service Management
+
 ```bash
 # Service module
 ansible all -m service -a "name=nginx state=started"
@@ -284,6 +298,7 @@ ansible all -m systemd -a "name=nginx state=started daemon_reload=yes"
 ```
 
 ### User Management
+
 ```bash
 # User module
 ansible all -m user -a "name=john state=present"
@@ -298,6 +313,7 @@ ansible all -m group -a "name=developers state=present"
 ## Playbooks
 
 ### Basic Playbook Structure
+
 ```yaml
 ---
 - name: Configure web servers
@@ -333,6 +349,7 @@ ansible all -m group -a "name=developers state=present"
 ```
 
 ### Multi-Play Playbook
+
 ```yaml
 ---
 - name: Configure database servers
@@ -355,6 +372,7 @@ ansible all -m group -a "name=developers state=present"
 ```
 
 ### Variables and Facts
+
 ```yaml
 ---
 - name: Variable examples
@@ -386,6 +404,7 @@ ansible all -m group -a "name=developers state=present"
 ```
 
 ### Conditionals
+
 ```yaml
 ---
 - name: Conditional examples
@@ -411,6 +430,7 @@ ansible all -m group -a "name=developers state=present"
 ```
 
 ### Loops
+
 ```yaml
 ---
 - name: Loop examples
@@ -444,6 +464,7 @@ ansible all -m group -a "name=developers state=present"
 ```
 
 ### Error Handling
+
 ```yaml
 ---
 - name: Error handling examples
@@ -475,6 +496,7 @@ ansible all -m group -a "name=developers state=present"
 ## Jinja2 Templates
 
 ### Basic Template (nginx.conf.j2)
+
 ```jinja2
 server {
     listen {{ http_port }};
@@ -500,6 +522,7 @@ server {
 ```
 
 ### Template with Filters
+
 ```jinja2
 # Uppercase filter
 server_name {{ ansible_hostname | upper }};
@@ -522,6 +545,7 @@ log_file /var/log/{{ app_name | lower }}.log;
 ## Roles
 
 ### Role Directory Structure
+
 ```
 roles/
   common/
@@ -542,6 +566,7 @@ roles/
 ```
 
 ### Using Roles in Playbooks
+
 ```yaml
 ---
 - name: Configure servers
@@ -555,6 +580,7 @@ roles/
 ```
 
 ### Role Dependencies (meta/main.yml)
+
 ```yaml
 ---
 dependencies:
@@ -569,6 +595,7 @@ dependencies:
 ## Ansible Vault
 
 ### Vault Commands
+
 ```bash
 # Create encrypted file
 ansible-vault create secrets.yml
@@ -593,6 +620,7 @@ ansible-vault encrypt_string 'secret_password' --name 'db_password'
 ```
 
 ### Using Vault in Playbooks
+
 ```yaml
 ---
 - name: Deploy application
@@ -608,6 +636,7 @@ ansible-vault encrypt_string 'secret_password' --name 'db_password'
 ```
 
 ### Running with Vault
+
 ```bash
 # Prompt for vault password
 ansible-playbook --ask-vault-pass playbook.yml
@@ -623,6 +652,7 @@ ansible-playbook playbook.yml
 ## Advanced Features
 
 ### Include and Import
+
 ```yaml
 ---
 - name: Main playbook
@@ -645,6 +675,7 @@ ansible-playbook playbook.yml
 ```
 
 ### Custom Facts
+
 ```bash
 # Create custom fact script
 #!/bin/bash
@@ -655,6 +686,7 @@ echo '{"custom_fact": "custom_value"}'
 ```
 
 ### Delegation and Local Actions
+
 ```yaml
 ---
 - name: Delegation examples
@@ -685,6 +717,7 @@ echo '{"custom_fact": "custom_value"}'
 ## Testing and Debugging
 
 ### Debug Module
+
 ```yaml
 ---
 - name: Debug examples
@@ -709,6 +742,7 @@ echo '{"custom_fact": "custom_value"}'
 ```
 
 ### Assertion Module
+
 ```yaml
 ---
 - name: Assert examples
@@ -726,6 +760,7 @@ echo '{"custom_fact": "custom_value"}'
 ## Common Patterns
 
 ### Rolling Updates
+
 ```yaml
 ---
 - name: Rolling update
@@ -758,6 +793,7 @@ echo '{"custom_fact": "custom_value"}'
 ```
 
 ### Blue-Green Deployment
+
 ```yaml
 ---
 - name: Blue-green deployment
@@ -784,6 +820,7 @@ echo '{"custom_fact": "custom_value"}'
 ## Performance and Best Practices
 
 ### Optimization Tips
+
 ```yaml
 ---
 - name: Performance optimizations
@@ -808,6 +845,7 @@ echo '{"custom_fact": "custom_value"}'
 ```
 
 ### Directory Layout
+
 ```
 site.yml                 # master playbook
 webservers.yml          # playbook for webserver tier
@@ -885,4 +923,3 @@ export ANSIBLE_LOG_PATH=./ansible.log
 ---
 
 *For more detailed information, visit the [official Ansible documentation](https://docs.ansible.com/)*
-

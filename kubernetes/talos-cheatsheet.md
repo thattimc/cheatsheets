@@ -3,6 +3,7 @@
 ## Installation & Setup
 
 ### Install talosctl
+
 ```bash
 # macOS
 brew install siderolabs/tap/talosctl
@@ -19,6 +20,7 @@ chmod +x /usr/local/bin/talosctl
 ```
 
 ### Generate Configuration
+
 ```bash
 # Generate cluster configuration
 talosctl gen config cluster-name https://cluster-endpoint:6443
@@ -36,6 +38,7 @@ talosctl gen config cluster-name https://cluster-endpoint:6443 \
 ## Cluster Management
 
 ### Bootstrap & Apply Configuration
+
 ```bash
 # Apply configuration to node
 talosctl apply-config --insecure --nodes 192.168.1.10 --file controlplane.yaml
@@ -51,6 +54,7 @@ talosctl kubeconfig --nodes 192.168.1.10 --endpoints 192.168.1.10
 ```
 
 ### Node Operations
+
 ```bash
 # Reboot node
 talosctl reboot --nodes 192.168.1.10
@@ -71,6 +75,7 @@ talosctl upgrade-k8s --nodes 192.168.1.10 --to 1.28.0
 ## Configuration Management
 
 ### View & Edit Configuration
+
 ```bash
 # Get current configuration
 talosctl get machineconfig --nodes 192.168.1.10
@@ -86,6 +91,7 @@ talosctl apply-config --nodes 192.168.1.10 --file new-config.yaml
 ```
 
 ### Configuration Patches
+
 ```yaml
 # Example patch file (patch.yaml)
 - op: replace
@@ -102,6 +108,7 @@ talosctl apply-config --nodes 192.168.1.10 --file new-config.yaml
 ## Monitoring & Diagnostics
 
 ### System Information
+
 ```bash
 # Get node health
 talosctl health --nodes 192.168.1.10
@@ -117,6 +124,7 @@ talosctl stats --nodes 192.168.1.10
 ```
 
 ### Logs & Debugging
+
 ```bash
 # View system logs
 talosctl logs --nodes 192.168.1.10
@@ -134,6 +142,7 @@ talosctl dmesg --nodes 192.168.1.10
 ```
 
 ### System Processes
+
 ```bash
 # List running processes
 talosctl ps --nodes 192.168.1.10
@@ -151,6 +160,7 @@ talosctl service kubelet restart --nodes 192.168.1.10
 ## Resource Management
 
 ### Talos Resources
+
 ```bash
 # List all resources
 talosctl get all --nodes 192.168.1.10
@@ -166,6 +176,7 @@ talosctl get nodes -o json --nodes 192.168.1.10
 ```
 
 ### Disk & Storage
+
 ```bash
 # List disks
 talosctl get disks --nodes 192.168.1.10
@@ -178,6 +189,7 @@ talosctl get mounts --nodes 192.168.1.10
 ```
 
 ### Network
+
 ```bash
 # Get network interfaces
 talosctl get addresses --nodes 192.168.1.10
@@ -193,6 +205,7 @@ talosctl get hostname --nodes 192.168.1.10
 ## Container Management
 
 ### Container Operations
+
 ```bash
 # List containers
 talosctl containers --nodes 192.168.1.10
@@ -208,6 +221,7 @@ talosctl exec --nodes 192.168.1.10 --container container-name -- /bin/sh
 ```
 
 ### Image Management
+
 ```bash
 # List images
 talosctl images --nodes 192.168.1.10
@@ -222,6 +236,7 @@ talosctl image prune --nodes 192.168.1.10
 ## Security & Certificates
 
 ### Certificate Management
+
 ```bash
 # Get cluster certificates
 talosctl get certificates --nodes 192.168.1.10
@@ -234,6 +249,7 @@ talosctl rotate-ca --nodes 192.168.1.10
 ```
 
 ### Security Scanning
+
 ```bash
 # Run security scan
 talosctl conformance --nodes 192.168.1.10
@@ -245,6 +261,7 @@ talosctl get securityprofile --nodes 192.168.1.10
 ## Maintenance & Backup
 
 ### Etcd Operations
+
 ```bash
 # Create etcd snapshot
 talosctl etcd snapshot --nodes 192.168.1.10
@@ -260,6 +277,7 @@ talosctl etcd status --nodes 192.168.1.10
 ```
 
 ### Backup & Recovery
+
 ```bash
 # Create cluster backup
 talosctl etcd snapshot --nodes 192.168.1.10 --output backup.db
@@ -271,6 +289,7 @@ talosctl bootstrap --nodes 192.168.1.10 --recover-from backup.db
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check node readiness
 talosctl health --nodes 192.168.1.10
@@ -286,6 +305,7 @@ talosctl validate --config controlplane.yaml
 ```
 
 ### Recovery Operations
+
 ```bash
 # Force reboot if node is unresponsive
 talosctl reboot --nodes 192.168.1.10 --force
@@ -301,6 +321,7 @@ talosctl copy --nodes 192.168.1.10 --to-local /remote/file /local/path
 ## Configuration Examples
 
 ### Basic Control Plane Configuration
+
 ```yaml
 version: v1alpha1
 kind: MachineConfig
@@ -333,6 +354,7 @@ cluster:
 ```
 
 ### Basic Worker Configuration
+
 ```yaml
 version: v1alpha1
 kind: MachineConfig
@@ -357,6 +379,7 @@ cluster:
 ## Advanced Features
 
 ### Custom Registry Configuration
+
 ```yaml
 machine:
   registries:
@@ -374,6 +397,7 @@ machine:
 ```
 
 ### Disk Encryption
+
 ```yaml
 machine:
   systemDiskEncryption:
@@ -385,6 +409,7 @@ machine:
 ```
 
 ### Custom Kernel Parameters
+
 ```yaml
 machine:
   kernel:
@@ -397,6 +422,7 @@ machine:
 ## Useful Commands
 
 ### Quick Status Check
+
 ```bash
 # One-liner cluster health check
 talosctl health --control-plane-nodes $(talosctl config info | grep endpoints | cut -d: -f2 | tr -d ' ')
@@ -409,6 +435,7 @@ talosctl version --short --nodes 192.168.1.10,192.168.1.11,192.168.1.12
 ```
 
 ### Automation Scripts
+
 ```bash
 #!/bin/bash
 # Bulk node operations
@@ -426,6 +453,7 @@ talosctl health --wait-timeout 10m --nodes $NODES
 ## Configuration Management
 
 ### Talosctl Config
+
 ```bash
 # List contexts
 talosctl config contexts
@@ -441,6 +469,7 @@ talosctl config remove cluster-name
 ```
 
 ### Environment Variables
+
 ```bash
 # Set default endpoints
 export TALOSCONFIG="~/.talos/config"
@@ -453,6 +482,7 @@ export TALOS_NODES="192.168.1.10,192.168.1.11,192.168.1.12"
 ## Performance Tuning
 
 ### Resource Limits
+
 ```yaml
 machine:
   kubelet:
@@ -463,6 +493,7 @@ machine:
 ```
 
 ### Network Optimization
+
 ```yaml
 machine:
   network:
@@ -475,6 +506,7 @@ machine:
 ## Tips & Best Practices
 
 ### Security
+
 1. **Always use TLS** for cluster communication
 2. **Rotate certificates regularly** using `talosctl rotate-ca`
 3. **Use disk encryption** for sensitive workloads
@@ -482,6 +514,7 @@ machine:
 5. **Keep Talos updated** with latest security patches
 
 ### Operations
+
 1. **Backup etcd regularly** with `talosctl etcd snapshot`
 2. **Test configuration changes** on non-production first
 3. **Monitor cluster health** with `talosctl health`
@@ -489,9 +522,9 @@ machine:
 5. **Document your patches** and configurations
 
 ### Automation
+
 1. **Use GitOps** for configuration management
 2. **Automate upgrades** with proper testing
 3. **Monitor logs** for early issue detection
 4. **Set up alerts** for cluster health
 5. **Use infrastructure as code** for reproducible clusters
-

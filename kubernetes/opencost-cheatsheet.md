@@ -1,10 +1,13 @@
 # OpenCost Cheatsheet
 
-OpenCost is a vendor-neutral open source project for measuring and allocating infrastructure and container costs in Kubernetes environments. It provides real-time cost monitoring with Kubernetes native concepts.
+OpenCost is a vendor-neutral open source project for measuring and allocating
+infrastructure and container costs in Kubernetes environments. It provides real-time cost
+monitoring with Kubernetes native concepts.
 
 ## Overview
 
 ### Key Features
+
 - **Real-time Cost Monitoring** - Track costs as workloads run
 - **Kubernetes Native** - Uses labels, namespaces, and other K8s concepts
 - **Multi-Cloud Support** - Works with AWS, GCP, Azure, on-premises
@@ -15,6 +18,7 @@ OpenCost is a vendor-neutral open source project for measuring and allocating in
 - **Prometheus Integration** - Built on Prometheus metrics
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Kubernetes    │    │    OpenCost     │    │   Monitoring    │
@@ -37,6 +41,7 @@ OpenCost is a vendor-neutral open source project for measuring and allocating in
 ```
 
 ### Core Concepts
+
 - **Cost Model** - Calculates infrastructure costs based on resource usage
 - **Allocation** - Distributes costs to pods, namespaces, labels, etc.
 - **Assets** - Cloud resources like nodes, disks, load balancers
@@ -47,6 +52,7 @@ OpenCost is a vendor-neutral open source project for measuring and allocating in
 ## Installation
 
 ### Helm Installation (Recommended)
+
 ```bash
 # Add OpenCost Helm repository
 helm repo add opencost https://opencost.github.io/opencost-helm-chart
@@ -70,6 +76,7 @@ helm status opencost --namespace opencost
 ```
 
 ### Kubernetes Manifests
+
 ```bash
 # Install OpenCost using kubectl
 kubectl apply --namespace opencost -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/opencost.yaml
@@ -86,6 +93,7 @@ kubectl get svc -n opencost
 ```
 
 ### Custom Installation
+
 ```yaml
 # opencost-values.yaml
 opencost:
@@ -142,6 +150,7 @@ helm install opencost opencost/opencost \
 ```
 
 ### Access OpenCost UI
+
 ```bash
 # Port forward to access UI
 kubectl port-forward --namespace opencost svc/opencost 9090:9090
@@ -179,6 +188,7 @@ EOF
 ## Configuration
 
 ### Environment Variables
+
 ```yaml
 # OpenCost configuration via environment variables
 env:
@@ -230,6 +240,7 @@ env:
 ### Cloud Provider Setup
 
 #### AWS Configuration
+
 ```yaml
 env:
   - name: CLOUD_PROVIDER
@@ -267,6 +278,7 @@ kubectl create secret generic aws-credentials \
 ```
 
 #### GCP Configuration
+
 ```yaml
 env:
   - name: CLOUD_PROVIDER
@@ -297,6 +309,7 @@ kubectl create secret generic gcp-service-account \
 ```
 
 #### Azure Configuration
+
 ```yaml
 env:
   - name: CLOUD_PROVIDER
@@ -322,6 +335,7 @@ env:
 ```
 
 ### Custom Pricing Configuration
+
 ```yaml
 # For on-premises or custom pricing
 env:
@@ -354,6 +368,7 @@ env:
 ## API Usage
 
 ### Basic API Endpoints
+
 ```bash
 # Base URL
 OPENCOST_URL="http://localhost:9090"
@@ -378,6 +393,7 @@ curl "$OPENCOST_URL/cloudCost?window=7d&aggregate=service"
 ```
 
 ### Allocation API Examples
+
 ```bash
 # Get allocation data for last 24 hours
 curl "$OPENCOST_URL/allocation?window=1d"
@@ -411,6 +427,7 @@ curl "$OPENCOST_URL/allocation?window=1d&includeExternal=true"
 ```
 
 ### Assets API Examples
+
 ```bash
 # Get all assets for last 24 hours
 curl "$OPENCOST_URL/assets?window=1d"
@@ -432,6 +449,7 @@ curl "$OPENCOST_URL/assets?window=7d&accumulate=true"
 ```
 
 ### Cloud Cost API Examples
+
 ```bash
 # Get cloud costs by service
 curl "$OPENCOST_URL/cloudCost?window=7d&aggregate=service"
@@ -447,6 +465,7 @@ curl "$OPENCOST_URL/cloudCost?window=7d&aggregate=label:Environment"
 ```
 
 ### Advanced API Usage
+
 ```bash
 # Complex allocation query
 curl -G "$OPENCOST_URL/allocation" \
@@ -470,6 +489,7 @@ curl "$OPENCOST_URL/allocation?window=1d&shareNamespaces=kube-system,monitoring"
 ## Monitoring and Alerting
 
 ### Prometheus Metrics
+
 ```promql
 # Key OpenCost metrics
 
@@ -501,6 +521,7 @@ opencost_allocation_ram_cost / opencost_allocation_ram_bytes
 ```
 
 ### Grafana Dashboard Queries
+
 ```promql
 # Total daily costs
 sum(increase(opencost_allocation_total_cost[24h]))
@@ -531,6 +552,7 @@ sum(rate(http_requests_total[5m]))
 ```
 
 ### Alerting Rules
+
 ```yaml
 # opencost-alerts.yaml
 groups:
@@ -597,6 +619,7 @@ groups:
 ## Cost Optimization
 
 ### Resource Right-sizing
+
 ```bash
 # Get resource efficiency data
 curl "$OPENCOST_URL/allocation?window=7d&includeEfficiency=true" | \
@@ -612,6 +635,7 @@ curl "$OPENCOST_URL/allocation?window=30d&aggregate=namespace&includeEfficiency=
 ```
 
 ### Spot Instance Recommendations
+
 ```promql
 # Identify workloads suitable for spot instances
 # (stateless, fault-tolerant workloads)
@@ -626,6 +650,7 @@ sum by (namespace, deployment) (
 ```
 
 ### Storage Optimization
+
 ```bash
 # Find unused persistent volumes
 curl "$OPENCOST_URL/assets?window=7d&filter=type:Disk" | \
@@ -639,6 +664,7 @@ curl "$OPENCOST_URL/allocation?window=30d&aggregate=storageclass&accumulate=true
 ## Custom Metrics and Dashboards
 
 ### Custom Metrics Configuration
+
 ```yaml
 # Add custom metrics to OpenCost
 apiVersion: v1
@@ -663,6 +689,7 @@ data:
 ```
 
 ### Grafana Dashboard JSON
+
 ```json
 {
   "dashboard": {
@@ -752,6 +779,7 @@ data:
 ## Budget Management
 
 ### Budget Configuration
+
 ```yaml
 # Budget alerts via Prometheus rules
 apiVersion: v1
@@ -792,6 +820,7 @@ data:
 ```
 
 ### Budget Monitoring Queries
+
 ```promql
 # Monthly budget utilization
 (
@@ -816,6 +845,7 @@ sum(rate(opencost_allocation_total_cost[1d])) * 86400
 ## Multi-tenancy and RBAC
 
 ### RBAC Configuration
+
 ```yaml
 # Team-based RBAC
 apiVersion: rbac.authorization.k8s.io/v1
@@ -849,6 +879,7 @@ subjects:
 ```
 
 ### Namespace-scoped Cost Access
+
 ```bash
 # Create service account for team
 kubectl create serviceaccount team-alpha-opencost -n team-alpha
@@ -869,6 +900,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check OpenCost pods
 kubectl get pods -n opencost
@@ -894,6 +926,7 @@ kubectl exec -it deployment/opencost -n opencost -- \
 ```
 
 ### Debugging Cost Calculations
+
 ```bash
 # Check node costs
 curl "$OPENCOST_URL/assets?window=1d&filter=type:Node" | \
@@ -912,6 +945,7 @@ curl "$OPENCOST_URL/allocation?window=1h&resolution=1m" | \
 ```
 
 ### Performance Issues
+
 ```bash
 # Check memory usage
 kubectl top pod -n opencost
@@ -931,6 +965,7 @@ kubectl exec -it deployment/opencost -n opencost -- df -h
 ## Best Practices
 
 ### Label Strategy
+
 ```yaml
 # Good labeling practices for cost allocation
 metadata:
@@ -958,6 +993,7 @@ metadata:
 ```
 
 ### Resource Configuration
+
 ```yaml
 # Always set resource requests and limits
 resources:
@@ -981,6 +1017,7 @@ tolerations:
 ```
 
 ### Monitoring Setup
+
 ```yaml
 # Monitor key cost metrics
 prometheus:
@@ -1005,6 +1042,7 @@ alerting:
 ```
 
 ### Data Retention
+
 ```yaml
 # Configure appropriate data retention
 opencost:
@@ -1025,4 +1063,3 @@ opencost:
 ---
 
 *For more detailed information, visit the [official OpenCost documentation](https://www.opencost.io/docs/)*
-

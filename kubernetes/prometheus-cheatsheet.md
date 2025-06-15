@@ -1,10 +1,13 @@
 # Prometheus Cheatsheet
 
-Prometheus is an open-source monitoring and alerting toolkit designed for reliability and scalability. It collects and stores metrics as time series data, identified by metric name and key-value pairs called labels.
+Prometheus is an open-source monitoring and alerting toolkit designed for reliability and
+scalability. It collects and stores metrics as time series data, identified by metric name
+and key-value pairs called labels.
 
 ## Overview
 
 ### Key Features
+
 - **Multi-dimensional Data Model** - Time series identified by metric name and labels
 - **PromQL** - Flexible query language for data selection and aggregation
 - **Pull-based Collection** - HTTP pulls metrics from instrumented targets
@@ -15,6 +18,7 @@ Prometheus is an open-source monitoring and alerting toolkit designed for reliab
 - **Federation** - Hierarchical federation for scalability
 
 ### Core Components
+
 - **Prometheus Server** - Scrapes and stores time series data
 - **Client Libraries** - Instrument application code
 - **Push Gateway** - For short-lived jobs
@@ -23,6 +27,7 @@ Prometheus is an open-source monitoring and alerting toolkit designed for reliab
 - **Grafana** - Visualization and dashboarding
 
 ### Architecture
+
 ```
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
 │   Target    │    │   Target    │    │ Push Gateway│
@@ -44,6 +49,7 @@ Prometheus is an open-source monitoring and alerting toolkit designed for reliab
 ## Installation
 
 ### Docker Installation
+
 ```bash
 # Run Prometheus server
 docker run -d \
@@ -67,6 +73,7 @@ docker run -d \
 ```
 
 ### Binary Installation
+
 ```bash
 # Download and install Prometheus
 wget https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
@@ -78,6 +85,7 @@ cd prometheus-2.45.0.linux-amd64
 ```
 
 ### Kubernetes Installation with Helm
+
 ```bash
 # Add Prometheus Helm repository
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -96,6 +104,7 @@ helm install prometheus prometheus-community/prometheus \
 ```
 
 ### macOS Installation
+
 ```bash
 # Install with Homebrew
 brew install prometheus
@@ -110,6 +119,7 @@ prometheus --config.file=/usr/local/etc/prometheus.yml
 ## Configuration
 
 ### Basic prometheus.yml
+
 ```yaml
 # prometheus.yml
 global:
@@ -158,6 +168,7 @@ scrape_configs:
 ```
 
 ### Advanced Configuration
+
 ```yaml
 # Advanced prometheus.yml
 global:
@@ -236,6 +247,7 @@ scrape_configs:
 ```
 
 ### Service Discovery Files
+
 ```json
 # targets.json
 [
@@ -271,6 +283,7 @@ scrape_configs:
 ## PromQL (Prometheus Query Language)
 
 ### Basic Syntax
+
 ```promql
 # Instant vector - single value per time series at one point in time
 http_requests_total
@@ -286,6 +299,7 @@ http_requests_total[5m]
 ```
 
 ### Selectors and Matchers
+
 ```promql
 # Label matching
 http_requests_total{method="GET"}
@@ -304,6 +318,7 @@ up
 ```
 
 ### Time Range Selectors
+
 ```promql
 # Range vectors
 http_requests_total[5m]    # Last 5 minutes
@@ -315,6 +330,7 @@ http_requests_total[1w]    # Last 1 week
 ```
 
 ### Operators
+
 ```promql
 # Arithmetic operators
 node_memory_MemTotal_bytes / 1024 / 1024  # Convert to MB
@@ -335,6 +351,7 @@ not (up == 1)                   # NOT
 ```
 
 ### Aggregation Operators
+
 ```promql
 # Sum
 sum(http_requests_total)
@@ -373,6 +390,7 @@ bottomk(3, cpu_usage)
 ```
 
 ### Functions
+
 ```promql
 # Rate and increase
 rate(http_requests_total[5m])           # Per-second rate
@@ -414,6 +432,7 @@ histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
 ```
 
 ### Advanced Queries
+
 ```promql
 # Memory usage percentage
 (
@@ -458,6 +477,7 @@ node_load1 * on(instance) group_left(job) up{job="node-exporter"}
 ## Metrics Types
 
 ### Counter
+
 ```promql
 # Always increasing value (e.g., requests, errors)
 http_requests_total
@@ -469,6 +489,7 @@ increase(http_requests_total[1h])  # Total requests in last hour
 ```
 
 ### Gauge
+
 ```promql
 # Current value that can go up or down (e.g., temperature, memory)
 node_memory_MemAvailable_bytes
@@ -481,6 +502,7 @@ max(node_memory_MemAvailable_bytes)
 ```
 
 ### Histogram
+
 ```promql
 # Distribution of observations (e.g., request duration, response size)
 http_request_duration_seconds_bucket
@@ -498,6 +520,7 @@ sum(rate(http_request_duration_seconds_count[5m]))
 ```
 
 ### Summary
+
 ```promql
 # Similar to histogram but calculates quantiles on client side
 http_request_duration_seconds{quantile="0.95"}
@@ -511,6 +534,7 @@ http_request_duration_seconds{quantile="0.99"}
 ## Recording Rules
 
 ### Basic Recording Rules
+
 ```yaml
 # rules/recording.yml
 groups:
@@ -555,6 +579,7 @@ groups:
 ```
 
 ### Advanced Recording Rules
+
 ```yaml
 # rules/sli.yml
 groups:
@@ -593,6 +618,7 @@ groups:
 ## Alerting Rules
 
 ### Basic Alert Rules
+
 ```yaml
 # rules/alerts.yml
 groups:
@@ -645,6 +671,7 @@ groups:
 ```
 
 ### Application Alert Rules
+
 ```yaml
 # rules/app_alerts.yml
 groups:
@@ -713,6 +740,7 @@ groups:
 ```
 
 ### SLO-based Alerts
+
 ```yaml
 # rules/slo_alerts.yml
 groups:
@@ -773,6 +801,7 @@ groups:
 ## Exporters
 
 ### Node Exporter
+
 ```bash
 # Install Node Exporter
 wget https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
@@ -811,6 +840,7 @@ services:
 ```
 
 ### Application Metrics
+
 ```python
 # Python application with prometheus_client
 from prometheus_client import Counter, Histogram, Gauge, start_http_server
@@ -920,6 +950,7 @@ func main() {
 ```
 
 ### Common Exporters
+
 ```bash
 # MySQL Exporter
 docker run -d \
@@ -960,6 +991,7 @@ docker run -d \
 ## Kubernetes Integration
 
 ### Kubernetes Service Discovery
+
 ```yaml
 # kubernetes.yml
 scrape_configs:
@@ -1052,6 +1084,7 @@ scrape_configs:
 ```
 
 ### ServiceMonitor (Prometheus Operator)
+
 ```yaml
 # servicemonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -1077,6 +1110,7 @@ spec:
 ```
 
 ### PodMonitor (Prometheus Operator)
+
 ```yaml
 # podmonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -1096,6 +1130,7 @@ spec:
 ```
 
 ### PrometheusRule (Prometheus Operator)
+
 ```yaml
 # prometheusrule.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -1123,6 +1158,7 @@ spec:
 ## Federation
 
 ### Basic Federation
+
 ```yaml
 # Global Prometheus configuration
 scrape_configs:
@@ -1143,6 +1179,7 @@ scrape_configs:
 ```
 
 ### Hierarchical Federation
+
 ```yaml
 # Regional Prometheus federating from local instances
 scrape_configs:
@@ -1186,6 +1223,7 @@ scrape_configs:
 ## HTTP API
 
 ### Query API
+
 ```bash
 # Instant query
 curl 'http://localhost:9090/api/v1/query?query=up'
@@ -1219,6 +1257,7 @@ curl 'http://localhost:9090/api/v1/status/buildinfo'
 ```
 
 ### Administrative API
+
 ```bash
 # Reload configuration (requires --web.enable-lifecycle)
 curl -X POST http://localhost:9090/-/reload
@@ -1242,6 +1281,7 @@ curl 'http://localhost:9090/api/v1/status/walreplay'
 ## Storage and Retention
 
 ### Local Storage Configuration
+
 ```bash
 # Start Prometheus with custom storage settings
 prometheus \
@@ -1255,6 +1295,7 @@ prometheus \
 ```
 
 ### Remote Storage
+
 ```yaml
 # Remote write configuration
 remote_write:
@@ -1287,6 +1328,7 @@ remote_read:
 ```
 
 ### TSDB Administration
+
 ```bash
 # Compact TSDB blocks
 promtool tsdb create-blocks-from openmetrics \
@@ -1315,6 +1357,7 @@ promtool tsdb bench write \
 ## Monitoring Prometheus
 
 ### Key Metrics to Monitor
+
 ```promql
 # Prometheus process metrics
 prometheus_build_info
@@ -1353,6 +1396,7 @@ prometheus_remote_storage_queue_length
 ```
 
 ### Prometheus Health Checks
+
 ```promql
 # Config reload failures
 time() - prometheus_config_last_reload_success_timestamp_seconds > 300
@@ -1382,6 +1426,7 @@ rate(prometheus_remote_storage_failed_samples_total[5m]) > 0
 ## Performance Tuning
 
 ### Query Optimization
+
 ```promql
 # Use recording rules for expensive queries
 # Instead of:
@@ -1410,6 +1455,7 @@ node_load1 * on(instance) group_left(job) up{job="node-exporter"}
 ```
 
 ### Resource Configuration
+
 ```bash
 # Memory optimization
 prometheus \
@@ -1430,6 +1476,7 @@ prometheus \
 ```
 
 ### Relabeling Optimization
+
 ```yaml
 # Drop unwanted metrics early
 scrape_configs:
@@ -1457,6 +1504,7 @@ scrape_configs:
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check Prometheus configuration
 promtool check config prometheus.yml
@@ -1487,6 +1535,7 @@ promtool tsdb analyze /prometheus/data
 ```
 
 ### Debug Queries
+
 ```promql
 # Find missing metrics
 absent(up{job="my-service"})
@@ -1508,6 +1557,7 @@ increase(prometheus_target_scrapes_exceeded_sample_limit_total[1h])
 ```
 
 ### Memory Issues
+
 ```bash
 # Monitor memory usage
 echo 'process_resident_memory_bytes{job="prometheus"}' | promtool query instant
@@ -1525,6 +1575,7 @@ promtool tsdb create-blocks-from openmetrics input.txt /prometheus/data
 ## Best Practices
 
 ### Naming Conventions
+
 ```promql
 # Metric names
 http_requests_total          # Counter with _total suffix
@@ -1546,6 +1597,7 @@ DatabaseConnectionsHigh     # Clear and actionable
 ```
 
 ### Configuration Best Practices
+
 ```yaml
 # Use appropriate scrape intervals
 scrape_configs:
@@ -1571,6 +1623,7 @@ metric_relabel_configs:
 ```
 
 ### Alerting Best Practices
+
 ```yaml
 # Use appropriate severities
 labels:
@@ -1595,4 +1648,3 @@ for: 0s    # For critical issues that need immediate alerting
 ---
 
 *For more detailed information, visit the [official Prometheus documentation](https://prometheus.io/docs/)*
-

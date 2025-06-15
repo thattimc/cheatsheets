@@ -5,17 +5,20 @@ Tailscale is a zero-config VPN that creates a secure network between your device
 ## Installation
 
 ### macOS
+
 ```bash
 brew install tailscale
 # or download from https://tailscale.com/download
 ```
 
 ### Linux (Ubuntu/Debian)
+
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
 ```
 
 ### Windows
+
 ```powershell
 # Download from https://tailscale.com/download
 # or use winget
@@ -25,6 +28,7 @@ winget install tailscale.tailscale
 ## Basic Commands
 
 ### Authentication & Setup
+
 ```bash
 # Start Tailscale and authenticate
 tailscale up
@@ -40,6 +44,7 @@ tailscale status
 ```
 
 ### Network Management
+
 ```bash
 # Show network status
 tailscale status
@@ -58,6 +63,7 @@ tailscale ip -6
 ```
 
 ### Connection Control
+
 ```bash
 # Connect to Tailscale network
 tailscale up
@@ -72,6 +78,7 @@ tailscale up --reset
 ## Advanced Features
 
 ### Exit Nodes
+
 ```bash
 # Advertise as exit node
 tailscale up --advertise-exit-node
@@ -87,6 +94,7 @@ tailscale exit-node list
 ```
 
 ### Subnet Routing
+
 ```bash
 # Advertise subnet routes
 tailscale up --advertise-routes=192.168.1.0/24,10.0.0.0/8
@@ -96,6 +104,7 @@ tailscale up --accept-routes
 ```
 
 ### DNS Configuration
+
 ```bash
 # Accept DNS configuration
 tailscale up --accept-dns
@@ -105,6 +114,7 @@ tailscale up --accept-dns=false
 ```
 
 ### SSH Integration
+
 ```bash
 # Enable Tailscale SSH
 tailscale up --ssh
@@ -117,6 +127,7 @@ ssh user@<tailscale-ip>
 ```
 
 ## File Sharing (Taildrop)
+
 ```bash
 # Send file to another device
 tailscale file cp myfile.txt <hostname>:
@@ -131,6 +142,7 @@ tailscale file get
 ## Network Diagnostics
 
 ### Ping and Connectivity
+
 ```bash
 # Ping another Tailscale node
 tailscale ping <hostname-or-ip>
@@ -143,6 +155,7 @@ tailscale status --peers
 ```
 
 ### Debugging
+
 ```bash
 # Show detailed logs
 tailscale debug
@@ -158,6 +171,7 @@ tailscale status --json | jq '.Peer[].TailscaleIPs'
 ## Device Management
 
 ### Device Information
+
 ```bash
 # Show current device info
 tailscale whois $(tailscale ip -4)
@@ -170,6 +184,7 @@ tailscale status --peers
 ```
 
 ### Device Control
+
 ```bash
 # Set device hostname
 tailscale up --hostname=<new-hostname>
@@ -184,6 +199,7 @@ tailscale up --force-reauth
 ## Security & Access Control
 
 ### MagicDNS
+
 ```bash
 # Enable MagicDNS (usually automatic)
 tailscale up --accept-dns
@@ -194,6 +210,7 @@ ssh user@<device-name>
 ```
 
 ### Tailscale Lock (Network Lock)
+
 ```bash
 # Initialize Tailscale Lock
 tailscale lock init
@@ -208,6 +225,7 @@ tailscale lock status
 ## Configuration Files
 
 ### Service Configuration
+
 ```bash
 # Linux systemd service
 sudo systemctl status tailscaled
@@ -219,6 +237,7 @@ sudo launchctl unload /Library/LaunchDaemons/com.tailscale.tailscaled.plist
 ```
 
 ### Config Locations
+
 - **Linux**: `/var/lib/tailscale/`
 - **macOS**: `/Library/Tailscale/`
 - **Windows**: `%ProgramData%\Tailscale\`
@@ -226,6 +245,7 @@ sudo launchctl unload /Library/LaunchDaemons/com.tailscale.tailscaled.plist
 ## Common Use Cases
 
 ### Remote Access Setup
+
 ```bash
 # 1. Install on remote server
 sudo tailscale up --ssh --advertise-exit-node
@@ -238,6 +258,7 @@ ssh user@<server-tailscale-name>
 ```
 
 ### Site-to-Site VPN
+
 ```bash
 # On site router/gateway
 tailscale up --advertise-routes=192.168.1.0/24 --accept-routes
@@ -247,6 +268,7 @@ tailscale up --advertise-routes=10.0.0.0/24 --accept-routes
 ```
 
 ### Secure Internet Access
+
 ```bash
 # Set up exit node
 tailscale up --advertise-exit-node
@@ -273,6 +295,7 @@ tailscale up --exit-node=<exit-node-ip>
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Connection problems
 tailscale netcheck
@@ -290,6 +313,7 @@ sudo journalctl -u tailscaled -f
 ```
 
 ### Reset & Clean Start
+
 ```bash
 # Complete reset
 tailscale logout
@@ -299,7 +323,7 @@ tailscale up
 
 ## Web Interface
 
-- **Admin Console**: https://login.tailscale.com/admin/
+- **Admin Console**: <https://login.tailscale.com/admin/>
 - **Device Management**: Manage devices, users, and settings
 - **Access Controls**: Set up ACLs and device policies
 - **DNS Settings**: Configure MagicDNS and nameservers
@@ -316,4 +340,3 @@ tailscale up
 ---
 
 *For more detailed information, visit the [official Tailscale documentation](https://tailscale.com/kb/)*
-

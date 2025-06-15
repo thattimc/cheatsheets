@@ -1,10 +1,13 @@
 # MinIO Cheatsheet
 
-MinIO is a high-performance, S3-compatible object storage system built for cloud-native applications. It provides enterprise-grade features like data protection, scalability, and security while maintaining simplicity and ease of use.
+MinIO is a high-performance, S3-compatible object storage system built for cloud-native
+applications. It provides enterprise-grade features like data protection, scalability, and
+security while maintaining simplicity and ease of use.
 
 ## Overview
 
 ### Key Features
+
 - **S3 Compatible** - Full compatibility with Amazon S3 API
 - **High Performance** - Sub-millisecond latency and high throughput
 - **Distributed** - Horizontally scalable across multiple nodes
@@ -19,6 +22,7 @@ MinIO is a high-performance, S3-compatible object storage system built for cloud
 - **Replication** - Cross-site and cross-cloud replication
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Client Apps  │    │   MinIO Server  │    │   Storage       │
@@ -42,6 +46,7 @@ MinIO is a high-performance, S3-compatible object storage system built for cloud
 ## Installation
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install minio/stable/minio
@@ -63,6 +68,7 @@ mc --version
 ```
 
 ### Linux Installation
+
 ```bash
 # Download and install MinIO server
 wget https://dl.min.io/server/minio/release/linux-amd64/minio
@@ -141,6 +147,7 @@ sudo systemctl status minio.service
 ```
 
 ### Docker Installation
+
 ```bash
 # Run MinIO server
 docker run -p 9000:9000 -p 9001:9001 \
@@ -188,6 +195,7 @@ docker run -it --entrypoint=/bin/sh minio/mc
 ```
 
 ### Kubernetes Installation
+
 ```yaml
 # Using MinIO Operator
 kubectl apply -k "github.com/minio/operator?ref=v4.5.8"
@@ -236,6 +244,7 @@ kubectl apply -f minio-tenant.yaml
 ## Basic MinIO Server Commands
 
 ### Starting MinIO Server
+
 ```bash
 # Basic server start
 minio server /data
@@ -266,6 +275,7 @@ curl http://localhost:9000/minio/health/live
 ```
 
 ### Server Configuration
+
 ```bash
 # Environment variables
 export MINIO_ROOT_USER=admin                    # Access key
@@ -299,6 +309,7 @@ export MINIO_LOGGER_WEBHOOK_ENDPOINT=http://localhost:8080/log
 ## MinIO Client (mc) Commands
 
 ### Configuration and Aliases
+
 ```bash
 # Add MinIO server alias
 mc alias set myminio http://localhost:9000 minioadmin minioadmin
@@ -320,6 +331,7 @@ mc admin info myminio
 ```
 
 ### Bucket Operations
+
 ```bash
 # List buckets
 mc ls myminio
@@ -348,6 +360,7 @@ mc tree myminio/mybucket
 ```
 
 ### Object Operations
+
 ```bash
 # Upload file
 mc cp file.txt myminio/mybucket/
@@ -394,6 +407,7 @@ mc share upload myminio/mybucket/
 ```
 
 ### Advanced Object Operations
+
 ```bash
 # Multipart upload
 mc cp --disable-multipart file.txt myminio/mybucket/
@@ -426,6 +440,7 @@ mc legalhold clear myminio/mybucket/file.txt
 ## Access Control and Security
 
 ### User Management
+
 ```bash
 # List users
 mc admin user list myminio
@@ -451,6 +466,7 @@ mc admin user svcacct list myminio username
 ```
 
 ### Service Accounts
+
 ```bash
 # Create service account
 mc admin user svcacct add myminio username
@@ -470,6 +486,7 @@ mc admin user svcacct edit --secret-key newsecret myminio ACCESS_KEY
 ```
 
 ### Groups
+
 ```bash
 # Create group
 mc admin group add myminio developers user1 user2 user3
@@ -491,6 +508,7 @@ mc admin group info myminio developers
 ```
 
 ### Policies
+
 ```bash
 # List policies
 mc admin policy list myminio
@@ -537,6 +555,7 @@ mc admin policy set myminio diagnostics user=username
 ```
 
 ### Bucket Policies
+
 ```bash
 # Set bucket policy
 cat > bucket-policy.json << EOF
@@ -571,6 +590,7 @@ mc policy set none myminio/mybucket
 ## Encryption and Security
 
 ### Server-Side Encryption (SSE)
+
 ```bash
 # SSE-S3 (MinIO managed keys)
 mc encrypt set SSE-S3 myminio/mybucket
@@ -593,6 +613,7 @@ mc cp --encrypt-key "myminio/mybucket=32byteslongsecretkeymustbegiven" \
 ```
 
 ### Key Management Server (KMS)
+
 ```bash
 # Configure external KMS
 export MINIO_KMS_SECRET_KEY="my-minio-key:OSMM+vkKUTCvQs9YL/CVMIMt43HFhkUpqJxTmGl6rYw="
@@ -610,6 +631,7 @@ export MINIO_KMS_KMS_KEY_ID="arn:aws:kms:us-east-1:123456789:key/key-id"
 ```
 
 ### TLS/SSL Configuration
+
 ```bash
 # Generate self-signed certificate
 openssl req -new -x509 -days 3650 -nodes -out public.crt -keyout private.key \
@@ -637,6 +659,7 @@ minio server --certs-dir /etc/minio/certs /data
 ## Monitoring and Administration
 
 ### Server Administration
+
 ```bash
 # Server info
 mc admin info myminio
@@ -670,6 +693,7 @@ mc admin profile stop myminio
 ```
 
 ### Health and Diagnostics
+
 ```bash
 # Health check
 mc admin health myminio
@@ -697,6 +721,7 @@ mc admin bandwidth info myminio
 ```
 
 ### Data Management
+
 ```bash
 # Healing (repair)
 mc admin heal myminio
@@ -721,6 +746,7 @@ mc admin rebalance stop myminio
 ## Event Notifications
 
 ### Configure Notifications
+
 ```bash
 # Webhook notification
 mc admin config set myminio notify_webhook:1 \
@@ -757,6 +783,7 @@ mc admin service restart myminio
 ```
 
 ### Set up Event Listeners
+
 ```bash
 # Listen to bucket events
 mc event add myminio/mybucket arn:minio:sqs::1:webhook --event put,delete
@@ -789,6 +816,7 @@ mc event remove myminio/mybucket arn:minio:sqs::1:webhook
 ## Lifecycle Management
 
 ### Object Lifecycle
+
 ```bash
 # Create lifecycle configuration
 cat > lifecycle.json << EOF
@@ -844,6 +872,7 @@ mc ilm remove --id "DeleteOldFiles" myminio/mybucket
 ```
 
 ### Versioning and Retention
+
 ```bash
 # Enable versioning
 mc version enable myminio/mybucket
@@ -873,6 +902,7 @@ mc legalhold info myminio/mybucket/file.txt
 ## Replication
 
 ### Site Replication
+
 ```bash
 # Add site for replication
 mc admin replicate add myminio1 myminio2
@@ -889,6 +919,7 @@ mc admin replicate status myminio1
 ```
 
 ### Bucket Replication
+
 ```bash
 # Create replication configuration
 cat > replication.json << EOF
@@ -939,6 +970,7 @@ mc replicate resync status myminio/source-bucket
 ## Performance Tuning
 
 ### Server Optimization
+
 ```bash
 # Increase file descriptor limits
 ulimit -n 65536
@@ -967,6 +999,7 @@ mc mirror --parallel 10 /large-dataset/ myminio/mybucket/
 ```
 
 ### Network Optimization
+
 ```bash
 # Load balancer configuration for distributed MinIO
 # nginx.conf example
@@ -1027,6 +1060,7 @@ server {
 ```
 
 ### Distributed Setup
+
 ```bash
 # 4-node distributed setup
 # Node 1:
@@ -1056,6 +1090,7 @@ minio server \
 ## SDK and API Usage
 
 ### Python SDK Example
+
 ```python
 from minio import Minio
 from minio.error import S3Error
@@ -1110,6 +1145,7 @@ client.put_object(
 ```
 
 ### JavaScript SDK Example
+
 ```javascript
 const Minio = require('minio');
 
@@ -1157,6 +1193,7 @@ minioClient.presignedGetObject('mybucket', 'myfile.txt', 24*60*60, (err, presign
 ```
 
 ### Go SDK Example
+
 ```go
 package main
 
@@ -1211,6 +1248,7 @@ func main() {
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check server status
 curl -I http://localhost:9000/minio/health/live
@@ -1238,6 +1276,7 @@ ss -tlnp | grep 9000
 ```
 
 ### Performance Diagnostics
+
 ```bash
 # Performance test
 mc admin speedtest myminio
@@ -1261,6 +1300,7 @@ sudo smartctl -a /dev/sdX
 ```
 
 ### Error Resolution
+
 ```bash
 # "Disk not found" error
 # Check if disks are mounted and accessible
@@ -1293,6 +1333,7 @@ mc admin heal --dry-run myminio/bucket
 ```
 
 ### Backup and Recovery
+
 ```bash
 # Backup configuration
 mc admin config export myminio > minio-config.json
@@ -1321,6 +1362,7 @@ mc admin heal --recursive myminio
 ```
 
 ### Monitoring Setup
+
 ```bash
 # Prometheus configuration
 cat > prometheus.yml << EOF
@@ -1349,4 +1391,3 @@ curl http://localhost:9000/minio/v2/metrics/cluster
 ---
 
 *For more detailed information, visit the [official MinIO documentation](https://docs.min.io/)*
-

@@ -1,10 +1,14 @@
 # CSGHub Cheatsheet
 
-CSGHub is an open-source platform for managing machine learning models, datasets, and code repositories. It provides a comprehensive solution for MLOps with features like model versioning, dataset management, and collaborative development.
+CSGHub is an open-source platform for managing machine learning models,
+datasets, and code repositories. It provides a comprehensive solution for MLOps
+with features like model versioning, dataset management, and collaborative
+development.
 
 ## Overview
 
 ### Key Features
+
 - **Model Repository** - Store and version ML models with metadata
 - **Dataset Management** - Handle large datasets with versioning
 - **Code Repository** - Git-based code management with ML-specific features
@@ -15,6 +19,7 @@ CSGHub is an open-source platform for managing machine learning models, datasets
 - **Web Interface** - User-friendly web dashboard
 
 ### Components
+
 - **CSGHub Server** - Core backend service
 - **Web Portal** - Frontend web interface
 - **CLI Tool** - Command-line interface
@@ -26,6 +31,7 @@ CSGHub is an open-source platform for managing machine learning models, datasets
 ## Installation
 
 ### Prerequisites
+
 ```bash
 # System requirements
 # - Docker and Docker Compose
@@ -38,7 +44,9 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 
 # Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L \
+  "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" \
+  -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 # Verify installation
@@ -47,6 +55,7 @@ docker-compose --version
 ```
 
 ### Docker Compose Installation
+
 ```bash
 # Clone CSGHub repository
 git clone https://github.com/OpenCSGs/csghub.git
@@ -69,6 +78,7 @@ docker-compose logs -f
 ```
 
 ### Docker Compose Configuration
+
 ```yaml
 # docker-compose.yml
 version: '3.8'
@@ -171,6 +181,7 @@ networks:
 ```
 
 ### Kubernetes Deployment
+
 ```yaml
 # namespace.yaml
 apiVersion: v1
@@ -316,6 +327,7 @@ spec:
 ## CLI Installation and Setup
 
 ### Install CLI
+
 ```bash
 # Download CLI binary
 wget https://github.com/OpenCSGs/csghub-cli/releases/latest/download/csghub-cli-linux-amd64
@@ -332,6 +344,7 @@ csghub version
 ```
 
 ### CLI Configuration
+
 ```bash
 # Configure CLI
 csghub config set-url https://csghub.example.com
@@ -349,6 +362,7 @@ csghub config set-org <organization-name>
 ```
 
 ### Authentication
+
 ```bash
 # Login with username/password
 csghub login --username <username> --password <password>
@@ -375,6 +389,7 @@ csghub logout
 ## Repository Management
 
 ### Model Repositories
+
 ```bash
 # Create model repository
 csghub repo create --type model --name my-model --description "My ML model"
@@ -398,6 +413,7 @@ csghub repo delete <organization>/<model-name>
 ```
 
 ### Dataset Repositories
+
 ```bash
 # Create dataset repository
 csghub repo create --type dataset --name my-dataset --description "Training dataset"
@@ -421,6 +437,7 @@ csghub dataset stats <organization>/<dataset-name>
 ```
 
 ### Code Repositories
+
 ```bash
 # Create code repository
 csghub repo create --type code --name my-project --description "ML project code"
@@ -443,6 +460,7 @@ git push origin main
 ## Model Management
 
 ### Model Upload and Download
+
 ```bash
 # Upload model files
 csghub model upload <organization>/<model-name> --file model.pkl
@@ -464,9 +482,11 @@ csghub model info <organization>/<model-name>
 ```
 
 ### Model Versioning
+
 ```bash
 # Create model version
-csghub model version create <organization>/<model-name> --tag v1.1.0 --message "Updated model"
+csghub model version create <organization>/<model-name> \
+  --tag v1.1.0 --message "Updated model"
 
 # List versions
 csghub model version list <organization>/<model-name>
@@ -482,6 +502,7 @@ csghub model version set-default <organization>/<model-name> --tag v1.1.0
 ```
 
 ### Model Metadata
+
 ```bash
 # Set model metadata
 csghub model metadata set <organization>/<model-name> \
@@ -503,6 +524,7 @@ csghub model card template > model_card.md
 ## Dataset Operations
 
 ### Dataset Upload and Management
+
 ```bash
 # Upload dataset with metadata
 csghub dataset upload <organization>/<dataset-name> \
@@ -527,6 +549,7 @@ csghub dataset stream-upload <organization>/<dataset-name> \
 ```
 
 ### Dataset Versioning
+
 ```bash
 # Create dataset version
 csghub dataset version create <organization>/<dataset-name> \
@@ -544,6 +567,7 @@ csghub dataset version rollback <organization>/<dataset-name> \
 ```
 
 ### Dataset Processing
+
 ```bash
 # Preview dataset
 csghub dataset preview <organization>/<dataset-name> --rows 10
@@ -563,6 +587,7 @@ csghub dataset transform <organization>/<dataset-name> \
 ## Experiment Tracking
 
 ### Create and Manage Experiments
+
 ```bash
 # Create experiment
 csghub experiment create \
@@ -583,6 +608,7 @@ csghub experiment update <experiment-id> \
 ```
 
 ### Log Metrics and Artifacts
+
 ```bash
 # Log metrics
 csghub experiment log-metric <experiment-id> \
@@ -612,6 +638,7 @@ csghub experiment log-run <experiment-id> \
 ```
 
 ### Compare Experiments
+
 ```bash
 # Compare experiments
 csghub experiment compare \
@@ -631,10 +658,12 @@ csghub experiment export <experiment-id> \
 
 ## API Usage
 
-### Authentication
+### API Authentication
+
 ```bash
 # Get API token
-TOKEN=$(csghub auth create-token --name "API Access" --scopes "read,write" --output token)
+TOKEN=$(csghub auth create-token --name "API Access" \
+  --scopes "read,write" --output token)
 
 # Use token in API calls
 HEADERS="Authorization: Bearer $TOKEN"
@@ -642,6 +671,7 @@ BASE_URL="https://csghub.example.com/api/v1"
 ```
 
 ### Repository API
+
 ```bash
 # List repositories
 curl -H "$HEADERS" "$BASE_URL/repos"
@@ -672,6 +702,7 @@ curl -X DELETE -H "$HEADERS" \
 ```
 
 ### Model API
+
 ```bash
 # Upload model file
 curl -X POST -H "$HEADERS" \
@@ -698,6 +729,7 @@ curl -X PATCH -H "$HEADERS" -H "Content-Type: application/json" \
 ```
 
 ### Dataset API
+
 ```bash
 # Upload dataset
 curl -X POST -H "$HEADERS" \
@@ -721,6 +753,7 @@ curl -H "$HEADERS" \
 ## Python SDK
 
 ### Installation and Setup
+
 ```python
 # Installation
 # pip install csghub-sdk
@@ -740,6 +773,7 @@ print(f"Logged in as: {user_info['username']}")
 ```
 
 ### Repository Operations
+
 ```python
 # Create repository
 repo = client.create_repo(
@@ -767,7 +801,8 @@ client.update_repo(
 client.delete_repo("organization/model-name")
 ```
 
-### Model Management
+### Advanced Model Management
+
 ```python
 # Upload model
 client.upload_model(
@@ -804,7 +839,8 @@ version = client.create_model_version(
 )
 ```
 
-### Dataset Operations
+### Advanced Dataset Operations
+
 ```python
 # Upload dataset
 client.upload_dataset(
@@ -833,7 +869,8 @@ preview = client.preview_dataset(
 print(preview)
 ```
 
-### Experiment Tracking
+### Advanced Experiment Tracking
+
 ```python
 # Create experiment
 experiment = client.create_experiment(
@@ -876,6 +913,7 @@ print(f"Best accuracy: {max(results['metrics']['accuracy'])}")
 ## Web Interface Usage
 
 ### Navigation
+
 ```bash
 # Access web interface
 # URL: https://csghub.example.com
@@ -890,7 +928,8 @@ print(f"Best accuracy: {max(results['metrics']['accuracy'])}")
 # - Profile: User settings and API tokens
 ```
 
-### Repository Management
+### Advanced Repository Management
+
 ```bash
 # Create repository:
 # 1. Click "New Repository" button
@@ -917,6 +956,7 @@ print(f"Best accuracy: {max(results['metrics']['accuracy'])}")
 ## Configuration and Settings
 
 ### Server Configuration
+
 ```yaml
 # config/server.yaml
 server:
@@ -962,6 +1002,7 @@ logging:
 ```
 
 ### Client Configuration
+
 ```yaml
 # ~/.csghub/config.yaml
 endpoint: https://csghub.example.com
@@ -981,6 +1022,7 @@ logging:
 ## Monitoring and Maintenance
 
 ### Health Checks
+
 ```bash
 # Check service health
 curl -f http://localhost:8080/health
@@ -999,6 +1041,7 @@ curl http://localhost:8080/metrics
 ```
 
 ### Backup and Recovery
+
 ```bash
 # Backup database
 docker-compose exec postgres pg_dump -U csghub csghub > backup.sql
@@ -1017,6 +1060,7 @@ mc mirror ./backup/storage/ minio/csghub
 ```
 
 ### Log Management
+
 ```bash
 # View application logs
 docker-compose logs -f csghub-server
@@ -1036,6 +1080,7 @@ logrotate /etc/logrotate.d/csghub
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Service not starting
 docker-compose ps
@@ -1061,6 +1106,7 @@ git config --global user.email "your.email@example.com"
 ```
 
 ### Debug Commands
+
 ```bash
 # Enable debug mode
 export CSGHUB_DEBUG=true
@@ -1116,6 +1162,7 @@ export CSGHUB_CHUNK_SIZE="10MB"
 ## Best Practices
 
 ### Repository Organization
+
 1. **Naming Convention** - Use clear, descriptive repository names
 2. **Documentation** - Maintain comprehensive README files
 3. **Version Tagging** - Use semantic versioning for releases
@@ -1123,7 +1170,8 @@ export CSGHUB_CHUNK_SIZE="10MB"
 5. **License** - Specify appropriate licenses
 6. **Dependencies** - Document requirements and dependencies
 
-### Model Management
+### Enterprise Model Management
+
 1. **Model Cards** - Create detailed model documentation
 2. **Experiment Tracking** - Log all training experiments
 3. **Version Control** - Tag model versions with meaningful names
@@ -1131,6 +1179,7 @@ export CSGHUB_CHUNK_SIZE="10MB"
 5. **Reproducibility** - Ensure experiments are reproducible
 
 ### Security
+
 1. **Access Control** - Use appropriate repository visibility
 2. **Token Management** - Rotate API tokens regularly
 3. **Audit Logs** - Monitor repository access and changes
@@ -1140,4 +1189,3 @@ export CSGHUB_CHUNK_SIZE="10MB"
 ---
 
 *For more detailed information, visit the [official CSGHub documentation](https://github.com/OpenCSGs/csghub)*
-

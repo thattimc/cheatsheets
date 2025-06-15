@@ -1,10 +1,13 @@
 # Loki Cheatsheet
 
-Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost effective and easy to operate, as it does not index the contents of the logs, but rather a set of labels for each log stream.
+Loki is a horizontally scalable, highly available, multi-tenant log aggregation system
+inspired by Prometheus. It is designed to be very cost effective and easy to operate, as
+it does not index the contents of the logs, but rather a set of labels for each log stream.
 
 ## Overview
 
 ### Key Features
+
 - **Label-based Indexing** - Only indexes labels, not log content
 - **Cost Effective** - Minimal storage and compute requirements
 - **Multi-tenant** - Supports multiple tenants with isolation
@@ -15,6 +18,7 @@ Loki is a horizontally scalable, highly available, multi-tenant log aggregation 
 - **Horizontal Scaling** - Scales out across multiple instances
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Log Sources   │    │     Agents      │    │      Loki       │
@@ -44,6 +48,7 @@ Loki is a horizontally scalable, highly available, multi-tenant log aggregation 
 ```
 
 ### Core Components
+
 - **Distributor** - Receives logs from agents and forwards to ingesters
 - **Ingester** - Writes log data to storage and serves recent log queries
 - **Querier** - Handles log queries and merges data from ingesters and storage
@@ -54,6 +59,7 @@ Loki is a horizontally scalable, highly available, multi-tenant log aggregation 
 ## Installation
 
 ### Docker Installation
+
 ```bash
 # Simple Loki container
 docker run -d \
@@ -78,6 +84,7 @@ docker run -d \
 ```
 
 ### Docker Compose
+
 ```yaml
 # docker-compose.yml
 version: '3.8'
@@ -136,6 +143,7 @@ networks:
 ```
 
 ### Kubernetes Installation
+
 ```bash
 # Using Helm
 helm repo add grafana https://grafana.github.io/helm-charts
@@ -159,6 +167,7 @@ kubectl port-forward --namespace default service/loki-stack-grafana 3000:80
 ```
 
 ### Binary Installation
+
 ```bash
 # Download Loki binary
 wget https://github.com/grafana/loki/releases/download/v2.9.0/loki-linux-amd64.zip
@@ -183,6 +192,7 @@ promtail -config.file=/etc/promtail/config.yml
 ```
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install loki
@@ -198,6 +208,7 @@ promtail -config.file=/usr/local/etc/promtail-config.yaml
 ## Configuration
 
 ### Basic Loki Configuration
+
 ```yaml
 # loki-config.yaml
 auth_enabled: false
@@ -254,6 +265,7 @@ analytics:
 ```
 
 ### Production Loki Configuration
+
 ```yaml
 # loki-production.yaml
 auth_enabled: true
@@ -378,6 +390,7 @@ analytics:
 ```
 
 ### Promtail Configuration
+
 ```yaml
 # promtail-config.yaml
 server:
@@ -509,6 +522,7 @@ scrape_configs:
 ## LogQL (Log Query Language)
 
 ### Basic Syntax
+
 ```logql
 # Simple log stream selector
 {job="varlog"}
@@ -529,6 +543,7 @@ scrape_configs:
 ```
 
 ### Log Stream Selectors
+
 ```logql
 # Basic stream selectors
 {container="nginx"}
@@ -548,6 +563,7 @@ scrape_configs:
 ```
 
 ### Line Filter Expressions
+
 ```logql
 # Contains text
 {job="varlog"} |= "error"
@@ -570,6 +586,7 @@ scrape_configs:
 ```
 
 ### Label Filter Expressions
+
 ```logql
 # Parse and filter by extracted labels
 {job="varlog"} | json | level="error"
@@ -587,6 +604,7 @@ scrape_configs:
 ```
 
 ### Parser Expressions
+
 ```logql
 # JSON parser
 {job="app"} | json
@@ -608,6 +626,7 @@ scrape_configs:
 ```
 
 ### Aggregation Functions
+
 ```logql
 # Count logs
 count_over_time({job="varlog"}[5m])
@@ -632,6 +651,7 @@ quantile_over_time(0.95, {job="nginx"} | json | unwrap response_time [5m])
 ```
 
 ### Advanced Queries
+
 ```logql
 # Error rate by service
 sum by (service) (
@@ -673,6 +693,7 @@ quantile_over_time(0.95, {job="api"} | json | unwrap duration [5m])
 ```
 
 ### Metric Queries
+
 ```logql
 # Range aggregations
 sum(rate({job="app"}[5m]))
@@ -696,6 +717,7 @@ avg by (instance) (avg_over_time({job="node"} | json | unwrap cpu [5m])) > 0.8
 ## Promtail Pipeline Stages
 
 ### Basic Pipeline Stages
+
 ```yaml
 pipeline_stages:
   # Docker log format
@@ -724,6 +746,7 @@ pipeline_stages:
 ```
 
 ### Advanced Pipeline Stages
+
 ```yaml
 pipeline_stages:
   # Multi-line log handling
@@ -774,6 +797,7 @@ pipeline_stages:
 ```
 
 ### Example Complete Pipeline
+
 ```yaml
 scrape_configs:
   - job_name: nginx
@@ -827,6 +851,7 @@ scrape_configs:
 ## Grafana Integration
 
 ### Data Source Configuration
+
 ```yaml
 # grafana-datasources.yaml
 apiVersion: 1
@@ -850,6 +875,7 @@ datasources:
 ```
 
 ### Log Panel Configuration
+
 ```json
 {
   "type": "logs",
@@ -884,6 +910,7 @@ datasources:
 ```
 
 ### Log Rate Panel
+
 ```json
 {
   "type": "timeseries",
@@ -924,6 +951,7 @@ datasources:
 ## Alerting
 
 ### Recording Rules
+
 ```yaml
 # loki-rules.yaml
 groups:
@@ -945,6 +973,7 @@ groups:
 ```
 
 ### Alerting Rules
+
 ```yaml
 # loki-alerts.yaml
 groups:
@@ -1007,6 +1036,7 @@ groups:
 ## Storage and Retention
 
 ### Storage Configuration
+
 ```yaml
 # File system storage
 storage_config:
@@ -1047,6 +1077,7 @@ storage_config:
 ```
 
 ### Retention Configuration
+
 ```yaml
 # Table manager retention
 table_manager:
@@ -1087,6 +1118,7 @@ limits_config:
 ## Performance Tuning
 
 ### Ingester Configuration
+
 ```yaml
 ingester:
   # WAL configuration
@@ -1119,6 +1151,7 @@ ingester:
 ```
 
 ### Query Performance
+
 ```yaml
 querier:
   # Query performance
@@ -1166,6 +1199,7 @@ query_frontend:
 ```
 
 ### Limits Configuration
+
 ```yaml
 limits_config:
   # Ingestion limits
@@ -1199,6 +1233,7 @@ limits_config:
 ## Monitoring Loki
 
 ### Key Metrics
+
 ```promql
 # Ingestion metrics
 loki_ingester_chunks_flushed_total
@@ -1227,6 +1262,7 @@ loki_compactor_delete_requests_processed_total
 ```
 
 ### Health Checks
+
 ```bash
 # Loki readiness
 curl http://localhost:3100/ready
@@ -1253,6 +1289,7 @@ curl http://localhost:3100/compactor/ring
 ## API Reference
 
 ### Push API
+
 ```bash
 # Push logs to Loki
 curl -v -H "Content-Type: application/json" -XPOST \
@@ -1291,6 +1328,7 @@ curl -H "Content-Type: application/json" -XPOST \
 ```
 
 ### Query API
+
 ```bash
 # Query logs
 curl -G -s "http://localhost:3100/loki/api/v1/query" \
@@ -1319,6 +1357,7 @@ wscat -c "ws://localhost:3100/loki/api/v1/tail?query={job=\"test\"}"
 ```
 
 ### Rules API
+
 ```bash
 # List rule groups
 curl -s "http://localhost:3100/loki/api/v1/rules"
@@ -1338,6 +1377,7 @@ curl -X DELETE "http://localhost:3100/loki/api/v1/rules/namespace/group"
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check Loki logs
 docker logs loki
@@ -1366,6 +1406,7 @@ chown -R loki:loki /loki/
 ```
 
 ### Performance Issues
+
 ```bash
 # Check ingestion rate
 curl -s http://localhost:3100/metrics | grep loki_distributor_bytes_received_total
@@ -1386,6 +1427,7 @@ curl -s http://localhost:3100/metrics | grep loki_ingester_chunks_flushed_total
 ```
 
 ### Debug Configuration
+
 ```yaml
 server:
   log_level: debug
@@ -1411,6 +1453,7 @@ limits_config:
 ## Best Practices
 
 ### Label Design
+
 ```yaml
 # Good label practices
 labels:
@@ -1428,6 +1471,7 @@ labels:
 ```
 
 ### Query Optimization
+
 ```logql
 # Use specific time ranges
 {job="app"}[1h]  # Good
@@ -1446,6 +1490,7 @@ count_over_time({job="app"}[5m])          # Good for counting
 ```
 
 ### Storage Optimization
+
 ```yaml
 # Chunk configuration
 ingester:
@@ -1466,4 +1511,3 @@ limits_config:
 ---
 
 *For more detailed information, visit the [official Loki documentation](https://grafana.com/docs/loki/)*
-

@@ -1,10 +1,13 @@
 # Redis Cheatsheet
 
-Redis (Remote Dictionary Server) is an open-source, in-memory data structure store that can be used as a database, cache, message broker, and streaming engine. It supports various data structures and provides high performance with sub-millisecond latency.
+Redis (Remote Dictionary Server) is an open-source, in-memory data structure store that
+can be used as a database, cache, message broker, and streaming engine. It supports various
+data structures and provides high performance with sub-millisecond latency.
 
 ## Overview
 
 ### Key Features
+
 - **In-Memory Storage** - All data stored in RAM for ultra-fast access
 - **Persistence** - Optional disk persistence with RDB snapshots and AOF logs
 - **Data Structures** - Rich set of data types (strings, hashes, lists, sets, sorted sets, etc.)
@@ -19,6 +22,7 @@ Redis (Remote Dictionary Server) is an open-source, in-memory data structure sto
 - **Modules** - Extensibility through Redis modules
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Client Apps  │    │   Redis Server  │    │   Persistence   │
@@ -41,6 +45,7 @@ Redis (Remote Dictionary Server) is an open-source, in-memory data structure sto
 ## Installation
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install redis
@@ -68,6 +73,7 @@ brew services stop redis
 ```
 
 ### Linux Installation
+
 ```bash
 # Ubuntu/Debian
 sudo apt update
@@ -96,6 +102,7 @@ sudo systemctl status redis
 ```
 
 ### Docker Installation
+
 ```bash
 # Run Redis container
 docker run --name redis-server -p 6379:6379 -d redis:7-alpine
@@ -133,6 +140,7 @@ docker-compose up -d
 ## Basic Commands
 
 ### Connection and Server Commands
+
 ```bash
 # Connect to Redis
 redis-cli
@@ -192,6 +200,7 @@ CLIENT KILL ip:port
 ```
 
 ### Key Management
+
 ```bash
 # Key operations
 KEYS pattern           # List keys (avoid in production)
@@ -221,6 +230,7 @@ DEL user:123 user:456
 ## Data Types and Commands
 
 ### Strings
+
 ```bash
 # Basic string operations
 SET key value [EX seconds] [PX milliseconds] [NX|XX]
@@ -261,6 +271,7 @@ SETBIT online_users 123 1
 ```
 
 ### Lists
+
 ```bash
 # List operations (O(1) for head/tail, O(N) for middle)
 LPUSH key element [element ...]    # Push to left (head)
@@ -294,6 +305,7 @@ BLPOP tasks 30        # Wait up to 30 seconds for element
 ```
 
 ### Sets
+
 ```bash
 # Set operations
 SADD key member [member ...]      # Add members
@@ -325,6 +337,7 @@ SCARD users:online
 ```
 
 ### Sorted Sets (ZSets)
+
 ```bash
 # Sorted set operations
 ZADD key [NX|XX] [CH] [INCR] score member [score member ...]
@@ -364,6 +377,7 @@ ZINCRBY leaderboard 100 player1
 ```
 
 ### Hashes
+
 ```bash
 # Hash operations
 HSET key field value [field value ...]  # Set field(s)
@@ -398,6 +412,7 @@ HDEL user:123 email
 ```
 
 ### Streams
+
 ```bash
 # Stream operations
 XADD key ID field value [field value ...] # Add entry
@@ -425,6 +440,7 @@ XREADGROUP GROUP processors consumer1 COUNT 1 STREAMS events >
 ```
 
 ### HyperLogLog
+
 ```bash
 # HyperLogLog operations (probabilistic cardinality)
 PFADD key element [element ...]    # Add elements
@@ -437,6 +453,7 @@ PFCOUNT unique_visitors
 ```
 
 ### Geospatial
+
 ```bash
 # Geospatial operations
 GEOADD key longitude latitude member [longitude latitude member ...]
@@ -455,6 +472,7 @@ GEORADIUS locations -122.4194 37.7749 100 km
 ## Advanced Features
 
 ### Transactions
+
 ```bash
 # Transaction commands
 MULTI                    # Start transaction
@@ -479,6 +497,7 @@ EXEC
 ```
 
 ### Pub/Sub
+
 ```bash
 # Publisher commands
 PUBLISH channel message       # Publish message
@@ -507,6 +526,7 @@ PUBLISH news:sports "Sports news!"
 ```
 
 ### Lua Scripting
+
 ```bash
 # Script commands
 EVAL script numkeys key [key ...] arg [arg ...]
@@ -537,6 +557,7 @@ EVALSHA <sha1> 1 mykey
 ```
 
 ### Pipeline and Batch Operations
+
 ```bash
 # Using redis-cli with pipeline
 echo -e "SET key1 value1\nSET key2 value2\nGET key1\nGET key2" | redis-cli --pipe
@@ -553,6 +574,7 @@ cat data.txt | redis-cli --pipe
 ## Configuration and Persistence
 
 ### Configuration
+
 ```bash
 # View configuration
 CONFIG GET *
@@ -577,6 +599,7 @@ CONFIG SET requirepass "mypassword"
 ```
 
 ### Persistence
+
 ```bash
 # RDB (Redis Database) snapshots
 SAVE                     # Synchronous save (blocks server)
@@ -598,6 +621,7 @@ INFO persistence
 ```
 
 ### Memory Management
+
 ```bash
 # Memory commands
 MEMORY USAGE key         # Get memory usage of key
@@ -622,6 +646,7 @@ INFO memory
 ## Replication and High Availability
 
 ### Master-Slave Replication
+
 ```bash
 # On slave server
 REPLICAOF hostname port  # Set as replica of master
@@ -639,6 +664,7 @@ PSYNC replicationid offset  # Partial resynchronization
 ```
 
 ### Redis Sentinel
+
 ```bash
 # Start Sentinel
 redis-sentinel /path/to/sentinel.conf
@@ -659,6 +685,7 @@ SENTINEL reset mymaster
 ```
 
 ### Redis Cluster
+
 ```bash
 # Create cluster
 redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 --cluster-replicas 1
@@ -687,6 +714,7 @@ redis-cli --cluster check host:port
 ## Monitoring and Debugging
 
 ### Monitoring Commands
+
 ```bash
 # Real-time monitoring
 MONITOR                  # Monitor all commands
@@ -723,6 +751,7 @@ CLIENT KILL TYPE normal
 ```
 
 ### Debugging
+
 ```bash
 # Debug commands
 DEBUG OBJECT key         # Get object encoding info
@@ -743,6 +772,7 @@ redis-benchmark -t set,get -n 100000 -q
 ## Redis CLI Tips and Tricks
 
 ### CLI Options
+
 ```bash
 # Connect with options
 redis-cli -h hostname -p port -a password -n database
@@ -781,6 +811,7 @@ redis-cli --rdb /path/to/dump.rdb
 ```
 
 ### Batch Operations
+
 ```bash
 # Mass insertion
 cat data.txt | redis-cli --pipe
@@ -798,6 +829,7 @@ redis-cli -c 'SET key1 value1' 'SET key2 value2' 'GET key1'
 ## Performance Optimization
 
 ### Best Practices
+
 ```bash
 # Use appropriate data structures
 # Strings for simple values
@@ -841,6 +873,7 @@ SLOWLOG GET 10
 ```
 
 ### Memory Optimization
+
 ```bash
 # Use smaller data types when possible
 # For small hashes, lists, sets - Redis uses optimized encodings
@@ -870,6 +903,7 @@ SET user:123 '{"name":"John","age":30}'
 ## Common Use Cases and Patterns
 
 ### Caching
+
 ```bash
 # Simple cache with expiration
 SETEX cache:user:123 3600 "user_data"
@@ -892,6 +926,7 @@ SET cache:key data
 ```
 
 ### Session Storage
+
 ```bash
 # Store session data
 HSET session:abc123 user_id 456 username "john" last_seen 1640995200
@@ -906,6 +941,7 @@ EXPIRE session:abc123 1800  # Reset expiration
 ```
 
 ### Rate Limiting
+
 ```bash
 # Simple rate limiter
 key = "rate_limit:" + user_id + ":" + current_minute
@@ -923,6 +959,7 @@ if ZCARD rate_limit:user:123 > rate_limit:
 ```
 
 ### Real-time Analytics
+
 ```bash
 # Page views counter
 INCR page_views:total
@@ -939,6 +976,7 @@ ZREVRANGE popular_pages 0 9 WITHSCORES  # Top 10 pages
 ```
 
 ### Message Queue
+
 ```bash
 # Simple queue with lists
 LPUSH queue:tasks task_data
@@ -956,6 +994,7 @@ LREM queue:processing 1 task  # Remove from processing when done
 ```
 
 ### Leaderboard
+
 ```bash
 # Gaming leaderboard
 ZADD leaderboard 1000 player1 1500 player2 2000 player3
@@ -975,6 +1014,7 @@ ZINCRBY leaderboard 100 player1
 ```
 
 ### Geolocation
+
 ```bash
 # Store locations
 GEOADD drivers 37.7749 -122.4194 driver1 40.7128 -74.0059 driver2
@@ -989,6 +1029,7 @@ GEODIST drivers driver1 driver2 km
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check Redis status
 PING
@@ -1030,6 +1071,7 @@ redis-benchmark
 ```
 
 ### Error Messages
+
 ```bash
 # "MISCONF Redis is configured to save RDB snapshots"
 # Solution: Fix disk space or disable saves
@@ -1053,6 +1095,7 @@ TYPE mykey
 ```
 
 ### Performance Tuning
+
 ```bash
 # Optimize configuration
 CONFIG SET maxmemory 1gb
@@ -1078,6 +1121,7 @@ redis-cli --latency-history
 ## Security
 
 ### Authentication and Authorization
+
 ```bash
 # Set password
 CONFIG SET requirepass "strong_password"
@@ -1101,6 +1145,7 @@ ACL DELUSER alice
 ```
 
 ### Network Security
+
 ```bash
 # Bind to specific interfaces
 CONFIG SET bind "127.0.0.1 192.168.1.100"
@@ -1119,4 +1164,3 @@ CONFIG SET port 0  # Disable non-TLS
 ---
 
 *For more detailed information, visit the [official Redis documentation](https://redis.io/documentation)*
-

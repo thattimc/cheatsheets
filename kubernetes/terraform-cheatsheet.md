@@ -1,10 +1,12 @@
 # Terraform Cheatsheet
 
-Terraform is an Infrastructure as Code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently across multiple cloud providers.
+Terraform is an Infrastructure as Code (IaC) tool that allows you to build, change, and
+version infrastructure safely and efficiently across multiple cloud providers.
 
 ## Installation
 
 ### macOS
+
 ```bash
 # Install via Homebrew
 brew install terraform
@@ -19,6 +21,7 @@ tfenv use 1.5.0
 ```
 
 ### Linux
+
 ```bash
 # Download and install binary
 wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip
@@ -35,6 +38,7 @@ sudo apt update && sudo apt install terraform
 ```
 
 ### Windows
+
 ```powershell
 # Using Chocolatey
 choco install terraform
@@ -46,6 +50,7 @@ winget install HashiCorp.Terraform
 ## Basic Commands
 
 ### Essential Commands
+
 ```bash
 # Initialize Terraform configuration
 terraform init
@@ -76,6 +81,7 @@ terraform version
 ```
 
 ### Advanced Commands
+
 ```bash
 # Plan with specific var file
 terraform plan -var-file="prod.tfvars"
@@ -110,6 +116,7 @@ terraform state rm aws_instance.example
 ## Configuration Syntax
 
 ### Basic Configuration Structure
+
 ```hcl
 # Configure Terraform and providers
 terraform {
@@ -189,6 +196,7 @@ output "instance_dns" {
 ## Variables
 
 ### Variable Types
+
 ```hcl
 # String variable
 variable "environment" {
@@ -247,6 +255,7 @@ variable "database_config" {
 ```
 
 ### Variable Files
+
 ```hcl
 # terraform.tfvars
 aws_region = "us-east-1"
@@ -266,6 +275,7 @@ instance_types = {
 ## Data Sources
 
 ### Common Data Sources
+
 ```hcl
 # AWS AMI
 data "aws_ami" "amazon_linux" {
@@ -316,6 +326,7 @@ data "terraform_remote_state" "network" {
 ## Resources
 
 ### AWS Examples
+
 ```hcl
 # VPC
 resource "aws_vpc" "main" {
@@ -429,6 +440,7 @@ resource "aws_autoscaling_group" "web" {
 ## Modules
 
 ### Creating a Module
+
 ```hcl
 # modules/vpc/main.tf
 variable "cidr_block" {
@@ -471,6 +483,7 @@ output "vpc_cidr_block" {
 ```
 
 ### Using a Module
+
 ```hcl
 # main.tf
 module "vpc" {
@@ -511,6 +524,7 @@ resource "aws_instance" "web" {
 ## State Management
 
 ### Remote State Backend
+
 ```hcl
 # S3 Backend
 terraform {
@@ -543,6 +557,7 @@ terraform {
 ```
 
 ### State Commands
+
 ```bash
 # List resources in state
 terraform state list
@@ -569,6 +584,7 @@ terraform state push terraform.tfstate
 ## Functions
 
 ### Built-in Functions
+
 ```hcl
 # String functions
 locals {
@@ -644,6 +660,7 @@ locals {
 ## Conditionals and Loops
 
 ### Conditional Expressions
+
 ```hcl
 # Ternary operator
 resource "aws_instance" "web" {
@@ -666,6 +683,7 @@ locals {
 ```
 
 ### Count
+
 ```hcl
 # Create multiple instances
 resource "aws_instance" "web" {
@@ -689,6 +707,7 @@ resource "aws_instance" "web" {
 ```
 
 ### for_each
+
 ```hcl
 # Create resources from a map
 variable "users" {
@@ -729,6 +748,7 @@ resource "aws_s3_bucket" "env_buckets" {
 ```
 
 ### Dynamic Blocks
+
 ```hcl
 resource "aws_security_group" "web" {
   name_prefix = "web-"
@@ -771,6 +791,7 @@ variable "ingress_rules" {
 ## Workspaces
 
 ### Workspace Commands
+
 ```bash
 # List workspaces
 terraform workspace list
@@ -789,6 +810,7 @@ terraform workspace delete staging
 ```
 
 ### Using Workspaces in Configuration
+
 ```hcl
 # Reference current workspace
 locals {
@@ -815,6 +837,7 @@ resource "aws_instance" "web" {
 ## Provisioners
 
 ### File Provisioner
+
 ```hcl
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon_linux.id
@@ -836,6 +859,7 @@ resource "aws_instance" "web" {
 ```
 
 ### Remote-exec Provisioner
+
 ```hcl
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon_linux.id
@@ -860,6 +884,7 @@ resource "aws_instance" "web" {
 ```
 
 ### Local-exec Provisioner
+
 ```hcl
 resource "aws_instance" "web" {
   ami           = data.aws_ami.amazon_linux.id
@@ -879,6 +904,7 @@ resource "aws_instance" "web" {
 ## Best Practices
 
 ### Project Structure
+
 ```
 project/
 ├── main.tf              # Main configuration
@@ -904,6 +930,7 @@ project/
 ```
 
 ### Naming Conventions
+
 ```hcl
 # Use descriptive names
 resource "aws_instance" "web_server" {  # Good
@@ -925,6 +952,7 @@ resource "aws_instance" "web_server" {
 ```
 
 ### Security Best Practices
+
 ```hcl
 # Don't hardcode secrets
 variable "db_password" {
@@ -960,6 +988,7 @@ data "aws_iam_policy_document" "s3_policy" {
 ## Common Patterns
 
 ### Blue-Green Deployment
+
 ```hcl
 variable "blue_instance_count" {
   description = "Number of blue instances"
@@ -999,6 +1028,7 @@ resource "aws_instance" "green" {
 ```
 
 ### Auto Scaling with Launch Template
+
 ```hcl
 resource "aws_launch_template" "app" {
   name_prefix   = "app-"
@@ -1050,6 +1080,7 @@ resource "aws_autoscaling_group" "app" {
 ## Debugging and Troubleshooting
 
 ### Environment Variables
+
 ```bash
 # Enable debug logging
 export TF_LOG=DEBUG
@@ -1073,6 +1104,7 @@ export TF_LOG_CORE=DEBUG
 ```
 
 ### Common Commands for Debugging
+
 ```bash
 # Validate configuration
 terraform validate
@@ -1147,4 +1179,3 @@ export ARM_SUBSCRIPTION_ID="subscription-id"
 ---
 
 *For more detailed information, visit the [official Terraform documentation](https://www.terraform.io/docs)*
-

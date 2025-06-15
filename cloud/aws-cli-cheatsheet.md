@@ -3,6 +3,7 @@
 ## Installation & Setup
 
 ### Install AWS CLI
+
 ```bash
 # macOS
 brew install awscli
@@ -23,6 +24,7 @@ sudo ./aws/install
 ```
 
 ### Configuration
+
 ```bash
 # Configure AWS CLI (interactive)
 aws configure
@@ -46,6 +48,7 @@ aws configure get aws_access_key_id --profile myprofile
 ```
 
 ### Profiles & Credentials
+
 ```bash
 # List profiles
 aws configure list-profiles
@@ -65,6 +68,7 @@ export AWS_DEFAULT_REGION=us-west-2
 ## EC2 (Elastic Compute Cloud)
 
 ### Instances
+
 ```bash
 # List instances
 aws ec2 describe-instances
@@ -93,6 +97,7 @@ aws ec2 reboot-instances --instance-ids i-1234567890abcdef0
 ```
 
 ### AMIs (Amazon Machine Images)
+
 ```bash
 # List AMIs
 aws ec2 describe-images --owners self
@@ -109,6 +114,7 @@ aws ec2 deregister-image --image-id ami-12345678
 ```
 
 ### Security Groups
+
 ```bash
 # List security groups
 aws ec2 describe-security-groups
@@ -135,12 +141,14 @@ aws ec2 revoke-security-group-ingress \
 ```
 
 ### Key Pairs
+
 ```bash
 # List key pairs
 aws ec2 describe-key-pairs
 
 # Create key pair
-aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+aws ec2 create-key-pair --key-name MyKeyPair \
+    --query 'KeyMaterial' --output text > MyKeyPair.pem
 
 # Delete key pair
 aws ec2 delete-key-pair --key-name MyKeyPair
@@ -149,6 +157,7 @@ aws ec2 delete-key-pair --key-name MyKeyPair
 ## S3 (Simple Storage Service)
 
 ### Buckets
+
 ```bash
 # List buckets
 aws s3 ls
@@ -168,6 +177,7 @@ aws s3 ls s3://my-bucket-name/path/ --human-readable --summarize
 ```
 
 ### Objects
+
 ```bash
 # Upload file
 aws s3 cp file.txt s3://my-bucket-name/
@@ -191,6 +201,7 @@ aws s3 rm s3://my-bucket-name/path/ --recursive
 ```
 
 ### S3 Advanced Operations
+
 ```bash
 # Set bucket versioning
 aws s3api put-bucket-versioning \
@@ -218,6 +229,7 @@ aws s3 presign s3://my-bucket-name/file.txt --expires-in 3600
 ## IAM (Identity and Access Management)
 
 ### Users
+
 ```bash
 # List users
 aws iam list-users
@@ -239,6 +251,7 @@ aws iam delete-access-key --user-name myuser --access-key-id AKIAIOSFODNN7EXAMPL
 ```
 
 ### Groups
+
 ```bash
 # List groups
 aws iam list-groups
@@ -257,6 +270,7 @@ aws iam get-group --group-name mygroup
 ```
 
 ### Policies
+
 ```bash
 # List policies
 aws iam list-policies
@@ -282,6 +296,7 @@ aws iam list-attached-user-policies --user-name myuser
 ```
 
 ### Roles
+
 ```bash
 # List roles
 aws iam list-roles
@@ -305,6 +320,7 @@ aws sts assume-role \
 ## RDS (Relational Database Service)
 
 ### DB Instances
+
 ```bash
 # List DB instances
 aws rds describe-db-instances
@@ -335,6 +351,7 @@ aws rds modify-db-instance \
 ```
 
 ### Snapshots
+
 ```bash
 # List snapshots
 aws rds describe-db-snapshots
@@ -357,6 +374,7 @@ aws rds delete-db-snapshot --db-snapshot-identifier mydb-snapshot-20231201
 ## Lambda
 
 ### Functions
+
 ```bash
 # List functions
 aws lambda list-functions
@@ -388,6 +406,7 @@ aws lambda get-function-configuration --function-name my-function
 ```
 
 ### Function Configuration
+
 ```bash
 # Update function configuration
 aws lambda update-function-configuration \
@@ -409,6 +428,7 @@ aws lambda tag-resource \
 ## CloudFormation
 
 ### Stacks
+
 ```bash
 # List stacks
 aws cloudformation list-stacks
@@ -439,6 +459,7 @@ aws cloudformation describe-stack-resources --stack-name my-stack
 ```
 
 ### Stack Operations
+
 ```bash
 # Validate template
 aws cloudformation validate-template --template-body file://template.yaml
@@ -456,6 +477,7 @@ aws cloudformation detect-stack-drift --stack-name my-stack
 ## CloudWatch
 
 ### Logs
+
 ```bash
 # List log groups
 aws logs describe-log-groups
@@ -481,6 +503,7 @@ aws logs filter-log-events \
 ```
 
 ### Metrics
+
 ```bash
 # List metrics
 aws cloudwatch list-metrics
@@ -505,6 +528,7 @@ aws cloudwatch put-metric-data \
 ## VPC (Virtual Private Cloud)
 
 ### VPC Management
+
 ```bash
 # List VPCs
 aws ec2 describe-vpcs
@@ -530,6 +554,7 @@ aws ec2 delete-subnet --subnet-id subnet-12345678
 ```
 
 ### Internet Gateway
+
 ```bash
 # List internet gateways
 aws ec2 describe-internet-gateways
@@ -551,6 +576,7 @@ aws ec2 detach-internet-gateway \
 ## Route 53
 
 ### Hosted Zones
+
 ```bash
 # List hosted zones
 aws route53 list-hosted-zones
@@ -568,6 +594,7 @@ aws route53 list-resource-record-sets --hosted-zone-id Z123456789
 ```
 
 ### DNS Records
+
 ```bash
 # Create DNS record
 aws route53 change-resource-record-sets \
@@ -593,6 +620,7 @@ aws route53 change-resource-record-sets \
 ## Useful Options & Formatting
 
 ### Output Formats
+
 ```bash
 # JSON output (default)
 aws s3 ls --output json
@@ -608,6 +636,7 @@ aws s3 ls --output yaml
 ```
 
 ### Filtering & Querying
+
 ```bash
 # JMESPath query
 aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId'
@@ -621,6 +650,7 @@ aws s3api list-objects --bucket my-bucket --query 'Contents[].{Key: Key, Size: S
 ```
 
 ### Pagination
+
 ```bash
 # Get all results (handles pagination automatically)
 aws s3api list-objects --bucket my-bucket --max-items 1000
@@ -635,6 +665,7 @@ aws s3api list-objects --bucket my-bucket --starting-token <token>
 ## Environment Variables
 
 ### AWS CLI Configuration
+
 ```bash
 # Credentials
 export AWS_ACCESS_KEY_ID=your_access_key
@@ -656,6 +687,7 @@ export AWS_CLI_AUTO_PROMPT=on
 ## Debugging & Troubleshooting
 
 ### Debug Options
+
 ```bash
 # Enable debug output
 aws s3 ls --debug
@@ -671,6 +703,7 @@ aws s3 cp large-file.zip s3://my-bucket/ --cli-read-timeout 0
 ```
 
 ### Common Troubleshooting
+
 ```bash
 # Check AWS CLI version
 aws --version
@@ -689,12 +722,14 @@ aws iam create-policy --policy-name test --policy-document file://policy.json --
 ## Tips & Best Practices
 
 ### Performance
+
 1. **Use appropriate output formats** - `text` for scripts, `table` for humans
 2. **Leverage JMESPath queries** to filter data client-side
 3. **Use pagination** for large result sets
 4. **Enable CLI pager** for better readability: `export AWS_PAGER=""`
 
 ### Security
+
 1. **Use IAM roles** instead of access keys when possible
 2. **Rotate access keys regularly**
 3. **Use least privilege principle** for IAM policies
@@ -702,6 +737,7 @@ aws iam create-policy --policy-name test --policy-document file://policy.json --
 5. **Use AWS SSO** for centralized access management
 
 ### Automation
+
 1. **Use profiles** for different environments
 2. **Leverage AWS CLI configuration files**
 3. **Use environment variables** in CI/CD pipelines
@@ -709,12 +745,14 @@ aws iam create-policy --policy-name test --policy-document file://policy.json --
 5. **Use AWS CLI v2** for better performance and features
 
 ### Useful Aliases
+
 ```bash
 # Add to ~/.bashrc or ~/.zshrc
 alias awswho='aws sts get-caller-identity'
 alias awsregion='aws configure get region'
 alias awsprofile='aws configure list-profiles'
-alias ec2ls='aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId,State.Name,Tags[?Key==\`Name\`]|[0].Value]" --output table'
+alias ec2ls='aws ec2 describe-instances \
+    --query "Reservations[*].Instances[*].[InstanceId,State.Name,\
+Tags[?Key==\\\`Name\\\`]|[0].Value]" --output table'
 alias s3ls='aws s3 ls --human-readable --summarize'
 ```
-

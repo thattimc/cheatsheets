@@ -8,4 +8,4 @@ This directory contains cheatsheets for DevOps tools and platforms:
 - **krakend-cheatsheet.md**: KrakenD API Gateway
 - **kafka-cheatsheet.md**: Apache Kafka
 - **redis-cheatsheet.md**: Redis
-- **postgresql-cheatsheet.md**: PostgreSQL 
+- **postgresql-cheatsheet.md**: PostgreSQL

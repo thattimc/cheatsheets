@@ -5,6 +5,7 @@ Docker is a platform for developing, shipping, and running applications using co
 ## Installation
 
 ### macOS
+
 ```bash
 # Install via Homebrew
 brew install --cask docker
@@ -13,6 +14,7 @@ brew install --cask docker
 ```
 
 ### Linux (Ubuntu/Debian)
+
 ```bash
 # Install Docker Engine
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -27,6 +29,7 @@ sudo systemctl enable docker
 ```
 
 ### Windows
+
 ```powershell
 # Download Docker Desktop from https://docker.com/products/docker-desktop
 # Or use winget
@@ -36,6 +39,7 @@ winget install Docker.DockerDesktop
 ## Basic Commands
 
 ### Docker System
+
 ```bash
 # Check Docker version
 docker --version
@@ -56,6 +60,7 @@ docker system prune -a  # Remove all unused data
 ### Images
 
 #### Pull and Push Images
+
 ```bash
 # Pull an image from registry
 docker pull ubuntu:20.04
@@ -73,6 +78,7 @@ docker logout
 ```
 
 #### List and Manage Images
+
 ```bash
 # List all images
 docker images
@@ -93,6 +99,7 @@ docker image prune -a
 ```
 
 #### Build Images
+
 ```bash
 # Build image from Dockerfile
 docker build -t myapp:latest .
@@ -114,6 +121,7 @@ docker inspect image_name
 ### Containers
 
 #### Run Containers
+
 ```bash
 # Run container
 docker run ubuntu:20.04
@@ -145,6 +153,7 @@ docker run --restart=unless-stopped nginx:latest
 ```
 
 #### Container Management
+
 ```bash
 # List running containers
 docker ps
@@ -176,6 +185,7 @@ docker container prune
 ```
 
 #### Container Interaction
+
 ```bash
 # Execute command in running container
 docker exec -it container_name /bin/bash
@@ -207,6 +217,7 @@ docker inspect container_name
 ## Dockerfile
 
 ### Basic Dockerfile Instructions
+
 ```dockerfile
 # Base image
 FROM ubuntu:20.04
@@ -252,6 +263,7 @@ HEALTHCHECK --interval=30s --timeout=3s \
 ```
 
 ### Multi-stage Dockerfile Example
+
 ```dockerfile
 # Build stage
 FROM node:16 AS builder
@@ -271,6 +283,7 @@ CMD ["node", "server.js"]
 ## Docker Compose
 
 ### Basic docker-compose.yml
+
 ```yaml
 version: '3.8'
 
@@ -312,6 +325,7 @@ networks:
 ```
 
 ### Docker Compose Commands
+
 ```bash
 # Start services
 docker-compose up
@@ -352,6 +366,7 @@ docker-compose config
 ## Volumes
 
 ### Volume Management
+
 ```bash
 # Create volume
 docker volume create myvolume
@@ -373,6 +388,7 @@ docker run -v myvolume:/data ubuntu:20.04
 ```
 
 ### Bind Mounts vs Volumes
+
 ```bash
 # Bind mount (host directory)
 docker run -v /host/path:/container/path ubuntu:20.04
@@ -389,6 +405,7 @@ docker run -v /container/path ubuntu:20.04
 ## Networks
 
 ### Network Management
+
 ```bash
 # List networks
 docker network ls
@@ -414,6 +431,7 @@ docker network prune
 ```
 
 ### Run Container with Custom Network
+
 ```bash
 # Run with custom network
 docker run --network=mynetwork ubuntu:20.04
@@ -428,6 +446,7 @@ docker run --network=none ubuntu:20.04
 ## Registry Operations
 
 ### Docker Hub
+
 ```bash
 # Login to Docker Hub
 docker login
@@ -443,6 +462,7 @@ docker pull username/myapp:latest
 ```
 
 ### Private Registry
+
 ```bash
 # Run local registry
 docker run -d -p 5000:5000 --name registry registry:2
@@ -460,6 +480,7 @@ docker pull localhost:5000/myapp:latest
 ## Docker Swarm (Orchestration)
 
 ### Swarm Management
+
 ```bash
 # Initialize swarm
 docker swarm init
@@ -483,6 +504,7 @@ docker node update --availability drain node_id
 ```
 
 ### Services
+
 ```bash
 # Create service
 docker service create --name web --publish 8080:80 nginx:latest
@@ -506,6 +528,7 @@ docker service logs web
 ## Security
 
 ### Security Best Practices
+
 ```bash
 # Run as non-root user
 docker run --user 1000:1000 ubuntu:20.04
@@ -528,6 +551,7 @@ docker service create --secret my_secret nginx:latest
 ```
 
 ### Image Security
+
 ```bash
 # Scan image for vulnerabilities (Docker Scout)
 docker scout cves ubuntu:20.04
@@ -540,6 +564,7 @@ docker push username/myapp:latest
 ## Monitoring and Debugging
 
 ### Container Monitoring
+
 ```bash
 # Real-time container stats
 docker stats
@@ -559,6 +584,7 @@ docker import container.tar myimage:latest
 ```
 
 ### Debugging
+
 ```bash
 # Debug container startup
 docker run --rm -it ubuntu:20.04 /bin/bash
@@ -580,6 +606,7 @@ docker commit container_name myimage:debug
 ## Cleanup Commands
 
 ### System Cleanup
+
 ```bash
 # Remove all stopped containers
 docker container prune
@@ -630,6 +657,7 @@ docker rmi $(docker images -q)
 ## Environment Variables and Secrets
 
 ### Environment Variables
+
 ```bash
 # Set environment variables
 docker run -e VAR1=value1 -e VAR2=value2 ubuntu:20.04
@@ -648,6 +676,7 @@ services:
 ```
 
 ### Docker Secrets (Swarm Mode)
+
 ```bash
 # Create secret
 echo "my_secret_password" | docker secret create db_password -
@@ -666,6 +695,7 @@ docker service create \
 ## Health Checks
 
 ### Health Check Examples
+
 ```dockerfile
 # In Dockerfile
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
@@ -692,6 +722,7 @@ docker inspect container_name | grep Health
 ## Performance Tips
 
 ### Dockerfile Optimization
+
 ```dockerfile
 # Use specific tags, not 'latest'
 FROM node:16-alpine
@@ -716,6 +747,7 @@ COPY --from=builder /app/dist ./dist
 ```
 
 ### Runtime Optimization
+
 ```bash
 # Set resource limits
 docker run --memory=512m --cpus=1.5 myapp:latest
@@ -730,4 +762,3 @@ docker run --log-driver=json-file --log-opt max-size=10m myapp:latest
 ---
 
 *For more detailed information, visit the [official Docker documentation](https://docs.docker.com/)*
-

@@ -1,10 +1,13 @@
 # PostgreSQL Cheatsheet
 
-PostgreSQL is a powerful, open-source object-relational database system with over 35 years of active development. It has earned a strong reputation for reliability, feature robustness, and performance.
+PostgreSQL is a powerful, open-source object-relational database system with over 35 years
+of active development. It has earned a strong reputation for reliability, feature robustness,
+and performance.
 
 ## Overview
 
 ### Key Features
+
 - **ACID Compliance** - Full support for transactions, consistency, isolation, durability
 - **Extensibility** - Custom data types, operators, functions, and extensions
 - **SQL Standards** - Extensive SQL standard compliance with advanced features
@@ -17,6 +20,7 @@ PostgreSQL is a powerful, open-source object-relational database system with ove
 - **Procedural Languages** - PL/pgSQL, Python, Perl, JavaScript support
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Client Apps  │    │  PostgreSQL     │    │   Storage       │
@@ -40,6 +44,7 @@ PostgreSQL is a powerful, open-source object-relational database system with ove
 ## Installation
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install postgresql@15
@@ -66,6 +71,7 @@ psql postgres
 ```
 
 ### Linux Installation
+
 ```bash
 # Ubuntu/Debian
 sudo apt update
@@ -91,6 +97,7 @@ psql
 ```
 
 ### Docker Installation
+
 ```bash
 # Run PostgreSQL container
 docker run --name postgres-db \
@@ -134,6 +141,7 @@ docker-compose up -d
 ```
 
 ### Configuration
+
 ```bash
 # Find configuration files
 psql -c "SHOW config_file;"
@@ -160,6 +168,7 @@ psql -c "SELECT pg_reload_conf();"
 ## Basic Commands
 
 ### psql Commands
+
 ```bash
 # Connect to PostgreSQL
 psql -h localhost -p 5432 -U username -d database
@@ -200,6 +209,7 @@ psql database_name
 ```
 
 ### Command Line Tools
+
 ```bash
 # Create database
 createdb mydb
@@ -246,6 +256,7 @@ reindexdb --all
 ## SQL Fundamentals
 
 ### Data Types
+
 ```sql
 -- Numeric Types
 SMALLINT                    -- 2 bytes, -32768 to 32767
@@ -302,6 +313,7 @@ MACADDR                     -- MAC address
 ```
 
 ### Database Operations
+
 ```sql
 -- Create database
 CREATE DATABASE mydb
@@ -325,6 +337,7 @@ SELECT pg_size_pretty(pg_database_size('mydb'));
 ```
 
 ### Schema Operations
+
 ```sql
 -- Create schema
 CREATE SCHEMA myschema;
@@ -343,6 +356,7 @@ SHOW search_path;
 ```
 
 ### Table Operations
+
 ```sql
 -- Create table
 CREATE TABLE users (
@@ -409,6 +423,7 @@ WHERE table_name = 'users';
 ## CRUD Operations
 
 ### INSERT
+
 ```sql
 -- Basic insert
 INSERT INTO users (username, email, password_hash)
@@ -442,6 +457,7 @@ VALUES ('user1', 'user1@example.com', 'hash',
 ```
 
 ### SELECT
+
 ```sql
 -- Basic select
 SELECT * FROM users;
@@ -504,6 +520,7 @@ FROM users;
 ```
 
 ### UPDATE
+
 ```sql
 -- Basic update
 UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = 1;
@@ -543,6 +560,7 @@ WHERE id = 1;
 ```
 
 ### DELETE
+
 ```sql
 -- Basic delete
 DELETE FROM users WHERE id = 1;
@@ -569,6 +587,7 @@ DELETE FROM temp_table;
 ## Joins and Relationships
 
 ### Join Types
+
 ```sql
 -- Inner Join
 SELECT u.username, o.total_amount, o.order_date
@@ -609,6 +628,7 @@ JOIN products p ON oi.product_id = p.id;
 ```
 
 ### Common Table Expressions (CTEs)
+
 ```sql
 -- Basic CTE
 WITH active_users AS (
@@ -658,6 +678,7 @@ JOIN high_value_users hvu ON u.id = hvu.user_id;
 ## Indexes and Performance
 
 ### Index Types
+
 ```sql
 -- B-tree index (default)
 CREATE INDEX idx_users_email ON users (email);
@@ -700,6 +721,7 @@ REINDEX DATABASE mydb;
 ```
 
 ### Query Performance
+
 ```sql
 -- Explain query plan
 EXPLAIN SELECT * FROM users WHERE email = 'john@example.com';
@@ -747,6 +769,7 @@ ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 ## Advanced SQL Features
 
 ### JSON Operations
+
 ```sql
 -- JSON operators
 SELECT profile->>'name' as name FROM users;  -- Get as text
@@ -773,6 +796,7 @@ UPDATE users SET profile = profile - 'age' WHERE id = 1;  -- Remove key
 ```
 
 ### Array Operations
+
 ```sql
 -- Array operations
 SELECT * FROM users WHERE 'reading' = ANY(tags);
@@ -794,6 +818,7 @@ GROUP BY user_id;
 ```
 
 ### Full-Text Search
+
 ```sql
 -- Basic text search
 SELECT * FROM posts 
@@ -820,6 +845,7 @@ ALTER MAPPING FOR asciiword WITH english_stem, simple;
 ```
 
 ### Window Functions
+
 ```sql
 -- Ranking functions
 SELECT username, total_spent,
@@ -849,6 +875,7 @@ FROM orders;
 ## User Management and Security
 
 ### User and Role Management
+
 ```sql
 -- Create users
 CREATE USER myuser WITH PASSWORD 'mypassword';
@@ -882,6 +909,7 @@ SELECT rolname, rolsuper, rolcreatedb, rolcreaterole FROM pg_roles;
 ```
 
 ### Permissions and Privileges
+
 ```sql
 -- Grant database privileges
 GRANT CONNECT ON DATABASE mydb TO app_user;
@@ -924,6 +952,7 @@ WHERE table_name = 'users';
 ```
 
 ### Row Level Security (RLS)
+
 ```sql
 -- Enable RLS on table
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
@@ -958,6 +987,7 @@ SET app.current_user_id = '123';
 ## Backup and Recovery
 
 ### Backup Strategies
+
 ```bash
 # SQL dump backup
 pg_dump mydb > mydb_backup.sql
@@ -990,6 +1020,7 @@ pg_dump --clean --if-exists --create --inserts mydb > mydb_backup.sql
 ```
 
 ### Restore Operations
+
 ```bash
 # Restore from SQL dump
 psql mydb < mydb_backup.sql
@@ -1018,6 +1049,7 @@ pg_restore --use-list=restore_list.txt -d mydb mydb_backup.dump
 ```
 
 ### Point-in-Time Recovery (PITR)
+
 ```bash
 # Configure WAL archiving in postgresql.conf
 wal_level = replica
@@ -1038,6 +1070,7 @@ echo "recovery_target_time = '2023-12-01 12:00:00'" >> recovery.conf
 ## Transactions and Concurrency
 
 ### Transaction Control
+
 ```sql
 -- Basic transaction
 BEGIN;
@@ -1077,6 +1110,7 @@ COMMIT;
 ```
 
 ### Locking
+
 ```sql
 -- Table-level locks
 LOCK TABLE users IN ACCESS EXCLUSIVE MODE;
@@ -1108,6 +1142,7 @@ JOIN pg_stat_activity a ON l.pid = a.pid;
 ## Functions and Stored Procedures
 
 ### PL/pgSQL Functions
+
 ```sql
 -- Simple function
 CREATE OR REPLACE FUNCTION get_user_count()
@@ -1181,6 +1216,7 @@ WHERE routine_schema = 'public';
 ```
 
 ### Triggers
+
 ```sql
 -- Create trigger function
 CREATE OR REPLACE FUNCTION update_modified_column()
@@ -1237,6 +1273,7 @@ WHERE event_object_schema = 'public';
 ## Monitoring and Maintenance
 
 ### Database Statistics
+
 ```sql
 -- Database size and statistics
 SELECT 
@@ -1285,6 +1322,7 @@ LIMIT 10;
 ```
 
 ### Connection Monitoring
+
 ```sql
 -- Active connections
 SELECT 
@@ -1326,6 +1364,7 @@ SELECT pg_cancel_backend(pid) FROM pg_stat_activity WHERE pid = 12345;
 ```
 
 ### Maintenance Tasks
+
 ```sql
 -- Manual vacuum and analyze
 VACUUM VERBOSE users;
@@ -1358,6 +1397,7 @@ SELECT name, setting FROM pg_settings WHERE name LIKE '%autovacuum%';
 ## Configuration and Tuning
 
 ### Key Configuration Parameters
+
 ```sql
 -- View current settings
 SELECT name, setting, unit, context FROM pg_settings 
@@ -1407,6 +1447,7 @@ SET autovacuum_analyze_scale_factor = 0.05;
 ```
 
 ### Performance Tuning
+
 ```sql
 -- Enable extensions for monitoring
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
@@ -1502,6 +1543,7 @@ ORDER BY wastedbytes DESC, wastedibytes DESC;
 ## Common Patterns and Best Practices
 
 ### Naming Conventions
+
 ```sql
 -- Table names: plural, lowercase, underscores
 CREATE TABLE users (...);           -- Good
@@ -1530,6 +1572,7 @@ ALTER TABLE users ADD CONSTRAINT chk_users_email_format
 ```
 
 ### Security Best Practices
+
 ```sql
 -- Use parameterized queries (application level)
 -- NEVER do this: "SELECT * FROM users WHERE id = " + user_input
@@ -1566,6 +1609,7 @@ CREATE TABLE audit_log (
 ```
 
 ### Performance Best Practices
+
 ```sql
 -- Always define primary keys
 CREATE TABLE users (
@@ -1605,4 +1649,3 @@ SELECT * FROM users;                    -- Avoid in production
 ---
 
 *For more detailed information, visit the [official PostgreSQL documentation](https://www.postgresql.org/docs/)*
-

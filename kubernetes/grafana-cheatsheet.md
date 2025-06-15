@@ -1,10 +1,12 @@
 # Grafana Cheatsheet
 
-Grafana is an open-source platform for monitoring and observability that allows you to query, visualize, alert on, and understand your metrics no matter where they are stored.
+Grafana is an open-source platform for monitoring and observability that allows you to
+query, visualize, alert on, and understand your metrics no matter where they are stored.
 
 ## Overview
 
 ### Key Features
+
 - **Data Source Agnostic** - Connect to 60+ data sources
 - **Rich Visualizations** - Graphs, tables, heatmaps, and more
 - **Dashboard Creation** - Interactive and dynamic dashboards
@@ -16,6 +18,7 @@ Grafana is an open-source platform for monitoring and observability that allows 
 - **API** - Comprehensive REST API for automation
 
 ### Architecture
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Data Sources  │    │     Grafana     │    │     Users       │
@@ -41,6 +44,7 @@ Grafana is an open-source platform for monitoring and observability that allows 
 ## Installation
 
 ### Docker Installation
+
 ```bash
 # Basic Grafana container
 docker run -d \
@@ -72,6 +76,7 @@ docker run -d \
 ```
 
 ### Docker Compose
+
 ```yaml
 # docker-compose.yml
 version: '3.8'
@@ -102,6 +107,7 @@ networks:
 ```
 
 ### Kubernetes Installation
+
 ```bash
 # Using Helm
 helm repo add grafana https://grafana.github.io/helm-charts
@@ -125,6 +131,7 @@ kubectl port-forward service/grafana 3000:80
 ```
 
 ### Binary Installation
+
 ```bash
 # Ubuntu/Debian
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
@@ -145,6 +152,7 @@ sudo systemctl status grafana-server
 ```
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install grafana
@@ -162,6 +170,7 @@ grafana-server --config=/usr/local/etc/grafana/grafana.ini
 ## Configuration
 
 ### Basic Configuration (grafana.ini)
+
 ```ini
 # /etc/grafana/grafana.ini
 
@@ -264,6 +273,7 @@ enable = publicDashboards
 ```
 
 ### Environment Variables
+
 ```bash
 # Common environment variables
 export GF_SECURITY_ADMIN_PASSWORD=admin123
@@ -287,6 +297,7 @@ export GF_SMTP_FROM_ADDRESS=your-email@gmail.com
 ## Data Sources
 
 ### Prometheus Data Source
+
 ```yaml
 # prometheus-datasource.yaml
 apiVersion: 1
@@ -309,6 +320,7 @@ datasources:
 ```
 
 ### InfluxDB Data Source
+
 ```yaml
 # influxdb-datasource.yaml
 apiVersion: 1
@@ -327,6 +339,7 @@ datasources:
 ```
 
 ### MySQL Data Source
+
 ```yaml
 # mysql-datasource.yaml
 apiVersion: 1
@@ -345,6 +358,7 @@ datasources:
 ```
 
 ### Elasticsearch Data Source
+
 ```yaml
 # elasticsearch-datasource.yaml
 apiVersion: 1
@@ -364,6 +378,7 @@ datasources:
 ```
 
 ### CloudWatch Data Source
+
 ```yaml
 # cloudwatch-datasource.yaml
 apiVersion: 1
@@ -381,6 +396,7 @@ datasources:
 ## Dashboard Creation
 
 ### Dashboard JSON Structure
+
 ```json
 {
   "dashboard": {
@@ -415,6 +431,7 @@ datasources:
 ```
 
 ### Basic Panel Configuration
+
 ```json
 {
   "id": 1,
@@ -460,6 +477,7 @@ datasources:
 ## Panel Types and Configurations
 
 ### Time Series Panel
+
 ```json
 {
   "type": "timeseries",
@@ -496,6 +514,7 @@ datasources:
 ```
 
 ### Stat Panel
+
 ```json
 {
   "type": "stat",
@@ -534,6 +553,7 @@ datasources:
 ```
 
 ### Gauge Panel
+
 ```json
 {
   "type": "gauge",
@@ -565,6 +585,7 @@ datasources:
 ```
 
 ### Table Panel
+
 ```json
 {
   "type": "table",
@@ -607,6 +628,7 @@ datasources:
 ```
 
 ### Heatmap Panel
+
 ```json
 {
   "type": "heatmap",
@@ -673,6 +695,7 @@ datasources:
 ## Variables and Templating
 
 ### Query Variable
+
 ```json
 {
   "name": "instance",
@@ -701,6 +724,7 @@ datasources:
 ```
 
 ### Custom Variable
+
 ```json
 {
   "name": "environment",
@@ -725,6 +749,7 @@ datasources:
 ```
 
 ### Datasource Variable
+
 ```json
 {
   "name": "datasource",
@@ -745,6 +770,7 @@ datasources:
 ```
 
 ### Interval Variable
+
 ```json
 {
   "name": "interval",
@@ -773,6 +799,7 @@ datasources:
 ## Alerting
 
 ### Alert Rule Configuration
+
 ```json
 {
   "uid": "alert-rule-1",
@@ -852,6 +879,7 @@ datasources:
 ```
 
 ### Notification Policy
+
 ```json
 {
   "receiver": "default-receiver",
@@ -888,6 +916,7 @@ datasources:
 ```
 
 ### Contact Points
+
 ```json
 {
   "name": "slack-alerts",
@@ -908,6 +937,7 @@ datasources:
 ## Provisioning
 
 ### Dashboard Provisioning
+
 ```yaml
 # provisioning/dashboards/dashboard.yaml
 apiVersion: 1
@@ -945,6 +975,7 @@ providers:
 ```
 
 ### Data Source Provisioning
+
 ```yaml
 # provisioning/datasources/datasource.yaml
 apiVersion: 1
@@ -1004,6 +1035,7 @@ datasources:
 ```
 
 ### Alert Provisioning
+
 ```yaml
 # provisioning/alerting/alerts.yaml
 groups:
@@ -1067,6 +1099,7 @@ groups:
 ## Grafana API
 
 ### Authentication
+
 ```bash
 # API Key authentication
 API_KEY="your-api-key"
@@ -1083,6 +1116,7 @@ HEADER="Authorization: Bearer $SA_TOKEN"
 ```
 
 ### Dashboard API
+
 ```bash
 # Get all dashboards
 curl -H "$HEADER" "http://localhost:3000/api/search?type=dash-db"
@@ -1119,6 +1153,7 @@ curl -X POST -H "$HEADER" -H "Content-Type: application/json" \
 ```
 
 ### Data Source API
+
 ```bash
 # Get all data sources
 curl -H "$HEADER" "http://localhost:3000/api/datasources"
@@ -1153,6 +1188,7 @@ curl -X POST -H "$HEADER" "http://localhost:3000/api/datasources/1/health"
 ```
 
 ### User and Organization API
+
 ```bash
 # Get current user
 curl -H "$HEADER" "http://localhost:3000/api/user"
@@ -1189,6 +1225,7 @@ curl -X POST -H "$HEADER" "http://localhost:3000/api/user/using/2"
 ```
 
 ### Alerting API
+
 ```bash
 # Get alert rules
 curl -H "$HEADER" "http://localhost:3000/api/ruler/grafana/api/v1/rules"
@@ -1227,6 +1264,7 @@ curl -X POST -H "$HEADER" -H "Content-Type: application/json" \
 ## Plugins
 
 ### Installing Plugins
+
 ```bash
 # Install plugin via CLI
 grafana-cli plugins install grafana-clock-panel
@@ -1258,6 +1296,7 @@ docker run -d \
 ```
 
 ### Popular Plugins
+
 ```bash
 # Panel plugins
 grafana-clock-panel           # Clock panel
@@ -1281,6 +1320,7 @@ volkovlabs-rss-datasource     # RSS/Atom feeds
 ```
 
 ### Plugin Configuration
+
 ```ini
 # grafana.ini
 [plugins]
@@ -1301,6 +1341,7 @@ check_for_plugin_updates = true
 ## Performance Optimization
 
 ### Query Optimization
+
 ```json
 {
   "targets": [
@@ -1320,6 +1361,7 @@ check_for_plugin_updates = true
 ```
 
 ### Caching Configuration
+
 ```ini
 [caching]
 # Enable query result caching
@@ -1333,6 +1375,7 @@ max_value_mb = 25
 ```
 
 ### Database Optimization
+
 ```ini
 [database]
 # Use external database for better performance
@@ -1352,6 +1395,7 @@ log_queries = false
 ```
 
 ### Resource Limits
+
 ```yaml
 # kubernetes deployment
 resources:
@@ -1366,6 +1410,7 @@ resources:
 ## Monitoring Grafana
 
 ### Grafana Metrics
+
 ```promql
 # Query performance
 grafana_api_dataproxy_request_duration_seconds
@@ -1391,6 +1436,7 @@ process_cpu_seconds_total{job="grafana"}
 ```
 
 ### Health Check
+
 ```bash
 # Health endpoint
 curl http://localhost:3000/api/health
@@ -1405,6 +1451,7 @@ curl http://localhost:3000/api/ready
 ## Security
 
 ### Authentication Configuration
+
 ```ini
 [auth]
 # Disable login form
@@ -1434,6 +1481,7 @@ allow_sign_up = true
 ```
 
 ### LDAP Configuration
+
 ```toml
 # /etc/grafana/ldap.toml
 [[servers]]
@@ -1471,6 +1519,7 @@ org_role = "Viewer"
 ```
 
 ### TLS Configuration
+
 ```ini
 [server]
 protocol = https
@@ -1490,6 +1539,7 @@ tls_cipher_suites = [
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check Grafana logs
 docker logs grafana
@@ -1520,6 +1570,7 @@ top -p $(pgrep grafana)
 ```
 
 ### Debug Mode
+
 ```ini
 [log]
 mode = console file
@@ -1540,6 +1591,7 @@ max_days = 7
 ```
 
 ### Performance Issues
+
 ```bash
 # Check query performance
 curl -H "Authorization: Bearer $API_KEY" \
@@ -1561,6 +1613,7 @@ go tool pprof http://localhost:3000/debug/pprof/profile
 ## Best Practices
 
 ### Dashboard Design
+
 ```json
 {
   "dashboard": {
@@ -1600,6 +1653,7 @@ go tool pprof http://localhost:3000/debug/pprof/profile
 ```
 
 ### Variable Usage
+
 ```promql
 # Use variables in queries
 sum(rate(http_requests_total{instance=~"$instance", job="$job"}[$interval]))
@@ -1612,6 +1666,7 @@ label_values(up{job=~"$service.*"}, instance)
 ```
 
 ### Organization Structure
+
 ```yaml
 # Organization hierarchy
 Organizations:
@@ -1635,6 +1690,7 @@ Folders:
 ```
 
 ### Naming Conventions
+
 ```text
 # Dashboard naming
 [Environment] Service - Overview
@@ -1658,4 +1714,3 @@ $timerange
 ---
 
 *For more detailed information, visit the [official Grafana documentation](https://grafana.com/docs/)*
-

@@ -1,10 +1,12 @@
 # Headscale Cheatsheet
 
-Headscale is an open-source, self-hosted implementation of the Tailscale control server. It allows you to run your own Tailscale network without relying on Tailscale's SaaS offering.
+Headscale is an open-source, self-hosted implementation of the Tailscale control server.
+It allows you to run your own Tailscale network without relying on Tailscale's SaaS offering.
 
 ## Installation
 
 ### Docker (Recommended)
+
 ```bash
 # Pull the latest image
 docker pull headscale/headscale:latest
@@ -23,6 +25,7 @@ docker run \
 ```
 
 ### Binary Installation (Linux)
+
 ```bash
 # Download latest release
 wget https://github.com/juanfont/headscale/releases/latest/download/headscale_linux_amd64
@@ -31,6 +34,7 @@ sudo mv headscale_linux_amd64 /usr/local/bin/headscale
 ```
 
 ### From Source
+
 ```bash
 git clone https://github.com/juanfont/headscale.git
 cd headscale
@@ -40,6 +44,7 @@ go build -ldflags "-s -w -X github.com/juanfont/headscale/cmd/headscale/cli.Vers
 ## Configuration
 
 ### Basic Configuration File
+
 ```yaml
 # /etc/headscale/config.yaml
 server_url: https://headscale.example.com
@@ -81,6 +86,7 @@ dns_config:
 ```
 
 ### Generate Private Keys
+
 ```bash
 # Generate private key
 headscale generate private-key > /etc/headscale/private.key
@@ -92,6 +98,7 @@ headscale generate noise-key > /etc/headscale/noise_private.key
 ## Server Management
 
 ### Start/Stop Server
+
 ```bash
 # Start server
 headscale serve
@@ -104,6 +111,7 @@ nohup headscale serve > headscale.log 2>&1 &
 ```
 
 ### Systemd Service
+
 ```bash
 # Create systemd service file
 sudo tee /etc/systemd/system/headscale.service > /dev/null <<EOF
@@ -133,6 +141,7 @@ sudo systemctl start headscale
 ## User Management
 
 ### Create Users
+
 ```bash
 # Create a new user
 headscale users create myuser
@@ -150,6 +159,7 @@ headscale users rename oldname newname
 ## Pre-auth Keys
 
 ### Generate Pre-auth Keys
+
 ```bash
 # Create a pre-auth key
 headscale preauthkeys create --user myuser
@@ -173,6 +183,7 @@ headscale preauthkeys expire --identifier <key-id>
 ## Node Management
 
 ### Register Nodes
+
 ```bash
 # Register a node manually
 headscale nodes register --user myuser --key <machine-key>
@@ -188,6 +199,7 @@ headscale nodes show <node-id>
 ```
 
 ### Node Operations
+
 ```bash
 # Delete a node
 headscale nodes delete <node-id>
@@ -208,6 +220,7 @@ headscale nodes expire <node-id>
 ## Route Management
 
 ### Subnet Routes
+
 ```bash
 # Enable route for node
 headscale routes enable <route-id>
@@ -226,6 +239,7 @@ headscale routes delete <route-id>
 ```
 
 ### Exit Nodes
+
 ```bash
 # Enable node as exit node
 headscale routes enable <route-id>  # where route is 0.0.0.0/0
@@ -237,6 +251,7 @@ headscale routes list | grep "0.0.0.0/0"
 ## ACL (Access Control Lists)
 
 ### ACL Configuration
+
 ```bash
 # Set ACL policy from file
 headscale acl set policy.json
@@ -249,6 +264,7 @@ headscale acl validate policy.json
 ```
 
 ### Sample ACL Policy
+
 ```json
 {
   "hosts": {
@@ -281,6 +297,7 @@ headscale acl validate policy.json
 ## API Keys
 
 ### Generate API Keys
+
 ```bash
 # Create API key
 headscale apikeys create
@@ -296,6 +313,7 @@ headscale apikeys expire <prefix>
 ```
 
 ### Using API Keys
+
 ```bash
 # Set API key as environment variable
 export HEADSCALE_API_KEY="your-api-key-here"
@@ -308,6 +326,7 @@ curl -H "Authorization: Bearer $HEADSCALE_API_KEY" \
 ## Client Configuration
 
 ### Connect Tailscale Client to Headscale
+
 ```bash
 # Set custom control server
 tailscale up --login-server https://headscale.example.com
@@ -320,6 +339,7 @@ tailscale up --login-server https://headscale.example.com --accept-routes --acce
 ```
 
 ### Reset Client
+
 ```bash
 # Reset tailscale client
 tailscale logout
@@ -331,6 +351,7 @@ tailscale up --login-server https://headscale.example.com
 ## Database Management
 
 ### SQLite Operations
+
 ```bash
 # Backup database
 sqlite3 /etc/headscale/db.sqlite ".backup /path/to/backup.db"
@@ -343,6 +364,7 @@ sqlite3 /etc/headscale/db.sqlite ".tables"
 ```
 
 ### PostgreSQL Configuration
+
 ```yaml
 # In config.yaml
 database:
@@ -359,6 +381,7 @@ database:
 ## Monitoring & Logging
 
 ### View Logs
+
 ```bash
 # View logs (systemd)
 sudo journalctl -u headscale -f
@@ -371,6 +394,7 @@ headscale --log-level debug serve
 ```
 
 ### Metrics
+
 ```bash
 # Access Prometheus metrics
 curl http://localhost:9090/metrics
@@ -382,6 +406,7 @@ curl http://localhost:8080/health
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check server status
 headscale debug create-node-key
@@ -400,6 +425,7 @@ openssl s_client -connect headscale.example.com:443
 ```
 
 ### Node Registration Issues
+
 ```bash
 # Manual node registration
 # 1. On client, get machine key
@@ -410,6 +436,7 @@ headscale nodes register --user myuser --key mkey:...
 ```
 
 ### Certificate Issues
+
 ```bash
 # Generate self-signed certificate
 openssl req -new -x509 -key private.key -out cert.crt -days 365
@@ -484,4 +511,3 @@ tailscale up --login-server https://headscale.example.com
 ---
 
 *For more detailed information, visit the [official Headscale documentation](https://headscale.net/) and [GitHub repository](https://github.com/juanfont/headscale)*
-

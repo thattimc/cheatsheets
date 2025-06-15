@@ -1,10 +1,13 @@
 # OpenTofu Cheatsheet
 
-OpenTofu is an open-source Infrastructure as Code (IaC) tool and the community-driven fork of Terraform. It provides the same functionality as Terraform with additional features and improvements.
+OpenTofu is an open-source Infrastructure as Code (IaC) tool and the community-driven
+fork of Terraform. It provides the same functionality as Terraform with additional features
+and improvements.
 
 ## Installation
 
 ### macOS
+
 ```bash
 # Install via Homebrew
 brew install opentofu
@@ -22,6 +25,7 @@ tofu version
 ```
 
 ### Linux
+
 ```bash
 # Download and install binary
 wget https://github.com/opentofu/opentofu/releases/download/v1.6.0/tofu_1.6.0_linux_amd64.zip
@@ -39,6 +43,7 @@ sudo snap install opentofu --classic
 ```
 
 ### Windows
+
 ```powershell
 # Using Chocolatey
 choco install opentofu
@@ -53,6 +58,7 @@ scoop install opentofu
 ## Basic Commands
 
 ### Essential Commands
+
 ```bash
 # Initialize OpenTofu configuration
 tofu init
@@ -83,6 +89,7 @@ tofu version
 ```
 
 ### Advanced Commands
+
 ```bash
 # Plan with specific var file
 tofu plan -var-file="prod.tfvars"
@@ -117,6 +124,7 @@ tofu state rm aws_instance.example
 ## Configuration Syntax
 
 ### Basic Configuration Structure
+
 ```hcl
 # Configure OpenTofu and providers
 terraform {
@@ -197,6 +205,7 @@ output "instance_dns" {
 ## OpenTofu-Specific Features
 
 ### State Encryption
+
 ```hcl
 # OpenTofu supports state encryption
 terraform {
@@ -221,6 +230,7 @@ terraform {
 ```
 
 ### Provider-defined Functions
+
 ```hcl
 # OpenTofu supports provider-defined functions
 locals {
@@ -233,6 +243,7 @@ locals {
 ```
 
 ### Improved Testing
+
 ```hcl
 # OpenTofu has enhanced testing capabilities
 # test/main.tftest.hcl
@@ -263,6 +274,7 @@ run "test_instance_tags" {
 ## Variables
 
 ### Variable Types
+
 ```hcl
 # String variable
 variable "environment" {
@@ -338,6 +350,7 @@ variable "instance_size" {
 ```
 
 ### Variable Files
+
 ```hcl
 # terraform.tfvars
 aws_region = "us-east-1"
@@ -363,6 +376,7 @@ enable_monitoring = true
 ## State Management
 
 ### Remote State Backend
+
 ```hcl
 # S3 Backend with encryption
 terraform {
@@ -410,6 +424,7 @@ terraform {
 ```
 
 ### State Commands
+
 ```bash
 # List resources in state
 tofu state list
@@ -439,6 +454,7 @@ tofu state encrypt
 ## Functions
 
 ### Built-in Functions
+
 ```hcl
 # String functions
 locals {
@@ -497,6 +513,7 @@ locals {
 ## Modules
 
 ### Creating a Module
+
 ```hcl
 # modules/vpc/main.tf
 variable "cidr_block" {
@@ -558,6 +575,7 @@ output "internet_gateway_id" {
 ```
 
 ### Using a Module
+
 ```hcl
 # main.tf
 module "vpc" {
@@ -609,6 +627,7 @@ resource "aws_instance" "web" {
 ## Testing with OpenTofu
 
 ### Test Configuration
+
 ```hcl
 # tests/vpc_test.tftest.hcl
 variables {
@@ -650,6 +669,7 @@ run "test_tags" {
 ```
 
 ### Running Tests
+
 ```bash
 # Run all tests
 tofu test
@@ -667,6 +687,7 @@ tofu test -json > test_results.json
 ## OpenTofu vs Terraform Differences
 
 ### Key Differences
+
 ```hcl
 # 1. State Encryption (OpenTofu only)
 terraform {
@@ -703,6 +724,7 @@ locals {
 ```
 
 ### Migration from Terraform
+
 ```bash
 # 1. Replace terraform commands with tofu
 # terraform init -> tofu init
@@ -724,6 +746,7 @@ tofu init -migrate-state
 ## Best Practices
 
 ### Project Structure
+
 ```
 project/
 ├── main.tf              # Main configuration
@@ -754,6 +777,7 @@ project/
 ```
 
 ### Security Best Practices
+
 ```hcl
 # Use state encryption
 terraform {
@@ -819,6 +843,7 @@ locals {
 ## Debugging and Troubleshooting
 
 ### Environment Variables
+
 ```bash
 # Enable debug logging
 export TF_LOG=DEBUG
@@ -846,6 +871,7 @@ export TOFU_LOG_PATH=./tofu.log
 ```
 
 ### Common Commands for Debugging
+
 ```bash
 # Validate configuration
 tofu validate
@@ -882,6 +908,7 @@ tofu state encrypt
 ## Common Patterns
 
 ### Multi-Environment Setup
+
 ```hcl
 # environments/variables.tf
 variable "environment" {
@@ -993,6 +1020,7 @@ export TF_VAR_state_passphrase="your-secure-passphrase"
 ## Migration Guide
 
 ### From Terraform to OpenTofu
+
 ```bash
 # 1. Install OpenTofu
 brew install opentofu
@@ -1014,6 +1042,7 @@ tofu init
 ```
 
 ### Compatibility Notes
+
 ```hcl
 # OpenTofu is compatible with:
 # - All Terraform providers
@@ -1032,4 +1061,3 @@ tofu init
 ---
 
 *For more detailed information, visit the [official OpenTofu documentation](https://opentofu.org/docs/)*
-

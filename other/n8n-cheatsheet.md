@@ -3,6 +3,7 @@
 ## Installation & Setup
 
 ### Installation Methods
+
 ```bash
 # NPM (Global)
 npm install n8n -g
@@ -37,6 +38,7 @@ services:
 ```
 
 ### Running n8n
+
 ```bash
 # Start n8n
 n8n start
@@ -63,6 +65,7 @@ n8n export:workflow --id 1 --output workflow.json
 ## Environment Variables
 
 ### Basic Configuration
+
 ```bash
 # Database
 export DB_TYPE=postgresdb
@@ -96,6 +99,7 @@ export N8N_LOG_FILE_LOCATION=/var/log/n8n.log
 ```
 
 ### Advanced Configuration
+
 ```bash
 # Performance
 export EXECUTIONS_PROCESS=main
@@ -124,6 +128,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ## Core Concepts
 
 ### Workflow Structure
+
 ```json
 {
   "name": "My Workflow",
@@ -152,6 +157,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ```
 
 ### Node Types
+
 - **Trigger Nodes**: Start workflows (Webhook, Cron, Manual)
 - **Regular Nodes**: Process data (HTTP Request, Set, Function)
 - **Credential Nodes**: Store authentication data
@@ -159,6 +165,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ## Common Node Examples
 
 ### HTTP Request Node
+
 ```json
 {
   "parameters": {
@@ -179,6 +186,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ```
 
 ### Webhook Trigger
+
 ```json
 {
   "parameters": {
@@ -195,6 +203,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ```
 
 ### Cron Trigger
+
 ```json
 {
   "parameters": {
@@ -213,6 +222,7 @@ export N8N_DISABLE_PRODUCTION_MAIN_PROCESS=false
 ```
 
 ### Function Node
+
 ```javascript
 // Function node example
 const items = $input.all();
@@ -227,6 +237,7 @@ return items;
 ```
 
 ### Set Node
+
 ```json
 {
   "parameters": {
@@ -259,6 +270,7 @@ return items;
 ## Expressions & Functions
 
 ### Basic Expressions
+
 ```javascript
 // Access input data
 {{ $json.fieldName }}
@@ -290,6 +302,7 @@ return items;
 ```
 
 ### String Functions
+
 ```javascript
 // String manipulation
 {{ $json.name.toUpperCase() }}
@@ -309,6 +322,7 @@ return items;
 ```
 
 ### Date Functions
+
 ```javascript
 // Date formatting
 {{ $now.format('YYYY-MM-DD') }}
@@ -332,6 +346,7 @@ return items;
 ```
 
 ### Math Functions
+
 ```javascript
 // Basic math
 {{ $json.price * 1.2 }}
@@ -350,6 +365,7 @@ return items;
 ```
 
 ### Array Functions
+
 ```javascript
 // Array operations
 {{ $json.items.length }}
@@ -370,6 +386,7 @@ return items;
 ```
 
 ### Conditional Logic
+
 ```javascript
 // Ternary operator
 {{ $json.score > 80 ? 'Pass' : 'Fail' }}
@@ -388,6 +405,7 @@ return items;
 ## Workflow Patterns
 
 ### Error Handling
+
 ```json
 {
   "parameters": {
@@ -406,6 +424,7 @@ return items;
 ```
 
 ### Data Transformation
+
 ```javascript
 // Transform data structure
 const items = $input.all();
@@ -426,6 +445,7 @@ return transformed;
 ```
 
 ### Batch Processing
+
 ```javascript
 // Process items in batches
 const items = $input.all();
@@ -446,6 +466,7 @@ return batches;
 ```
 
 ### Rate Limiting
+
 ```javascript
 // Add delay between requests
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -471,6 +492,7 @@ return processed;
 ## Common Integrations
 
 ### Slack
+
 ```json
 {
   "parameters": {
@@ -492,6 +514,7 @@ return processed;
 ```
 
 ### Gmail
+
 ```json
 {
   "parameters": {
@@ -510,6 +533,7 @@ return processed;
 ```
 
 ### Google Sheets
+
 ```json
 {
   "parameters": {
@@ -539,6 +563,7 @@ return processed;
 ```
 
 ### MySQL/PostgreSQL
+
 ```json
 {
   "parameters": {
@@ -562,6 +587,7 @@ return processed;
 ## CLI Commands
 
 ### Workflow Management
+
 ```bash
 # List workflows
 n8n list:workflow
@@ -583,6 +609,7 @@ n8n update:workflow --id=1 --file=./updated-workflow.json
 ```
 
 ### Credential Management
+
 ```bash
 # List credentials
 n8n list:credential
@@ -596,6 +623,7 @@ n8n import:credential --input=./credential.json
 ```
 
 ### Database Operations
+
 ```bash
 # Reset database
 n8n db:revert
@@ -610,6 +638,7 @@ n8n db:info
 ## Docker & Production
 
 ### Docker Compose for Production
+
 ```yaml
 version: '3.8'
 
@@ -675,6 +704,7 @@ networks:
 ```
 
 ### Nginx Configuration
+
 ```nginx
 events {
     worker_connections 1024;
@@ -717,6 +747,7 @@ http {
 ## Monitoring & Debugging
 
 ### Logging Configuration
+
 ```bash
 # Environment variables for logging
 export N8N_LOG_LEVEL=debug
@@ -727,6 +758,7 @@ export N8N_LOG_FILE_SIZE_MAX=10485760
 ```
 
 ### Health Checks
+
 ```bash
 # Health check endpoint
 curl http://localhost:5678/healthz
@@ -736,6 +768,7 @@ curl http://localhost:5678/metrics
 ```
 
 ### Debugging Workflows
+
 ```javascript
 // Debug function node
 console.log('Debug info:', $json);
@@ -764,6 +797,7 @@ return [{
 ## Security Best Practices
 
 ### Authentication Setup
+
 ```bash
 # Basic Auth
 export N8N_BASIC_AUTH_ACTIVE=true
@@ -779,6 +813,7 @@ export N8N_ENCRYPTION_KEY=your-32-character-encryption-key
 ```
 
 ### Secure Credentials
+
 ```json
 {
   "name": "API Credential",
@@ -791,6 +826,7 @@ export N8N_ENCRYPTION_KEY=your-32-character-encryption-key
 ```
 
 ### Network Security
+
 ```yaml
 # Docker network isolation
 networks:
@@ -804,6 +840,7 @@ networks:
 ## Performance Optimization
 
 ### Execution Settings
+
 ```bash
 # Process settings
 export EXECUTIONS_PROCESS=main
@@ -821,6 +858,7 @@ export N8N_METRICS=true
 ```
 
 ### Workflow Optimization Tips
+
 1. **Use Set nodes** to reduce data payload size
 2. **Implement proper error handling** with IF nodes
 3. **Use Function nodes** for complex data transformations
@@ -830,6 +868,7 @@ export N8N_METRICS=true
 ## Backup & Migration
 
 ### Backup Script
+
 ```bash
 #!/bin/bash
 
@@ -853,6 +892,7 @@ echo "Backup completed: $BACKUP_DIR"
 ```
 
 ### Migration Script
+
 ```bash
 #!/bin/bash
 
@@ -878,6 +918,7 @@ echo "Migration completed from: $BACKUP_DIR"
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check n8n status
 systemctl status n8n
@@ -900,6 +941,7 @@ telnet localhost 5678
 ```
 
 ### Database Issues
+
 ```bash
 # Check database connection
 psql -h localhost -U n8n -d n8n -c "SELECT version();"
@@ -912,6 +954,7 @@ psql -h localhost -U n8n -d n8n -c "DELETE FROM execution_entity WHERE startedAt
 ```
 
 ### Reset and Recovery
+
 ```bash
 # Reset n8n (removes all data)
 n8n db:reset
@@ -929,6 +972,7 @@ rm ~/.n8n/config
 ## Tips & Best Practices
 
 ### Workflow Design
+
 1. **Use descriptive node names** for better readability
 2. **Add notes** to complex nodes for documentation
 3. **Group related operations** in sub-workflows
@@ -936,6 +980,7 @@ rm ~/.n8n/config
 5. **Test with sample data** before activating
 
 ### Performance
+
 1. **Limit data passing** between nodes
 2. **Use appropriate node types** for each task
 3. **Implement rate limiting** for API calls
@@ -943,6 +988,7 @@ rm ~/.n8n/config
 5. **Use Set nodes** to transform data efficiently
 
 ### Security
+
 1. **Store sensitive data** in credentials
 2. **Use environment variables** for configuration
 3. **Implement proper authentication** on webhooks
@@ -950,10 +996,12 @@ rm ~/.n8n/config
 5. **Monitor access logs** for suspicious activity
 
 ### Maintenance
+
 1. **Regular backups** of workflows and data
 2. **Monitor disk usage** and clean old executions
 3. **Update n8n** regularly for security patches
 4. **Document workflows** for team collaboration
 5. **Set up monitoring** and alerting for critical workflows
+
 ```
 

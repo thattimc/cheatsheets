@@ -1,10 +1,14 @@
 # Apache Kafka Cheatsheet
 
-Apache Kafka is a distributed event streaming platform capable of handling trillions of events a day. It's designed for high-throughput, low-latency real-time data feeds and is widely used for building real-time streaming data pipelines and applications.
+Apache Kafka is a distributed event streaming platform capable of handling
+trillions of events a day. It's designed for high-throughput, low-latency
+real-time data feeds and is widely used for building real-time streaming data
+pipelines and applications.
 
 ## Overview
 
 ### Key Features
+
 - **High Throughput** - Handle millions of messages per second
 - **Low Latency** - Sub-millisecond latency for real-time applications
 - **Durability** - Persistent storage with configurable retention
@@ -19,7 +23,8 @@ Apache Kafka is a distributed event streaming platform capable of handling trill
 - **Multi-Tenancy** - Support for multiple isolated workloads
 
 ### Architecture
-```
+
+```text
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Producers     │    │   Kafka Cluster │    │   Consumers     │
 │                 │    │                 │    │                 │
@@ -52,6 +57,7 @@ Apache Kafka is a distributed event streaming platform capable of handling trill
 ## Installation
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew install kafka
@@ -73,6 +79,7 @@ kafka-topics.sh --version
 ```
 
 ### Linux Installation
+
 ```bash
 # Ubuntu/Debian
 # Install Java (required)
@@ -144,6 +151,7 @@ sudo systemctl start kafka
 ```
 
 ### Docker Installation
+
 ```bash
 # Single-node setup with Docker Compose
 cat > docker-compose.yml << EOF
@@ -266,6 +274,7 @@ docker-compose -f docker-compose-cluster.yml up -d
 ```
 
 ### Kubernetes Installation
+
 ```yaml
 # Using Strimzi Kafka Operator
 kubectl create namespace kafka
@@ -325,6 +334,7 @@ kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n kafka
 ## Basic Commands
 
 ### Starting Kafka
+
 ```bash
 # Start ZooKeeper (required for Kafka)
 zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
@@ -348,6 +358,7 @@ sudo systemctl stop zookeeper
 ```
 
 ### Environment Variables
+
 ```bash
 # Common Kafka environment variables
 export KAFKA_HOME=/opt/kafka
@@ -360,6 +371,7 @@ export JMX_PORT=9999
 ## Topic Management
 
 ### Topic Operations
+
 ```bash
 # Create topic
 kafka-topics.sh --create \
@@ -408,6 +420,7 @@ kafka-topics.sh --alter \
 ```
 
 ### Topic Configuration
+
 ```bash
 # List topic configurations
 kafka-configs.sh --describe \
@@ -442,6 +455,7 @@ kafka-configs.sh --alter \
 ## Producer Operations
 
 ### Console Producer
+
 ```bash
 # Basic console producer
 kafka-console-producer.sh \
@@ -476,6 +490,7 @@ kafka-console-producer.sh \
 ```
 
 ### Producer Performance Testing
+
 ```bash
 # Performance test producer
 kafka-producer-perf-test.sh \
@@ -500,6 +515,7 @@ kafka-producer-perf-test.sh \
 ```
 
 ### Producer Configuration Examples
+
 ```bash
 # High throughput producer
 kafka-console-producer.sh \
@@ -524,6 +540,7 @@ kafka-console-producer.sh \
 ## Consumer Operations
 
 ### Console Consumer
+
 ```bash
 # Basic console consumer
 kafka-console-consumer.sh \
@@ -574,6 +591,7 @@ kafka-console-consumer.sh \
 ```
 
 ### Consumer Groups
+
 ```bash
 # List consumer groups
 kafka-consumer-groups.sh \
@@ -630,6 +648,7 @@ kafka-consumer-groups.sh \
 ```
 
 ### Consumer Performance Testing
+
 ```bash
 # Performance test consumer
 kafka-consumer-perf-test.sh \
@@ -651,6 +670,7 @@ kafka-consumer-perf-test.sh \
 ## Data Management
 
 ### Log Segments
+
 ```bash
 # View log segments
 ls -la /tmp/kafka-logs/my-topic-0/
@@ -679,6 +699,7 @@ kafka-get-offsets.sh \
 ```
 
 ### Log Cleanup
+
 ```bash
 # Trigger log cleanup
 kafka-configs.sh --alter \
@@ -703,6 +724,7 @@ kafka-configs.sh --alter \
 ```
 
 ### Reassign Partitions
+
 ```bash
 # Generate partition reassignment plan
 echo '{"topics":[{"topic":"my-topic"}],"version":1}' > topics.json
@@ -729,6 +751,7 @@ kafka-reassign-partitions.sh \
 ## Cluster Management
 
 ### Broker Information
+
 ```bash
 # List brokers
 kafka-broker-api-versions.sh --bootstrap-server localhost:9092
@@ -751,6 +774,7 @@ kafka-configs.sh --alter \
 ```
 
 ### Replication
+
 ```bash
 # Check under-replicated partitions
 kafka-topics.sh --describe \
@@ -777,6 +801,7 @@ kafka-leader-election.sh \
 ```
 
 ### Log Directory
+
 ```bash
 # Describe log directories
 kafka-log-dirs.sh \
@@ -806,6 +831,7 @@ kafka-reassign-partitions.sh \
 ## Security Configuration
 
 ### SSL/TLS Configuration
+
 ```bash
 # Generate keystore and truststore
 keytool -keystore kafka.server.keystore.jks \
@@ -837,6 +863,7 @@ EOF
 ```
 
 ### SASL Configuration
+
 ```bash
 # SASL/PLAIN configuration
 cat > kafka_server_jaas.conf << EOF
@@ -863,6 +890,7 @@ kafka-server-start.sh config/server.properties
 ```
 
 ### ACL (Access Control Lists)
+
 ```bash
 # Add ACL for user
 kafka-acls.sh \
@@ -905,6 +933,7 @@ kafka-acls.sh \
 ## Kafka Connect
 
 ### Connect Cluster
+
 ```bash
 # Start Connect in standalone mode
 connect-standalone.sh \
@@ -921,6 +950,7 @@ curl http://localhost:8083/connector-plugins        # List plugins
 ```
 
 ### Connector Management
+
 ```bash
 # Create file source connector
 curl -X POST http://localhost:8083/connectors \
@@ -973,6 +1003,7 @@ curl -X DELETE http://localhost:8083/connectors/file-source
 ```
 
 ### JDBC Connector Example
+
 ```bash
 # JDBC Source Connector
 curl -X POST http://localhost:8083/connectors \
@@ -1012,6 +1043,7 @@ curl -X POST http://localhost:8083/connectors \
 ## Kafka Streams
 
 ### Streams Application Example (Java)
+
 ```java
 // WordCount Streams Application
 import org.apache.kafka.streams.KafkaStreams;
@@ -1042,7 +1074,8 @@ public class WordCountApplication {
             .groupBy((key, word) -> word)
             .count();
 
-        wordCounts.toStream().to("word-count-output", Produced.with(Serdes.String(), Serdes.Long()));
+        wordCounts.toStream().to("word-count-output", \
+            Produced.with(Serdes.String(), Serdes.Long()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
@@ -1053,9 +1086,11 @@ public class WordCountApplication {
 ```
 
 ### Streams Operations
+
 ```java
 // Filtering
-KStream<String, String> filtered = stream.filter((key, value) -> value.length() > 5);
+KStream<String, String> filtered = \
+    stream.filter((key, value) -> value.length() > 5);
 
 // Mapping
 KStream<String, String> mapped = stream.mapValues(value -> value.toUpperCase());
@@ -1082,6 +1117,7 @@ KTable<Windowed<String>, Long> windowed = stream
 ```
 
 ### Stream Reset
+
 ```bash
 # Reset Kafka Streams application
 kafka-streams-application-reset.sh \
@@ -1094,6 +1130,7 @@ kafka-streams-application-reset.sh \
 ## Schema Registry
 
 ### Schema Registry Setup
+
 ```bash
 # Start Schema Registry (Confluent)
 schema-registry-start etc/schema-registry/schema-registry.properties
@@ -1108,6 +1145,7 @@ EOF
 ```
 
 ### Schema Management
+
 ```bash
 # Register schema
 curl -X POST http://localhost:8081/subjects/user-value/versions \
@@ -1136,6 +1174,7 @@ curl -X DELETE http://localhost:8081/subjects/user-value
 ```
 
 ### Avro Producer/Consumer
+
 ```bash
 # Avro console producer
 kafka-avro-console-producer \
@@ -1155,6 +1194,7 @@ kafka-avro-console-consumer \
 ## Monitoring and Observability
 
 ### JMX Metrics
+
 ```bash
 # Enable JMX
 export JMX_PORT=9999
@@ -1173,6 +1213,7 @@ jconsole localhost:9999
 ```
 
 ### Kafka Manager/AKHQ
+
 ```bash
 # Using AKHQ (Kafka GUI)
 docker run -p 8080:8080 \
@@ -1187,6 +1228,7 @@ docker run -p 8080:8080 \
 ```
 
 ### Lag Monitoring
+
 ```bash
 # Monitor consumer lag
 kafka-consumer-groups.sh \
@@ -1203,6 +1245,7 @@ kafka-consumer-groups.sh \
 ```
 
 ### Log Analysis
+
 ```bash
 # Kafka logs location
 tail -f $KAFKA_HOME/logs/server.log
@@ -1222,6 +1265,7 @@ kafka-configs.sh --alter \
 ## Performance Tuning
 
 ### Broker Configuration
+
 ```bash
 # High-performance broker configuration
 cat >> server.properties << EOF
@@ -1258,11 +1302,14 @@ compression.type=gzip
 
 # JVM tuning
 export KAFKA_HEAP_OPTS="-Xmx6g -Xms6g"
-export KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:+UseG1GC -XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35 -XX:+ExplicitGCInvokesConcurrent -Djava.awt.headless=true"
+export KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:+UseG1GC \
+  -XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35 \
+  -XX:+ExplicitGCInvokesConcurrent -Djava.awt.headless=true"
 EOF
 ```
 
 ### Producer Tuning
+
 ```bash
 # High-throughput producer
 kafka-console-producer.sh \
@@ -1285,6 +1332,7 @@ kafka-console-producer.sh \
 ```
 
 ### Consumer Tuning
+
 ```bash
 # High-throughput consumer
 kafka-console-consumer.sh \
@@ -1305,6 +1353,7 @@ kafka-console-consumer.sh \
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Check if Kafka is running
 netstat -tlnp | grep 9092
@@ -1332,7 +1381,8 @@ lsof -p $(pgrep -f kafka.Kafka) | wc -l
 netstat -an | grep 9092
 ```
 
-### Log Analysis
+### Error Log Analysis
+
 ```bash
 # Check for errors in Kafka logs
 grep ERROR $KAFKA_HOME/logs/server.log
@@ -1349,6 +1399,7 @@ grep "Partition.*is not available" $KAFKA_HOME/logs/server.log
 ```
 
 ### Recovery Procedures
+
 ```bash
 # Recover from unclean shutdown
 # 1. Stop all Kafka brokers
@@ -1378,6 +1429,7 @@ rm /tmp/kafka-logs/my-topic-0/*.timeindex
 ```
 
 ### Performance Debugging
+
 ```bash
 # Check broker performance
 kafka-producer-perf-test.sh \
@@ -1404,6 +1456,7 @@ sar -u 1
 ## Backup and Migration
 
 ### Topic Backup
+
 ```bash
 # Mirror topics between clusters
 kafka-mirror-maker.sh \
@@ -1425,6 +1478,7 @@ connect-mirror-maker.sh mm2.properties
 ```
 
 ### Data Export/Import
+
 ```bash
 # Export topic data
 kafka-console-consumer.sh \
@@ -1445,4 +1499,3 @@ kafka-console-producer.sh \
 ---
 
 *For more detailed information, visit the [official Apache Kafka documentation](https://kafka.apache.org/documentation/)*
-

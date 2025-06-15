@@ -15,4 +15,4 @@ This directory contains cheatsheets for Kubernetes and related tools:
 - **docker-cheatsheet.md**: Docker CLI
 - **opentofu-cheatsheet.md**: OpenTofu (Terraform fork)
 - **terraform-cheatsheet.md**: Terraform
-- **ansible-cheatsheet.md**: Ansible 
+- **ansible-cheatsheet.md**: Ansible

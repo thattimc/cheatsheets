@@ -1,10 +1,12 @@
 # kubectl Cheatsheet
 
-kubectl is the command-line tool for interacting with Kubernetes clusters. This cheatsheet covers the most commonly used commands and operations.
+kubectl is the command-line tool for interacting with Kubernetes clusters. This
+cheatsheet covers the most commonly used commands and operations.
 
 ## Installation
 
 ### macOS
+
 ```bash
 # Install via Homebrew
 brew install kubectl
@@ -16,6 +18,7 @@ sudo mv kubectl /usr/local/bin/
 ```
 
 ### Linux
+
 ```bash
 # Download latest release
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -27,6 +30,7 @@ sudo apt-get update && sudo apt-get install -y kubectl
 ```
 
 ### Windows
+
 ```powershell
 # Using winget
 winget install Kubernetes.kubectl
@@ -38,6 +42,7 @@ choco install kubernetes-cli
 ## Basic Commands
 
 ### Cluster Information
+
 ```bash
 # Check kubectl version
 kubectl version --client
@@ -62,6 +67,7 @@ kubectl config set-context --current --namespace=<namespace>
 ```
 
 ### Get Resources
+
 ```bash
 # Get all resources
 kubectl get all
@@ -92,6 +98,7 @@ kubectl get pods --selector=app=nginx
 ## Pods
 
 ### Pod Operations
+
 ```bash
 # List pods
 kubectl get pods
@@ -126,6 +133,7 @@ kubectl cp <pod-name>:<remote-path> <local-file>
 ```
 
 ### Pod Creation and Management
+
 ```bash
 # Create pod from image
 kubectl run nginx --image=nginx
@@ -148,6 +156,7 @@ kubectl delete pods -l app=nginx
 ## Deployments
 
 ### Deployment Operations
+
 ```bash
 # List deployments
 kubectl get deployments
@@ -186,6 +195,7 @@ kubectl delete deploy <deployment-name>
 ## Services
 
 ### Service Operations
+
 ```bash
 # List services
 kubectl get services
@@ -215,6 +225,7 @@ kubectl delete svc <service-name>
 ## ConfigMaps and Secrets
 
 ### ConfigMaps
+
 ```bash
 # List configmaps
 kubectl get configmaps
@@ -239,6 +250,7 @@ kubectl delete configmap <cm-name>
 ```
 
 ### Secrets
+
 ```bash
 # List secrets
 kubectl get secrets
@@ -273,6 +285,7 @@ kubectl delete secret <secret-name>
 ## Namespaces
 
 ### Namespace Operations
+
 ```bash
 # List namespaces
 kubectl get namespaces
@@ -303,6 +316,7 @@ kubectl delete namespace <namespace-name>
 ## YAML Manifests
 
 ### Apply and Manage Manifests
+
 ```bash
 # Apply YAML file
 kubectl apply -f <file.yaml>
@@ -330,6 +344,7 @@ kubectl apply -f <file.yaml> --record
 ```
 
 ### Generate YAML Templates
+
 ```bash
 # Generate pod YAML
 kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
@@ -347,6 +362,7 @@ kubectl create configmap myconfig --from-literal=key=value --dry-run=client -o y
 ## Resource Management
 
 ### Labels and Annotations
+
 ```bash
 # Add label to resource
 kubectl label pod <pod-name> env=production
@@ -370,6 +386,7 @@ kubectl get pods --selector=env=production,version=v1.0
 ```
 
 ### Resource Quotas and Limits
+
 ```bash
 # Get resource quotas
 kubectl get resourcequotas
@@ -389,6 +406,7 @@ kubectl describe limitrange <limit-name>
 ## Troubleshooting
 
 ### Debugging Commands
+
 ```bash
 # Get events
 kubectl get events
@@ -419,6 +437,7 @@ kubectl run debug --image=busybox --rm -it --restart=Never -- /bin/sh
 ```
 
 ### Pod States and Conditions
+
 ```bash
 # Check pod status
 kubectl get pods -o wide
@@ -432,6 +451,7 @@ kubectl get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,COND
 ## Advanced Operations
 
 ### JSONPath and Custom Columns
+
 ```bash
 # Use JSONPath to extract specific data
 kubectl get pods -o jsonpath='{.items[*].metadata.name}'
@@ -444,6 +464,7 @@ kubectl get nodes -o custom-columns=NAME:.metadata.name,STATUS:.status.condition
 ```
 
 ### Watch and Wait
+
 ```bash
 # Watch resources for changes
 kubectl get pods --watch
@@ -456,6 +477,7 @@ kubectl wait --for=delete pod/<pod-name> --timeout=60s
 ```
 
 ### Patch Resources
+
 ```bash
 # Strategic merge patch
 kubectl patch deployment <deployment-name> -p '{"spec":{"replicas":3}}'
@@ -470,6 +492,7 @@ kubectl patch deployment <deployment-name> --type='json' -p='[{"op": "replace", 
 ## Contexts and Clusters
 
 ### Context Management
+
 ```bash
 # List contexts
 kubectl config get-contexts
@@ -538,6 +561,7 @@ alias ke='kubectl exec -it'
 ## Common kubectl Patterns
 
 ### One-liners
+
 ```bash
 # Get all pod IPs
 kubectl get pods -o jsonpath='{.items[*].status.podIP}'
@@ -567,6 +591,7 @@ kubectl get pods -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:
 ## Sample YAML Templates
 
 ### Basic Pod
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -583,6 +608,7 @@ spec:
 ```
 
 ### Basic Deployment
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -606,6 +632,7 @@ spec:
 ```
 
 ### Basic Service
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -624,6 +651,7 @@ spec:
 ## Environment Setup
 
 ### kubectl Autocompletion
+
 ```bash
 # For bash
 echo 'source <(kubectl completion bash)' >>~/.bashrc
@@ -636,6 +664,7 @@ kubectl completion fish | source
 ```
 
 ### Useful Tools
+
 ```bash
 # Install kubectx and kubens for easier context/namespace switching
 brew install kubectx
@@ -654,4 +683,3 @@ k9s
 ---
 
 *For more detailed information, visit the [official Kubernetes documentation](https://kubernetes.io/docs/reference/kubectl/)*
-

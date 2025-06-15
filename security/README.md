@@ -2,4 +2,4 @@
 
 This directory contains cheatsheets for security tools:
 
-- **infisical-cheatsheet.md**: Infisical 
+- **infisical-cheatsheet.md**: Infisical

@@ -1,10 +1,12 @@
 # Infisical Cheatsheet
 
-Infisical is an open-source secrets management platform that helps teams securely store, sync, and manage environment variables and secrets across applications and infrastructure.
+Infisical is an open-source secrets management platform that helps teams securely store,
+sync, and manage environment variables and secrets across applications and infrastructure.
 
 ## Overview
 
 ### Key Features
+
 - **Secret Management** - Store and manage environment variables securely
 - **Multi-Environment** - Separate secrets for dev, staging, production
 - **Team Collaboration** - Role-based access control and permissions
@@ -14,6 +16,7 @@ Infisical is an open-source secrets management platform that helps teams securel
 - **Integrations** - Support for various platforms and CI/CD tools
 
 ### Components
+
 - **Infisical Core** - Backend API and database
 - **Web Dashboard** - Browser-based management interface
 - **CLI Tool** - Command-line interface for developers
@@ -23,6 +26,7 @@ Infisical is an open-source secrets management platform that helps teams securel
 ## Installation
 
 ### Self-hosted with Docker Compose
+
 ```bash
 # Clone the repository
 git clone https://github.com/Infisical/infisical.git
@@ -45,6 +49,7 @@ docker-compose logs -f
 ```
 
 ### Docker Compose Configuration
+
 ```yaml
 # docker-compose.yml
 version: '3.8'
@@ -102,6 +107,7 @@ networks:
 ```
 
 ### Kubernetes Deployment
+
 ```yaml
 # infisical-namespace.yaml
 apiVersion: v1
@@ -211,6 +217,7 @@ spec:
 ## CLI Installation and Setup
 
 ### Install CLI
+
 ```bash
 # macOS
 brew install infisical/get-cli/infisical
@@ -231,6 +238,7 @@ infisical --version
 ```
 
 ### CLI Authentication
+
 ```bash
 # Login to Infisical
 infisical login
@@ -249,6 +257,7 @@ infisical logout
 ```
 
 ### Project Setup
+
 ```bash
 # List projects
 infisical projects
@@ -266,6 +275,7 @@ infisical project current
 ## Secret Management
 
 ### Managing Secrets via CLI
+
 ```bash
 # List secrets
 infisical secrets
@@ -295,6 +305,7 @@ infisical export --format=yaml --env=production
 ```
 
 ### Running Applications with Secrets
+
 ```bash
 # Run command with injected secrets
 infisical run -- npm start
@@ -311,6 +322,7 @@ infisical run --env=production DEBUG=true -- node server.js
 ```
 
 ### Environment File Generation
+
 ```bash
 # Generate .env file
 infisical export > .env
@@ -328,6 +340,7 @@ infisical export --template="{{.Key}}={{.Value}}" > custom.env
 ## Web Dashboard
 
 ### Project Management
+
 ```bash
 # Create new project via API
 curl -X POST https://app.infisical.com/api/v1/projects \
@@ -348,6 +361,7 @@ curl -X GET https://app.infisical.com/api/v1/projects/<project-id> \
 ```
 
 ### Environment Management
+
 ```bash
 # Create environment
 curl -X POST https://app.infisical.com/api/v1/projects/<project-id>/environments \
@@ -366,6 +380,7 @@ curl -X GET https://app.infisical.com/api/v1/projects/<project-id>/environments 
 ## API Usage
 
 ### Authentication
+
 ```bash
 # Get service token from dashboard
 # Use token in API requests
@@ -375,6 +390,7 @@ ENVIRONMENT="production"
 ```
 
 ### Secret Operations via API
+
 ```bash
 # Get secrets
 curl -X GET "https://app.infisical.com/api/v3/secrets/raw?environment=${ENVIRONMENT}&workspaceId=${PROJECT_ID}" \
@@ -420,6 +436,7 @@ curl -X DELETE "https://app.infisical.com/api/v3/secrets/raw" \
 ## SDKs and Integrations
 
 ### Node.js SDK
+
 ```javascript
 // Installation
 // npm install @infisical/sdk
@@ -478,6 +495,7 @@ async function createSecret() {
 ```
 
 ### Python SDK
+
 ```python
 # Installation
 # pip install infisical
@@ -531,6 +549,7 @@ def create_secret():
 ```
 
 ### Go SDK
+
 ```go
 // go mod init myapp
 // go get github.com/infisical/go-sdk
@@ -583,6 +602,7 @@ func main() {
 ## Kubernetes Integration
 
 ### Infisical Kubernetes Operator
+
 ```bash
 # Install operator
 kubectl apply -f https://raw.githubusercontent.com/Infisical/infisical/main/k8s-operator/kubectl-apply/install-operator.yaml
@@ -592,6 +612,7 @@ kubectl get pods -n infisical-operator-system
 ```
 
 ### InfisicalSecret Custom Resource
+
 ```yaml
 # infisical-secret.yaml
 apiVersion: secrets.infisical.com/v1alpha1
@@ -633,6 +654,7 @@ data:
 ```
 
 ### Using Secrets in Pods
+
 ```yaml
 # deployment.yaml
 apiVersion: apps/v1
@@ -667,6 +689,7 @@ spec:
 ## CI/CD Integration
 
 ### GitHub Actions
+
 ```yaml
 # .github/workflows/deploy.yml
 name: Deploy Application
@@ -697,6 +720,7 @@ jobs:
 ```
 
 ### GitLab CI
+
 ```yaml
 # .gitlab-ci.yml
 stages:
@@ -717,6 +741,7 @@ deploy:
 ```
 
 ### Docker Integration
+
 ```dockerfile
 # Dockerfile
 FROM node:18-alpine
@@ -739,6 +764,7 @@ CMD ["infisical", "run", "--", "npm", "start"]
 ## Security and Access Control
 
 ### Service Tokens
+
 ```bash
 # Create service token via CLI
 infisical service-token create \
@@ -755,6 +781,7 @@ infisical service-token revoke <token-id>
 ```
 
 ### Role-Based Access Control
+
 ```bash
 # Invite user to project
 infisical users invite \
@@ -778,6 +805,7 @@ infisical users remove \
 ```
 
 ### Audit Logs
+
 ```bash
 # View audit logs
 infisical audit-logs list --project-id=<project-id>
@@ -799,6 +827,7 @@ infisical audit-logs export \
 ## Backup and Migration
 
 ### Export Secrets
+
 ```bash
 # Export all environments
 for env in development staging production; do
@@ -813,6 +842,7 @@ infisical project export --project-id=<project-id> > project_config.json
 ```
 
 ### Import Secrets
+
 ```bash
 # Import from .env file
 infisical secrets set --from-file=.env.production --env=production
@@ -834,6 +864,7 @@ curl -X POST "https://app.infisical.com/api/v3/secrets/batch" \
 ## Monitoring and Troubleshooting
 
 ### Health Checks
+
 ```bash
 # Check Infisical service health
 curl -f http://localhost:8080/api/status
@@ -850,6 +881,7 @@ docker-compose logs -f frontend
 ```
 
 ### Common Issues
+
 ```bash
 # CLI authentication issues
 infisical logout
@@ -871,6 +903,7 @@ curl -H "Authorization: Bearer $INFISICAL_TOKEN" \
 ```
 
 ### Debug Mode
+
 ```bash
 # Enable debug logging
 export INFISICAL_DEBUG=true
@@ -886,6 +919,7 @@ infisical config
 ## Configuration Files
 
 ### CLI Configuration
+
 ```json
 // ~/.config/infisical/config.json
 {
@@ -901,6 +935,7 @@ infisical config
 ```
 
 ### Project Configuration
+
 ```json
 // .infisical.json
 {
@@ -950,6 +985,7 @@ export INFISICAL_DISABLE_UPDATE_CHECK=true
 ## Best Practices
 
 ### Security Recommendations
+
 1. **Rotate Service Tokens** - Regularly rotate service tokens
 2. **Least Privilege** - Grant minimum necessary permissions
 3. **Environment Separation** - Use separate projects for different environments
@@ -960,6 +996,7 @@ export INFISICAL_DISABLE_UPDATE_CHECK=true
 8. **Token Management** - Securely store and manage tokens
 
 ### Development Workflow
+
 1. **Local Development** - Use development environment for local work
 2. **Git Integration** - Map Git branches to environments
 3. **CI/CD Integration** - Automate secret injection in pipelines
@@ -969,4 +1006,3 @@ export INFISICAL_DISABLE_UPDATE_CHECK=true
 ---
 
 *For more detailed information, visit the [official Infisical documentation](https://infisical.com/docs)*
-

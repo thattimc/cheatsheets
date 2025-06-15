@@ -1,10 +1,13 @@
 # RKE2 Cheatsheet
 
-RKE2 (Rancher Kubernetes Engine 2) is a CNCF-certified Kubernetes distribution that focuses on security and compliance. It's the successor to RKE and is designed for production environments.
+RKE2 (Rancher Kubernetes Engine 2) is a CNCF-certified Kubernetes distribution that
+focuses on security and compliance. It's the successor to RKE and is designed for
+production environments.
 
 ## Overview
 
 ### Key Features
+
 - **FIPS 140-2 Compliance** - Federal Information Processing Standard compliance
 - **CIS Hardening** - Center for Internet Security benchmark compliance
 - **SELinux Support** - Security-Enhanced Linux integration
@@ -13,6 +16,7 @@ RKE2 (Rancher Kubernetes Engine 2) is a CNCF-certified Kubernetes distribution t
 - **Air-gapped Support** - Offline installation capabilities
 
 ### Architecture
+
 - **Server Nodes** - Control plane components (etcd, API server, scheduler, controller)
 - **Agent Nodes** - Worker nodes running kubelet and kube-proxy
 - **Embedded etcd** - Highly available datastore
@@ -21,6 +25,7 @@ RKE2 (Rancher Kubernetes Engine 2) is a CNCF-certified Kubernetes distribution t
 ## Installation
 
 ### Prerequisites
+
 ```bash
 # System requirements
 # - Linux kernel 3.10+
@@ -42,6 +47,7 @@ sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 ```
 
 ### Install RKE2 Server (First Node)
+
 ```bash
 # Download and install RKE2
 curl -sfL https://get.rke2.io | sh -
@@ -58,6 +64,7 @@ sudo journalctl -u rke2-server -f
 ```
 
 ### Install RKE2 Agent (Worker Nodes)
+
 ```bash
 # Download and install RKE2
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
@@ -78,6 +85,7 @@ sudo systemctl status rke2-agent.service
 ```
 
 ### Get Node Token
+
 ```bash
 # On server node, get the token
 sudo cat /var/lib/rancher/rke2/server/node-token
@@ -90,6 +98,7 @@ kubectl get secret -n kube-system rke2-serving -o jsonpath='{.data.token}' | bas
 ## Configuration
 
 ### Server Configuration (/etc/rancher/rke2/config.yaml)
+
 ```yaml
 # Basic server configuration
 bind-address: 0.0.0.0
@@ -146,6 +155,7 @@ data-dir: /var/lib/rancher/rke2
 ```
 
 ### Agent Configuration (/etc/rancher/rke2/config.yaml)
+
 ```yaml
 # Server connection
 server: https://rke2-server.example.com:9345
@@ -171,6 +181,7 @@ system-default-registry: "registry.example.com"
 ```
 
 ### High Availability Setup
+
 ```yaml
 # First server node
 cluster-init: true
@@ -193,6 +204,7 @@ tls-san:
 ## Cluster Management
 
 ### kubectl Configuration
+
 ```bash
 # Set up kubectl access
 export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
@@ -209,6 +221,7 @@ kubectl get pods -A
 ```
 
 ### Cluster Information
+
 ```bash
 # Get cluster info
 kubectl cluster-info
@@ -228,6 +241,7 @@ kubectl get events -A --sort-by='.lastTimestamp'
 ```
 
 ### Node Management
+
 ```bash
 # List nodes
 kubectl get nodes
@@ -254,6 +268,7 @@ kubectl drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ## Networking
 
 ### CNI Configuration
+
 ```bash
 # Default CNI (Canal)
 # Combines Calico and Flannel
@@ -297,6 +312,7 @@ data:
 ```
 
 ### Load Balancer Setup
+
 ```yaml
 # External load balancer for HA
 # Example: HAProxy configuration
@@ -343,6 +359,7 @@ backend k8s_api_backend
 ## Security
 
 ### CIS Hardening
+
 ```bash
 # Enable CIS hardening during installation
 curl -sfL https://get.rke2.io | INSTALL_RKE2_EXEC="--profile=cis-1.23" sh -
@@ -356,6 +373,7 @@ kubectl run --rm -it cis-benchmark --image=rancher/security-scan:v0.2.2 \
 ```
 
 ### FIPS Compliance
+
 ```bash
 # Install FIPS-compliant version
 curl -sfL https://get.rke2.io | INSTALL_RKE2_METHOD="rpm" sh -
@@ -368,6 +386,7 @@ rke2 --version
 ```
 
 ### SELinux Configuration
+
 ```bash
 # Install SELinux policy
 sudo yum install -y container-selinux selinux-policy-base
@@ -382,6 +401,7 @@ selinux: true
 ```
 
 ### Network Policies
+
 ```yaml
 # Example network policy
 apiVersion: networking.k8s.io/v1
@@ -408,6 +428,7 @@ spec:
 ## Backup and Restore
 
 ### etcd Snapshots
+
 ```bash
 # Manual snapshot
 sudo rke2 etcd-snapshot save --name manual-snapshot-$(date +%Y%m%d%H%M%S)
@@ -425,6 +446,7 @@ etcd-snapshot-dir: /var/lib/rancher/rke2/server/db/snapshots
 ```
 
 ### Cluster Restore
+
 ```bash
 # Stop RKE2 on all nodes
 sudo systemctl stop rke2-server
@@ -442,6 +464,7 @@ sudo systemctl start rke2-agent
 ```
 
 ### Backup Configuration
+
 ```bash
 # Backup important files
 tar -czf rke2-backup-$(date +%Y%m%d).tar.gz \
@@ -473,6 +496,7 @@ echo "Backup completed: ${BACKUP_DIR}/${DATE}"
 ## Upgrades
 
 ### Upgrade RKE2
+
 ```bash
 # Check current version
 rke2 --version
@@ -494,6 +518,7 @@ kubectl get nodes
 ```
 
 ### Automated Upgrade with System Upgrade Controller
+
 ```yaml
 # Install System Upgrade Controller
 kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
@@ -544,6 +569,7 @@ spec:
 ## Monitoring and Logging
 
 ### System Monitoring
+
 ```bash
 # Check service status
 sudo systemctl status rke2-server
@@ -565,6 +591,7 @@ df -h
 ```
 
 ### Kubernetes Monitoring
+
 ```bash
 # Install metrics server
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
@@ -582,6 +609,7 @@ kubectl get events -A --sort-by='.lastTimestamp' -w
 ```
 
 ### Prometheus Setup
+
 ```yaml
 # Prometheus monitoring stack
 kubectl create namespace monitoring
@@ -604,6 +632,7 @@ kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
 ## Troubleshooting
 
 ### Common Issues
+
 ```bash
 # Node not joining cluster
 # Check token and server URL
@@ -632,6 +661,7 @@ kubectl run -it --rm debug --image=nicolaka/netshoot --restart=Never -- bash
 ```
 
 ### Log Analysis
+
 ```bash
 # RKE2 server logs
 sudo journalctl -u rke2-server --since "1 hour ago"
@@ -651,6 +681,7 @@ sudo journalctl -u kubelet --since "1 hour ago"
 ```
 
 ### Debug Commands
+
 ```bash
 # Check cluster certificates
 openssl x509 -in /var/lib/rancher/rke2/server/tls/server-ca.crt -text -noout
@@ -677,6 +708,7 @@ sudo /var/lib/rancher/rke2/bin/kubelet --version
 ## Air-gapped Installation
 
 ### Prepare Air-gapped Environment
+
 ```bash
 # Download RKE2 artifacts
 mkdir -p rke2-artifacts
@@ -696,6 +728,7 @@ scp -r rke2-artifacts/ user@airgapped-server:/tmp/
 ```
 
 ### Install in Air-gapped Environment
+
 ```bash
 # Install RKE2
 INSTALL_RKE2_ARTIFACT_PATH=/tmp/rke2-artifacts sh install.sh
@@ -727,6 +760,7 @@ EOF
 ## Private Registry Configuration
 
 ### Registry Configuration
+
 ```yaml
 # /etc/rancher/rke2/registries.yaml
 mirrors:
@@ -770,6 +804,7 @@ configs:
 ## Configuration Files
 
 ### Important File Locations
+
 ```bash
 # Configuration
 /etc/rancher/rke2/config.yaml
@@ -824,6 +859,7 @@ export CONTAINERD_ADDRESS=/run/k3s/containerd/containerd.sock
 ## Best Practices
 
 ### Production Recommendations
+
 1. **High Availability** - Use 3 or 5 server nodes
 2. **etcd Backup** - Configure automatic snapshots
 3. **Load Balancer** - Use external load balancer for API server
@@ -838,4 +874,3 @@ export CONTAINERD_ADDRESS=/run/k3s/containerd/containerd.sock
 ---
 
 *For more detailed information, visit the [official RKE2 documentation](https://docs.rke2.io/)*
-

@@ -1,10 +1,14 @@
 # KrakenD Cheatsheet
 
-KrakenD is a high-performance, stateless API Gateway that enables you to create a unified API layer by aggregating, filtering, and manipulating multiple backend services. It's designed for microservices architectures with ultra-high performance and zero dependencies.
+KrakenD is a high-performance, stateless API Gateway that enables you to
+create a unified API layer by aggregating, filtering, and manipulating multiple
+backend services. It's designed for microservices architectures with
+ultra-high performance and zero dependencies.
 
 ## Overview
 
 ### Key Features
+
 - **High Performance** - Ultra-fast API Gateway with sub-millisecond latency
 - **Stateless** - No database required, configuration-driven
 - **Backend Aggregation** - Combine multiple backend services into single endpoints
@@ -19,7 +23,8 @@ KrakenD is a high-performance, stateless API Gateway that enables you to create 
 - **Zero Dependencies** - Single binary deployment
 
 ### Architecture
-```
+
+```text
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Client Apps  │    │   KrakenD API   │    │   Backend       │
 │                 │    │     Gateway     │    │   Services      │
@@ -44,17 +49,22 @@ KrakenD is a high-performance, stateless API Gateway that enables you to create 
 ## Installation
 
 ### macOS Installation
+
 ```bash
 # Using Homebrew
 brew tap krakendio/tap
 brew install krakend
 
 # Using Binary Download
-curl -L https://github.com/krakendio/krakend-ce/releases/latest/download/krakend_darwin_amd64.tar.gz | tar xz
+curl -L \
+  https://github.com/krakendio/krakend-ce/releases/latest/download/krakend_darwin_amd64.tar.gz | \
+  tar xz
 sudo mv krakend /usr/local/bin/
 
 # For Apple Silicon (M1/M2)
-curl -L https://github.com/krakendio/krakend-ce/releases/latest/download/krakend_darwin_arm64.tar.gz | tar xz
+curl -L \
+  https://github.com/krakendio/krakend-ce/releases/latest/download/krakend_darwin_arm64.tar.gz | \
+  tar xz
 sudo mv krakend /usr/local/bin/
 
 # Verify installation
@@ -62,6 +72,7 @@ krakend version
 ```
 
 ### Linux Installation
+
 ```bash
 # Ubuntu/Debian
 wget https://repo.krakend.io/bin/krakend_2.4.1_amd64_generic-linux.tar.gz
@@ -69,7 +80,8 @@ tar -xzf krakend_2.4.1_amd64_generic-linux.tar.gz
 sudo mv krakend /usr/local/bin/
 
 # Using package manager (Ubuntu/Debian)
-echo "deb https://repo.krakend.io/apt stable main" | sudo tee /etc/apt/sources.list.d/krakend.list
+echo "deb https://repo.krakend.io/apt stable main" | \
+  sudo tee /etc/apt/sources.list.d/krakend.list
 wget -O - https://repo.krakend.io/signing.key | sudo apt-key add -
 sudo apt update
 sudo apt install krakend
@@ -117,6 +129,7 @@ sudo systemctl start krakend
 ```
 
 ### Docker Installation
+
 ```bash
 # Run KrakenD with Docker
 docker run -p 8080:8080 -v $PWD:/etc/krakend/ devopsfaith/krakend:2.4 run --config /etc/krakend/krakend.json
@@ -154,6 +167,7 @@ docker run -it --rm -p 8080:8080 \
 ```
 
 ### Kubernetes Installation
+
 ```yaml
 # Create ConfigMap for configuration
 kubectl create configmap krakend-config --from-file=krakend.json
@@ -233,6 +247,7 @@ kubectl apply -f krakend-deployment.yaml
 ## Basic Commands
 
 ### CLI Commands
+
 ```bash
 # Start KrakenD server
 krakend run --config krakend.json
@@ -271,6 +286,7 @@ export KRAKEND_CONFIG_PATH=/etc/krakend/
 ```
 
 ### Configuration Generation
+
 ```bash
 # Generate basic configuration
 krakend generate --file krakend.json
@@ -291,6 +307,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Configuration Structure
 
 ### Basic Configuration
+
 ```json
 {
   "version": 3,
@@ -319,6 +336,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Advanced Configuration
+
 ```json
 {
   "version": 3,
@@ -362,6 +380,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Endpoint Configuration
 
 ### Basic Endpoint
+
 ```json
 {
   "endpoint": "/v1/users/{id}",
@@ -381,6 +400,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Endpoint with Multiple Backends
+
 ```json
 {
   "endpoint": "/v1/user-profile/{id}",
@@ -414,6 +434,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Endpoint with Data Manipulation
+
 ```json
 {
   "endpoint": "/v1/users/{id}/summary",
@@ -447,6 +468,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### POST/PUT Endpoints
+
 ```json
 {
   "endpoint": "/v1/users",
@@ -468,6 +490,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Backend Configuration
 
 ### Basic Backend
+
 ```json
 {
   "url_pattern": "/api/users/{id}",
@@ -479,6 +502,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Backend with Load Balancing
+
 ```json
 {
   "url_pattern": "/api/users/{id}",
@@ -509,6 +533,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Backend with Authentication
+
 ```json
 {
   "url_pattern": "/api/users/{id}",
@@ -534,6 +559,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Data Transformation
 
 ### Response Filtering
+
 ```json
 {
   "backend": [
@@ -548,6 +574,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Field Mapping
+
 ```json
 {
   "backend": [
@@ -566,6 +593,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Response Grouping
+
 ```json
 {
   "backend": [
@@ -584,6 +612,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### JMESPath Expressions
+
 ```json
 {
   "extra_config": {
@@ -605,6 +634,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Response Templates
+
 ```json
 {
   "extra_config": {
@@ -630,6 +660,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Security
 
 ### JWT Authentication
+
 ```json
 {
   "extra_config": {
@@ -650,6 +681,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### API Key Authentication
+
 ```json
 {
   "extra_config": {
@@ -674,6 +706,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Basic Authentication
+
 ```json
 {
   "extra_config": {
@@ -688,6 +721,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### CORS Configuration
+
 ```json
 {
   "extra_config": {
@@ -722,6 +756,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Security Headers
+
 ```json
 {
   "extra_config": {
@@ -750,6 +785,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Rate Limiting
 
 ### Global Rate Limiting
+
 ```json
 {
   "extra_config": {
@@ -764,6 +800,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Endpoint Rate Limiting
+
 ```json
 {
   "endpoint": "/v1/users",
@@ -780,6 +817,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Backend Rate Limiting
+
 ```json
 {
   "backend": [
@@ -798,6 +836,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Distributed Rate Limiting (Redis)
+
 ```json
 {
   "extra_config": {
@@ -817,6 +856,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Caching
 
 ### Memory Caching
+
 ```json
 {
   "endpoint": "/v1/users/{id}",
@@ -831,6 +871,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Redis Caching
+
 ```json
 {
   "extra_config": {
@@ -850,6 +891,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### CDN Caching
+
 ```json
 {
   "extra_config": {
@@ -870,6 +912,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Circuit Breaker
 
 ### Basic Circuit Breaker
+
 ```json
 {
   "backend": [
@@ -891,6 +934,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Advanced Circuit Breaker
+
 ```json
 {
   "extra_config": {
@@ -919,6 +963,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Monitoring and Observability
 
 ### Metrics Configuration
+
 ```json
 {
   "extra_config": {
@@ -935,6 +980,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Prometheus Integration
+
 ```json
 {
   "extra_config": {
@@ -962,6 +1008,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Jaeger Tracing
+
 ```json
 {
   "extra_config": {
@@ -986,6 +1033,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Logging Configuration
+
 ```json
 {
   "extra_config": {
@@ -1009,6 +1057,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Health Check
+
 ```json
 {
   "extra_config": {
@@ -1035,6 +1084,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Load Balancing
 
 ### Round Robin (Default)
+
 ```json
 {
   "backend": [
@@ -1051,6 +1101,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Service Discovery with Consul
+
 ```json
 {
   "backend": [
@@ -1071,6 +1122,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Service Discovery with Eureka
+
 ```json
 {
   "backend": [
@@ -1089,6 +1141,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### DNS Service Discovery
+
 ```json
 {
   "backend": [
@@ -1104,6 +1157,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Advanced Features
 
 ### Request/Response Modification
+
 ```json
 {
   "extra_config": {
@@ -1129,6 +1183,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### GraphQL Support
+
 ```json
 {
   "endpoint": "/graphql",
@@ -1155,6 +1210,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### gRPC Backend
+
 ```json
 {
   "backend": [
@@ -1181,6 +1237,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### WebSocket Proxy
+
 ```json
 {
   "endpoint": "/ws",
@@ -1207,6 +1264,7 @@ krakend generate postman --config krakend.json --out collection.json
 ```
 
 ### Lambda Functions
+
 ```json
 {
   "backend": [
@@ -1231,6 +1289,7 @@ krakend generate postman --config krakend.json --out collection.json
 ## Plugin Development
 
 ### Custom Middleware Plugin
+
 ```go
 // main.go
 package main
@@ -1289,6 +1348,7 @@ func main() {
 ```
 
 ### Plugin Configuration
+
 ```json
 {
   "extra_config": {
@@ -1309,6 +1369,7 @@ func main() {
 ## Configuration Templates
 
 ### Flexible Configuration with Templates
+
 ```json
 {
   "version": 3,
@@ -1335,6 +1396,7 @@ func main() {
 ```
 
 ### Environment Variables
+
 ```json
 {
   "version": 3,
@@ -1350,6 +1412,7 @@ func main() {
 ```
 
 ### Partial Templates
+
 ```json
 // backends.tmpl
 {
@@ -1378,6 +1441,7 @@ func main() {
 ## Performance Optimization
 
 ### High-Performance Configuration
+
 ```json
 {
   "version": 3,
@@ -1403,6 +1467,7 @@ func main() {
 ```
 
 ### Connection Pooling
+
 ```json
 {
   "backend": [
@@ -1430,6 +1495,7 @@ func main() {
 ## Testing and Debugging
 
 ### Debug Mode
+
 ```bash
 # Start with debug mode
 krakend run --config krakend.json --debug
@@ -1440,6 +1506,7 @@ krakend run --config krakend.json
 ```
 
 ### Configuration Validation
+
 ```bash
 # Check configuration syntax
 krakend check --config krakend.json
@@ -1452,6 +1519,7 @@ krakend audit --config krakend.json
 ```
 
 ### Testing Endpoints
+
 ```bash
 # Test basic endpoint
 curl -X GET "http://localhost:8080/v1/users/123"
@@ -1476,6 +1544,7 @@ curl -X GET "http://localhost:8080/__health"
 ## Production Deployment
 
 ### Docker Production Setup
+
 ```dockerfile
 # Dockerfile
 FROM devopsfaith/krakend:2.4
@@ -1487,6 +1556,7 @@ CMD ["run", "--config", "/etc/krakend/krakend.json"]
 ```
 
 ### Kubernetes Production Deployment
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1574,6 +1644,7 @@ spec:
 ```
 
 ### Monitoring Stack
+
 ```yaml
 # ServiceMonitor for Prometheus
 apiVersion: monitoring.coreos.com/v1
@@ -1593,4 +1664,3 @@ spec:
 ---
 
 *For more detailed information, visit the [official KrakenD documentation](https://www.krakend.io/docs/)*
-
